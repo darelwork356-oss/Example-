@@ -1,20 +1,23 @@
 # Configuración de Netlify Functions
 
+## Arquitectura
+- **Firebase**: Autenticación + Base de datos (Realtime Database)
+- **AWS S3**: Almacenamiento de imágenes
+- **AWS SES**: Envío de emails
+- **Netlify Functions**: Serverless para operaciones con AWS
+
 ## Variables de Entorno Requeridas
 
-Configura estas variables en Netlify Dashboard > Site settings > Environment variables:
-
-### Base de Datos
-- `DATABASE_URL`: URL de conexión a PostgreSQL
+Configura en Netlify Dashboard > Site settings > Environment variables:
 
 ### AWS
 - `AWS_ACCESS_KEY_ID`: Access Key de AWS
 - `AWS_SECRET_ACCESS_KEY`: Secret Key de AWS
-- `AWS_REGION`: Región de AWS (ej: us-east-1)
+- `AWS_REGION`: Región (ej: us-east-1)
 - `AWS_S3_BUCKET`: Nombre del bucket S3
 
 ### Email
-- `SUPPORT_EMAIL`: Email para recibir mensajes de soporte
+- `SUPPORT_EMAIL`: Email para soporte (debe estar verificado en AWS SES)
 
 ## Instalación
 
@@ -25,19 +28,25 @@ npm install
 
 ## Funciones Disponibles
 
-- `like-note.js` - Dar like a notas
-- `upload-image.js` - Subir imágenes a S3
-- `get-notes.js` - Obtener notas
-- `upload-note.js` - Crear notas
-- `delete-note.js` - Eliminar notas
-- `manage-following.js` - Seguir/dejar de seguir usuarios
-- `send-support-email.js` - Enviar emails de soporte
-- `get-user-stats.js` - Obtener estadísticas de usuario
-- `get-stories.js` - Obtener historias
-- `get-chapters.js` - Obtener capítulos
-- `manage-notifications.js` - Gestionar notificaciones
-- `check-user-limits.js` - Verificar límites de usuario
+- `upload-image.js` - Subir imágenes a AWS S3
+- `send-support-email.js` - Enviar emails vía AWS SES
 
-## Esquema de Base de Datos Requerido
+## Configuración AWS
 
-Ver `schema.sql` para la estructura completa de tablas.
+### S3 Bucket
+1. Crear bucket en AWS S3
+2. Configurar permisos públicos para lectura
+3. Habilitar CORS
+
+### SES (Simple Email Service)
+1. Verificar email de soporte
+2. Solicitar salir del sandbox (producción)
+
+## Datos
+Todo se almacena en **Firebase Realtime Database**:
+- Usuarios
+- Historias
+- Notas
+- Likes
+- Seguidores
+- Notificaciones
