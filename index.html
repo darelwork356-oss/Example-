@@ -1831,7 +1831,7 @@ setInterval(checkScheduledChapters, 60000);
 
 
 
-<!-- Modal de Generador de Imágenes IA estilo Zenvio -->
+<!-- Modal de Generador de Imágenes IA estilo Instagram -->
 <div id="image-generator-modal" class="fixed inset-0 bg-white hidden overflow-y-auto" style="z-index: 10000;">
   <div class="w-full h-full">
     <!-- Header estilo Instagram -->
@@ -1842,97 +1842,99 @@ setInterval(checkScheduledChapters, 60000);
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <h1 class="text-lg font-semibold text-gray-900">Generar con IA</h1>
-        <button onclick="generateImage()" id="generate-btn" class="text-[#FE2C55] font-semibold hover:text-red-600 transition-colors">
-          Crear
+        <h1 class="text-lg font-semibold text-gray-900">Nueva publicación</h1>
+        <button onclick="generateImage()" id="generate-btn" class="text-[#0095f6] font-semibold hover:text-blue-700 transition-colors">
+          Siguiente
         </button>
       </div>
     </div>
     
-    <!-- Contenido principal -->
-    <div class="p-4 space-y-6">
-      <!-- Sección de descripción -->
-      <div class="bg-white rounded-xl border border-gray-200 p-4">
-        <div class="flex items-center space-x-3 mb-3">
-          <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-            </svg>
-          </div>
-          <div>
-            <h3 class="font-semibold text-gray-900">Describe tu imagen</h3>
-            <p class="text-xs text-gray-500">Sé creativo y detallado</p>
-          </div>
-        </div>
-        <textarea id="image-prompt" placeholder="Ej: Un gato espacial con casco de astronauta flotando entre estrellas coloridas" 
-                  class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FE2C55] focus:border-transparent resize-none transition-all" 
-                  rows="3" maxlength="200"></textarea>
-        <div class="flex justify-between items-center mt-2">
-          <span id="char-counter" class="text-xs text-gray-400">0/200</span>
-          <div class="flex items-center space-x-2">
-            <span class="text-xs text-gray-500">Estilo:</span>
-            <select id="image-style" class="text-xs bg-gray-50 border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-[#FE2C55]">
-              <option value="realistic">Realista</option>
-              <option value="anime">Anime</option>
-              <option value="cartoon">Caricatura</option>
-              <option value="digital-art">Arte Digital</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Área de resultado -->
+    <!-- Contenido principal estilo Instagram -->
+    <div class="p-0">
+      <!-- Área de imagen generada -->
       <div id="generated-image-container" class="hidden">
-        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-          <div id="image-loading" class="hidden p-8 text-center">
-            <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-              <svg class="animate-spin h-8 w-8 text-white" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
+        <div class="bg-white">
+          <div id="image-loading" class="hidden aspect-square bg-gray-100 flex items-center justify-center">
+            <div class="text-center">
+              <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                <svg class="animate-spin h-8 w-8 text-white" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              </div>
+              <p class="text-lg font-semibold text-gray-700 mb-2">Generando imagen...</p>
+              <p class="text-sm text-gray-500">Esto puede tomar unos segundos</p>
             </div>
-            <p class="text-lg font-semibold text-gray-700 mb-2">Creando tu imagen...</p>
-            <p class="text-sm text-gray-500">La IA está trabajando en tu solicitud</p>
           </div>
           
           <div id="generated-image-result" class="hidden">
-            <img id="generated-image" class="w-full h-auto" alt="Imagen generada">
-            <div class="p-4 border-t border-gray-100">
-              <button onclick="useGeneratedImage()" class="w-full bg-[#FE2C55] text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition-colors">
-                Usar esta imagen
-              </button>
-            </div>
+            <img id="generated-image" class="w-full aspect-square object-cover" alt="Imagen generada">
           </div>
           
-          <div id="generation-error" class="hidden p-8 text-center">
-            <div class="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
-              <svg class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
+          <div id="generation-error" class="hidden aspect-square bg-gray-100 flex items-center justify-center">
+            <div class="text-center p-8">
+              <div class="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
+                <svg class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <p class="text-red-600 font-semibold mb-2">No se pudo generar</p>
+              <p class="text-sm text-gray-500">Intenta con otra descripción</p>
             </div>
-            <p class="text-red-600 font-semibold mb-2">Error al generar imagen</p>
-            <p class="text-sm text-gray-500">Intenta con una descripción diferente</p>
           </div>
         </div>
       </div>
       
-      <!-- Ejemplos rápidos -->
-      <div class="bg-gray-50 rounded-xl p-4">
-        <h4 class="font-semibold text-gray-900 mb-3 text-sm">Ideas rápidas</h4>
-        <div class="grid grid-cols-2 gap-2">
-          <button onclick="document.getElementById('image-prompt').value='Un dragón mágico volando sobre un castillo medieval'" class="text-left p-2 bg-white rounded-lg border border-gray-200 hover:border-[#FE2C55] transition-colors text-xs">
+      <!-- Área de descripción estilo Instagram -->
+      <div class="p-4 border-b border-gray-200">
+        <div class="flex items-start space-x-3">
+          <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8" stroke-width="2"/>
+              <path d="m21 21-4.35-4.35" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <textarea id="image-prompt" placeholder="Describe la imagen que quieres crear..." 
+                      class="w-full border-0 resize-none text-gray-900 placeholder-gray-500 focus:outline-none text-base bg-transparent" 
+                      rows="3" maxlength="200"></textarea>
+            <div class="flex justify-between items-center mt-2">
+              <span id="char-counter" class="text-xs text-gray-400">0/200</span>
+              <select id="image-style" class="text-xs bg-transparent border-0 text-gray-600 focus:outline-none">
+                <option value="realistic">Realista</option>
+                <option value="anime">Anime</option>
+                <option value="cartoon">Caricatura</option>
+                <option value="digital-art">Arte Digital</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sugerencias estilo Instagram -->
+      <div class="p-4">
+        <h4 class="font-semibold text-gray-900 mb-3 text-sm">Sugerencias</h4>
+        <div class="flex flex-wrap gap-2">
+          <button onclick="document.getElementById('image-prompt').value='Dragón mágico volando sobre castillo medieval'" class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs hover:bg-gray-200 transition-colors">
             Dragón mágico
           </button>
-          <button onclick="document.getElementById('image-prompt').value='Un paisaje futurista con ciudades flotantes'" class="text-left p-2 bg-white rounded-lg border border-gray-200 hover:border-[#FE2C55] transition-colors text-xs">
+          <button onclick="document.getElementById('image-prompt').value='Paisaje futurista con ciudades flotantes'" class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs hover:bg-gray-200 transition-colors">
             Ciudad futurista
           </button>
-          <button onclick="document.getElementById('image-prompt').value='Un bosque encantado con criaturas mágicas'" class="text-left p-2 bg-white rounded-lg border border-gray-200 hover:border-[#FE2C55] transition-colors text-xs">
+          <button onclick="document.getElementById('image-prompt').value='Bosque encantado con criaturas mágicas'" class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs hover:bg-gray-200 transition-colors">
             Bosque encantado
           </button>
-          <button onclick="document.getElementById('image-prompt').value='Un astronauta explorando un planeta alienígena'" class="text-left p-2 bg-white rounded-lg border border-gray-200 hover:border-[#FE2C55] transition-colors text-xs">
+          <button onclick="document.getElementById('image-prompt').value='Astronauta explorando planeta alienígena'" class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs hover:bg-gray-200 transition-colors">
             Explorador espacial
           </button>
         </div>
+      </div>
+      
+      <!-- Botón de acción estilo Instagram -->
+      <div id="use-image-section" class="hidden p-4 border-t border-gray-200">
+        <button onclick="useGeneratedImage()" class="w-full bg-[#0095f6] text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors">
+          Usar imagen
+        </button>
       </div>
     </div>
   </div>
@@ -2483,11 +2485,13 @@ firebase.auth().onAuthStateChanged(user => {
 
     <!-- Search Bar and Category Filter -->
     <div class="space-y-4 mb-6">
-      <div class="relative">
-        <input id="search-input" type="text" placeholder="Search for stories or authors" class="w-full pl-12 pr-12 py-3 rounded-full bg-gray-100 text-black border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#FE2C55] focus:border-transparent text-base">
-        <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#FE2C55]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
+      <div class="relative group">
+        <input id="search-input" type="text" placeholder="Search for stories or authors" class="w-full pl-12 pr-12 py-3 rounded-full bg-gray-100 text-black border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#FE2C55] focus:border-transparent text-base group">
+        <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#FE2C55] group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-purple-500 transition-colors" />
+          <path d="m21 21-4.35-4.35" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-purple-500 transition-colors" />
         </svg>
+        <div class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 rounded-full bg-purple-400 opacity-0 group-hover:opacity-20 group-hover:animate-ping pointer-events-none"></div>
         <button id="clear-search-btn" class="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors hidden" onclick="clearSearchInput()">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
@@ -3011,6 +3015,7 @@ firebase.auth().onAuthStateChanged(user => {
           document.getElementById('generated-image').src = successUrl;
           document.getElementById('image-loading').classList.add('hidden');
           document.getElementById('generated-image-result').classList.remove('hidden');
+          document.getElementById('use-image-section').classList.remove('hidden');
           
           generateBtn.disabled = false;
           generateBtn.textContent = originalText;
