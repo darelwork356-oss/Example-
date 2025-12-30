@@ -1035,7 +1035,7 @@ setInterval(checkScheduledChapters, 60000);
           <div class="flex items-start space-x-3">
             <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
               <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
               </svg>
             </div>
             <div class="flex-1">
@@ -1048,13 +1048,9 @@ setInterval(checkScheduledChapters, 60000);
                 </div>
                 <span class="text-xs text-gray-500">2h</span>
               </div>
-              <p class="text-gray-800 text-sm mb-2">
+              <p class="text-gray-800 text-sm">
                 🚀 <strong>Zenvio AI</strong> se implementará pronto en la plataforma. Nuestra inteligencia artificial te ayudará a crear mejores historias y generar ideas increíbles.
               </p>
-              <div class="flex items-center space-x-4 text-xs text-gray-500">
-                <button class="hover:text-[#FE2C55] transition-colors">Me gusta</button>
-                <button class="hover:text-[#FE2C55] transition-colors">Responder</button>
-              </div>
             </div>
           </div>
         </div>
@@ -2378,11 +2374,11 @@ firebase.auth().onAuthStateChanged(user => {
   </div>
 
   <!-- Tabs modernos -->
-  <div class="bg-white px-4 py-2">
-    <div class="flex gap-2">
-      <button onclick="switchCommunityTab('feed')" class="community-tab active bg-[#FE2C55] text-white" id="feed-tab">Feed</button>
-      <button onclick="switchCommunityTab('photos'); loadPhotos();" class="community-tab bg-gray-100 text-gray-600" id="photos-tab">Photos</button>
-      <button onclick="switchCommunityTab('calendar'); openCalendar();" class="community-tab bg-gray-100 text-gray-600" id="calendar-tab">Próximas</button>
+  <div class="bg-white px-4 py-3 border-b border-gray-100">
+    <div class="flex gap-1">
+      <button onclick="switchCommunityTab('feed')" class="community-tab active bg-[#FE2C55] text-white px-4 py-2 rounded-full text-sm font-medium" id="feed-tab">Feed</button>
+      <button onclick="switchCommunityTab('photos'); loadPhotos();" class="community-tab bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm font-medium" id="photos-tab">Fotos</button>
+      <button onclick="switchCommunityTab('calendar'); openCalendar();" class="community-tab bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm font-medium" id="calendar-tab">Próximas</button>
     </div>
   </div>
     
@@ -2486,7 +2482,7 @@ firebase.auth().onAuthStateChanged(user => {
       <div class="relative">
         <input id="search-input" type="text" placeholder="Search for stories or authors" class="w-full pl-12 pr-12 py-3 rounded-full bg-gray-100 text-black border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#FE2C55] focus:border-transparent text-base">
         <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#FE2C55]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
         </svg>
         <button id="clear-search-btn" class="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors hidden" onclick="clearSearchInput()">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
