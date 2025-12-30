@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Iconos Zenvio PWA</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #FE2C55;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        .icon-preview {
+            text-align: center;
+        }
+        .icon-preview canvas {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .icon-preview p {
+            margin: 10px 0 0 0;
+            font-size: 14px;
+            color: #666;
+        }
+        button {
+            background: #FE2C55;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #e02347;
+        }
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .instructions ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .instructions li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Generador de Iconos Zenvio PWA</h1>
+        
+        <div class="preview" id="preview"></div>
+        
+        <button onclick="generateAllIcons()">📱 Generar y Descargar Todos los Iconos</button>
+        
+        <div class="instructions">
+            <h3>📋 Instrucciones:</h3>
+            <ol>
+                <li>Haz clic en "Generar y Descargar Todos los Iconos"</li>
+                <li>Se descargarán automáticamente todos los tamaños necesarios</li>
+                <li>Coloca los archivos descargados en la carpeta <code>/icons/</code> de tu proyecto</li>
+                <li>Los iconos están optimizados para PWA y siguen las mejores prácticas</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        
+        function createIcon(size) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Fondo con gradiente
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#FE2C55');
+            gradient.addColorStop(1, '#ff6b7a');
+            
+            // Dibujar fondo con esquinas redondeadas
+            const radius = size * 0.125;
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.roundRect(0, 0, size, size, radius);
+            ctx.fill();
+            
+            // Dibujar letra "Z"
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${size * 0.55}px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.shadowColor = 'rgba(0,0,0,0.3)';
+            ctx.shadowBlur = size * 0.02;
+            ctx.shadowOffsetY = size * 0.01;
+            ctx.fillText('Z', size / 2, size / 2);
+            
+            return canvas;
+        }
+        
+        function downloadIcon(canvas, size) {
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `icon-${size}x${size}.png`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 'image/png', 1.0);
+        }
+        
+        function generateAllIcons() {
+            sizes.forEach((size, index) => {
+                setTimeout(() => {
+                    const canvas = createIcon(size);
+                    downloadIcon(canvas, size);
+                }, index * 300);
+            });
+            
+            // Mostrar mensaje de éxito
+            setTimeout(() => {
+                alert('✅ ¡Iconos generados exitosamente!\\n\\nSe han descargado ' + sizes.length + ' iconos en diferentes tamaños.\\n\\nColócalos en la carpeta /icons/ de tu proyecto.');
+            }, sizes.length * 300 + 500);
+        }
+        
+        function createPreviews() {
+            const preview = document.getElementById('preview');
+            const previewSizes = [72, 128, 192];
+            
+            previewSizes.forEach(size => {
+                const canvas = createIcon(size);
+                const container = document.createElement('div');
+                container.className = 'icon-preview';
+                
+                const displayCanvas = document.createElement('canvas');
+                displayCanvas.width = 80;
+                displayCanvas.height = 80;
+                const displayCtx = displayCanvas.getContext('2d');
+                displayCtx.drawImage(canvas, 0, 0, 80, 80);
+                
+                const label = document.createElement('p');
+                label.textContent = `${size}×${size}px`;
+                
+                container.appendChild(displayCanvas);
+                container.appendChild(label);
+                preview.appendChild(container);
+            });
+        }
+        
+        // Crear previsualizaciones al cargar la página
+        window.onload = createPreviews;
+    </script>
+</body>
+</html>

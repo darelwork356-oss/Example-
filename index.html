@@ -6,6 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zenvio</title>
   
+  <!-- PWA Configuration -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#FE2C55">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Zenvio">
+  <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+  
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4653147807800151" crossorigin="anonymous"></script>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
@@ -14000,3 +14008,125 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+<script>
+// Registrar Service Worker para PWA
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(registration => {
+        console.log('SW registrado exitosamente:', registration.scope);
+        
+        // Verificar actualizaciones
+        registration.addEventListener('updatefound', () => {
+          const newWorker = registration.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // Nueva versión disponible
+              if (confirm('Nueva versión disponible. ¿Actualizar ahora?')) {
+                newWorker.postMessage({ type: 'SKIP_WAITING' });
+                window.location.reload();
+              }
+            }
+          });
+        });
+      })
+      .catch(error => {
+        console.log('Error al registrar SW:', error);
+      });
+  });
+}
+
+// Detectar si la app está instalada
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  
+  // Mostrar botón de instalación personalizado
+  showInstallButton();
+});
+
+function showInstallButton() {
+  const installButton = document.createElement('button');
+  installButton.innerHTML = `
+    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+    </svg>
+    Instalar App
+  `;
+  installButton.className = 'fixed bottom-20 right-4 bg-[#FE2C55] text-white px-4 py-2 rounded-full shadow-lg flex items-center z-50 hover:bg-red-600 transition-colors';
+  installButton.onclick = installApp;
+  
+  document.body.appendChild(installButton);
+  
+  // Auto-ocultar después de 10 segundos
+  setTimeout(() => {
+    if (installButton.parentNode) {
+      installButton.remove();
+    }
+  }, 10000);
+}
+
+function installApp() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((result) => {
+      if (result.outcome === 'accepted') {
+        console.log('Usuario aceptó instalar la PWA');
+      }
+      deferredPrompt = null;
+    });
+  }
+}
+
+// Detectar cuando la app se instala
+window.addEventListener('appinstalled', (evt) => {
+  console.log('PWA instalada exitosamente');
+  // Ocultar botón de instalación si existe
+  const installButton = document.querySelector('button[onclick="installApp()"]');
+  if (installButton) {
+    installButton.remove();
+  }
+});
+
+// Manejar modo offline
+window.addEventListener('online', () => {
+  console.log('Conexión restaurada');
+  // Mostrar notificación de conexión restaurada
+  showNotification('Conexión restaurada', 'success');
+});
+
+window.addEventListener('offline', () => {
+  console.log('Sin conexión - modo offline');
+  // Mostrar notificación de modo offline
+  showNotification('Modo offline activado', 'info');
+});
+
+function showNotification(message, type = 'info') {
+  const notification = document.createElement('div');
+  const bgColor = type === 'success' ? 'bg-green-500' : type === 'error' ? 'bg-red-500' : 'bg-blue-500';
+  
+  notification.className = `fixed top-4 right-4 ${bgColor} text-white px-4 py-2 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300`;
+  notification.textContent = message;
+  
+  document.body.appendChild(notification);
+  
+  // Animar entrada
+  setTimeout(() => {
+    notification.classList.remove('translate-x-full');
+  }, 100);
+  
+  // Auto-ocultar
+  setTimeout(() => {
+    notification.classList.add('translate-x-full');
+    setTimeout(() => {
+      if (notification.parentNode) {
+        notification.remove();
+      }
+    }, 300);
+  }, 3000);
+}
+</script>
+
+</html>
