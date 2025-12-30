@@ -1030,23 +1030,31 @@ setInterval(checkScheduledChapters, 60000);
     <!-- Lista de notificaciones -->
     <div class="flex-1 overflow-y-auto p-4">
       <div id="notifications-list" class="space-y-4">
-        <!-- Notificación del sistema sobre Zenvio AI -->
-        <div class="notification-item bg-gradient-to-r from-purple-50 to-blue-50 border-l-4 border-purple-500">
+        <!-- Notificación del sistema sobre Zenvio AI estilo Instagram -->
+        <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm">
           <div class="flex items-start space-x-3">
-            <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
             </div>
             <div class="flex-1">
-              <div class="flex items-center space-x-2 mb-1">
-                <span class="font-semibold text-gray-900">Sistema</span>
-                <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full font-medium">Nuevo</span>
+              <div class="flex items-center justify-between mb-1">
+                <div class="flex items-center space-x-2">
+                  <span class="font-semibold text-gray-900">Zenvio</span>
+                  <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <span class="text-xs text-gray-500">2h</span>
               </div>
-              <p class="text-gray-700 text-sm leading-relaxed">
-                🚀 <strong>Zenvio AI</strong> se implementará pronto en la plataforma. Nuestra inteligencia artificial te ayudará a crear mejores historias, generar ideas y mucho más.
+              <p class="text-gray-800 text-sm mb-2">
+                🚀 <strong>Zenvio AI</strong> se implementará pronto en la plataforma. Nuestra inteligencia artificial te ayudará a crear mejores historias y generar ideas increíbles.
               </p>
-              <div class="notification-time text-purple-600">Hace unos momentos</div>
+              <div class="flex items-center space-x-4 text-xs text-gray-500">
+                <button class="hover:text-[#FE2C55] transition-colors">Me gusta</button>
+                <button class="hover:text-[#FE2C55] transition-colors">Responder</button>
+              </div>
             </div>
           </div>
         </div>
@@ -1827,132 +1835,107 @@ setInterval(checkScheduledChapters, 60000);
 
 
 
-<!-- Modal de Generador de Imágenes IA -->
+<!-- Modal de Generador de Imágenes IA estilo Zenvio -->
 <div id="image-generator-modal" class="fixed inset-0 bg-white hidden overflow-y-auto" style="z-index: 10000;">
   <div class="w-full h-full">
-    <!-- Header estilo TikTok -->
-    <div class="sticky top-0 bg-white/80 backdrop-blur-md border-b border-gray-200 p-4 z-10">
+    <!-- Header estilo Instagram -->
+    <div class="sticky top-0 bg-white border-b border-gray-200 p-4 z-10">
       <div class="flex items-center justify-between">
-        <button onclick="closeImageGenerator()" class="text-[#FE2C55] font-medium flex items-center hover:bg-gray-100 px-3 py-2 rounded-lg transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        <button onclick="closeImageGenerator()" class="text-gray-700 hover:text-[#FE2C55] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
-          <span>Volver</span>
         </button>
-        <h1 class="text-xl font-bold text-[#FE2C55]">Generador IA</h1>
-        <div class="w-20"></div>
+        <h1 class="text-lg font-semibold text-gray-900">Generar con IA</h1>
+        <button onclick="generateImage()" id="generate-btn" class="text-[#FE2C55] font-semibold hover:text-red-600 transition-colors">
+          Crear
+        </button>
       </div>
     </div>
     
     <!-- Contenido principal -->
-    <div class="max-w-2xl mx-auto px-4 py-8">
-      <div class="text-center mb-8">
-        <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-        </div>
-        <h2 class="text-3xl font-bold mb-2 text-black">Crear con IA</h2>
-        <p class="text-gray-600">Describe tu imagen y la IA la creará para ti</p>
-      </div>
-      
-      <div class="space-y-6">
-        <!-- Campo de descripción -->
-        <div class="bg-white rounded-2xl border-2 border-gray-200 p-6 shadow-sm">
-          <label class="block text-sm font-semibold text-gray-700 mb-3">Describe tu imagen</label>
-          <div class="relative">
-            <textarea id="image-prompt" placeholder="Ej: Un gato espacial con casco de astronauta flotando entre estrellas" 
-                      class="w-full p-4 pl-12 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FE2C55] focus:border-transparent resize-none transition-all" 
-                      rows="3" maxlength="200"></textarea>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-4 top-6 text-[#FE2C55]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+    <div class="p-4 space-y-6">
+      <!-- Sección de descripción -->
+      <div class="bg-white rounded-xl border border-gray-200 p-4">
+        <div class="flex items-center space-x-3 mb-3">
+          <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
             </svg>
           </div>
-          <div class="text-xs text-gray-500 mt-2 flex justify-between">
-            <span>Máximo 200 caracteres</span>
-            <span id="char-counter">0/200</span>
+          <div>
+            <h3 class="font-semibold text-gray-900">Describe tu imagen</h3>
+            <p class="text-xs text-gray-500">Sé creativo y detallado</p>
           </div>
         </div>
-        
-        <!-- Selector de estilo -->
-        <div class="bg-white rounded-2xl border-2 border-gray-200 p-6 shadow-sm">
-          <label class="block text-sm font-semibold text-gray-700 mb-3">Estilo de imagen</label>
-          <div class="relative">
-            <select id="image-style" class="w-full p-4 pl-12 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FE2C55] focus:border-transparent appearance-none transition-all">
+        <textarea id="image-prompt" placeholder="Ej: Un gato espacial con casco de astronauta flotando entre estrellas coloridas" 
+                  class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FE2C55] focus:border-transparent resize-none transition-all" 
+                  rows="3" maxlength="200"></textarea>
+        <div class="flex justify-between items-center mt-2">
+          <span id="char-counter" class="text-xs text-gray-400">0/200</span>
+          <div class="flex items-center space-x-2">
+            <span class="text-xs text-gray-500">Estilo:</span>
+            <select id="image-style" class="text-xs bg-gray-50 border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-[#FE2C55]">
               <option value="realistic">Realista</option>
               <option value="anime">Anime</option>
               <option value="cartoon">Caricatura</option>
               <option value="digital-art">Arte Digital</option>
-              <option value="oil-painting">Pintura al Óleo</option>
-              <option value="watercolor">Acuarela</option>
             </select>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-4 top-1/2 transform -translate-y-1/2 text-[#FE2C55]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
           </div>
         </div>
-        
-        <!-- Información -->
-        <div class="bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-2xl p-6">
-          <div class="flex items-center text-purple-700">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <div>
-              <p class="font-semibold mb-1">Generación gratuita con IA</p>
-              <p class="text-sm text-purple-600">La imagen se creará en unos segundos</p>
+      </div>
+      
+      <!-- Área de resultado -->
+      <div id="generated-image-container" class="hidden">
+        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+          <div id="image-loading" class="hidden p-8 text-center">
+            <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+              <svg class="animate-spin h-8 w-8 text-white" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
             </div>
+            <p class="text-lg font-semibold text-gray-700 mb-2">Creando tu imagen...</p>
+            <p class="text-sm text-gray-500">La IA está trabajando en tu solicitud</p>
           </div>
-        </div>
-        
-        <!-- Botones de acción -->
-        <div class="flex space-x-4">
-          <button onclick="closeImageGenerator()" class="flex-1 bg-gray-200 text-gray-700 py-4 rounded-xl font-semibold hover:bg-gray-300 transition-colors">
-            Cancelar
-          </button>
-          <button onclick="generateImage()" id="generate-btn" class="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all transform hover:scale-105">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-            </svg>
-            Generar Imagen
-          </button>
-        </div>
-        
-        <!-- Área de resultado -->
-        <div id="generated-image-container" class="hidden">
-          <div class="bg-white rounded-2xl border-2 border-gray-200 p-6 shadow-sm">
-            <div id="image-loading" class="hidden text-center py-12">
-              <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center">
-                <svg class="animate-spin h-8 w-8 text-white" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-              </div>
-              <p class="text-lg font-semibold text-gray-700 mb-2">Creando tu imagen...</p>
-              <p class="text-sm text-gray-500">La IA está trabajando en tu solicitud</p>
-            </div>
-            <div id="generated-image-result" class="hidden text-center">
-              <img id="generated-image" class="max-w-full h-auto rounded-xl mx-auto mb-6 shadow-lg" alt="Imagen generada">
-              <button onclick="useGeneratedImage()" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-8 py-3 rounded-xl font-semibold hover:from-green-600 hover:to-emerald-700 transition-all transform hover:scale-105">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
+          
+          <div id="generated-image-result" class="hidden">
+            <img id="generated-image" class="w-full h-auto" alt="Imagen generada">
+            <div class="p-4 border-t border-gray-100">
+              <button onclick="useGeneratedImage()" class="w-full bg-[#FE2C55] text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition-colors">
                 Usar esta imagen
               </button>
             </div>
-            <div id="generation-error" class="hidden text-center py-8">
-              <div class="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-              </div>
-              <p class="text-red-600 font-semibold mb-2">Error al generar imagen</p>
-              <p class="text-sm text-gray-500">Intenta con una descripción diferente</p>
-            </div>
           </div>
+          
+          <div id="generation-error" class="hidden p-8 text-center">
+            <div class="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
+              <svg class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <p class="text-red-600 font-semibold mb-2">Error al generar imagen</p>
+            <p class="text-sm text-gray-500">Intenta con una descripción diferente</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Ejemplos rápidos -->
+      <div class="bg-gray-50 rounded-xl p-4">
+        <h4 class="font-semibold text-gray-900 mb-3 text-sm">Ideas rápidas</h4>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="document.getElementById('image-prompt').value='Un dragón mágico volando sobre un castillo medieval'" class="text-left p-2 bg-white rounded-lg border border-gray-200 hover:border-[#FE2C55] transition-colors text-xs">
+            🐉 Dragón mágico
+          </button>
+          <button onclick="document.getElementById('image-prompt').value='Un paisaje futurista con ciudades flotantes'" class="text-left p-2 bg-white rounded-lg border border-gray-200 hover:border-[#FE2C55] transition-colors text-xs">
+            🌆 Ciudad futurista
+          </button>
+          <button onclick="document.getElementById('image-prompt').value='Un bosque encantado con criaturas mágicas'" class="text-left p-2 bg-white rounded-lg border border-gray-200 hover:border-[#FE2C55] transition-colors text-xs">
+            🌲 Bosque encantado
+          </button>
+          <button onclick="document.getElementById('image-prompt').value='Un astronauta explorando un planeta alienígena'" class="text-left p-2 bg-white rounded-lg border border-gray-200 hover:border-[#FE2C55] transition-colors text-xs">
+            🚀 Explorador espacial
+          </button>
         </div>
       </div>
     </div>
@@ -2271,9 +2254,10 @@ firebase.auth().onAuthStateChanged(user => {
       </button>
       <button onclick="openSearch()" class="flex flex-col items-center text-[#161823] hover:text-[#FE2C55] transition">
         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+          <circle cx="11" cy="11" r="8" stroke-linecap="round" stroke-linejoin="round" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-        <span class="text-xs font-medium">IA & Buscar</span>
+        <span class="text-xs font-medium">Buscar</span>
       </button>
       <button onclick="openCreatorHub()" class="flex flex-col items-center text-[#161823] hover:text-[#FE2C55] transition">
         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -2416,45 +2400,70 @@ firebase.auth().onAuthStateChanged(user => {
       <!-- Notes will be loaded dynamically here -->
     </div>
 
-    <!-- Add Note Form -->
-    <div id="add-note-form" class="hidden bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-      <textarea id="note-content" placeholder="What's on your mind?" maxlength="200" class="w-full p-4 border-0 rounded-xl bg-gray-50 resize-none h-24 focus:outline-none focus:ring-2 focus:ring-[#FE2C55] focus:bg-white transition"></textarea>
-      <div id="char-counter" class="text-sm text-gray-400 mt-2">200 characters remaining</div>
-      
-      <!-- AI Suggestions and Image Generator -->
-      <div class="mt-3 flex flex-wrap gap-2">
-        <button onclick="getAISuggestions()" class="text-sm text-[#FE2C55] hover:text-red-600 transition flex items-center px-3 py-2 bg-gray-50 rounded-lg" id="ai-suggest-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-          </svg>
-          Sugerencias IA
-        </button>
-        <button onclick="openImageGenerator()" class="text-sm text-white bg-purple-600 hover:bg-purple-700 transition flex items-center px-3 py-2 rounded-lg" id="ai-image-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-          Generar Imagen
+    <!-- Add Note Form estilo Instagram -->
+    <div id="add-note-form" class="hidden bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <!-- Header -->
+      <div class="flex items-center justify-between p-4 border-b border-gray-100">
+        <div class="flex items-center space-x-3">
+          <img src="https://via.placeholder.com/40" class="w-10 h-10 rounded-full object-cover" alt="Tu foto">
+          <div>
+            <p class="font-semibold text-gray-900">Tu nombre</p>
+            <p class="text-xs text-gray-500">Crear nueva publicación</p>
+          </div>
+        </div>
+        <button onclick="publishNote()" class="bg-[#FE2C55] text-white px-4 py-2 rounded-lg font-medium hover:bg-red-600 transition-colors text-sm">
+          Publicar
         </button>
       </div>
-      <div id="ai-suggestions" class="hidden mt-2 space-y-2"></div>
       
-      <div class="mt-4 flex items-center gap-3">
-        <label class="flex-1 cursor-pointer bg-gray-50 p-3 rounded-xl hover:bg-gray-100 transition text-center border border-gray-200">
-          <input type="file" id="note-image" accept="image/*" class="hidden" onchange="handleNoteImagePreview(event)">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-          Photo
-        </label>
-        <button onclick="publishNote()" class="px-6 py-3 bg-[#FE2C55] text-white rounded-xl font-medium hover:bg-red-600 transition">
-          Post
-        </button>
+      <!-- Content Area -->
+      <div class="p-4">
+        <textarea id="note-content" placeholder="¿Qué estás pensando?" maxlength="200" class="w-full border-0 resize-none text-gray-900 placeholder-gray-500 focus:outline-none text-base" rows="3"></textarea>
+        
+        <!-- Image Preview -->
+        <div id="image-preview" class="hidden mt-3">
+          <div class="relative inline-block">
+            <img id="preview-img" class="max-h-40 rounded-lg">
+            <button onclick="removeImage()" class="absolute -top-2 -right-2 bg-gray-800 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-gray-900 transition-colors">
+              ×
+            </button>
+          </div>
+        </div>
+        
+        <!-- Character Counter -->
+        <div id="char-counter" class="text-xs text-gray-400 mt-2 text-right">200 caracteres restantes</div>
       </div>
-      <div id="image-preview" class="mt-4 hidden">
-        <img id="preview-img" class="max-h-40 rounded-xl mx-auto">
-        <button onclick="removeImage()" class="mt-2 text-red-500 text-sm hover:text-red-700 transition">
-          Remove Photo
-        </button>
+      
+      <!-- Bottom Actions -->
+      <div class="border-t border-gray-100 p-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <label class="flex items-center space-x-2 cursor-pointer text-gray-600 hover:text-[#FE2C55] transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span class="text-sm">Foto</span>
+              <input type="file" id="note-image" accept="image/*" class="hidden" onchange="handleNoteImagePreview(event)">
+            </label>
+            
+            <button onclick="openImageGenerator()" class="flex items-center space-x-2 text-gray-600 hover:text-purple-600 transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+              <span class="text-sm">IA</span>
+            </button>
+            
+            <button onclick="getAISuggestions()" class="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors" id="ai-suggest-btn">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              <span class="text-sm">Ideas</span>
+            </button>
+          </div>
+        </div>
+        
+        <!-- AI Suggestions -->
+        <div id="ai-suggestions" class="hidden mt-3 space-y-2"></div>
       </div>
     </div>
   </div>
@@ -2476,9 +2485,8 @@ firebase.auth().onAuthStateChanged(user => {
     <div class="space-y-4 mb-6">
       <div class="relative">
         <input id="search-input" type="text" placeholder="Search for stories or authors" class="w-full pl-12 pr-12 py-3 rounded-full bg-gray-100 text-black border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#FE2C55] focus:border-transparent text-base">
-        <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#FE2C55]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
         </svg>
         <button id="clear-search-btn" class="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors hidden" onclick="clearSearchInput()">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
