@@ -1,23 +1,52 @@
 # Configuración de Netlify Functions
 
 ## Arquitectura
-- **Firebase**: Autenticación + Base de datos (Realtime Database)
-- **AWS S3**: Almacenamiento de imágenes
-- **AWS SES**: Envío de emails
-- **Netlify Functions**: Serverless para operaciones con AWS
+- **Firebase**: Solo autenticación
+- **AWS S3**: TODO (datos + imágenes)
+- **AWS SES**: Emails
+- **Netlify Functions**: Serverless
 
-## Variables de Entorno Requeridas
+## Estructura en S3
 
-Configura en Netlify Dashboard > Site settings > Environment variables:
+```
+zenvio-storage/
+├── notes/
+│   └── {userId}/
+│       └── {noteId}.json
+├── likes/
+│   └── {noteId}/
+│       └── {userId}.json
+├── following/
+│   └── {userId}/
+│       └── {targetUserId}.json
+├── notifications/
+│   └── {userId}/
+│       └── {notifId}.json
+└── images/
+    ├── profile/{userId}/
+    ├── stories/{userId}/
+    └── notes/{userId}/
+```
 
-### AWS
-- `AWS_ACCESS_KEY_ID`: Access Key de AWS
-- `AWS_SECRET_ACCESS_KEY`: Secret Key de AWS
-- `AWS_REGION`: Región (ej: us-east-1)
-- `AWS_S3_BUCKET`: Nombre del bucket S3
+## Variables de Entorno
 
-### Email
-- `SUPPORT_EMAIL`: Email para soporte (debe estar verificado en AWS SES)
+```
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_REGION
+AWS_S3_BUCKET
+SUPPORT_EMAIL
+```
+
+## Funciones
+
+- `notes.js` - GET/POST/DELETE notas
+- `likes.js` - POST likes
+- `following.js` - POST follow/unfollow
+- `notifications.js` - GET/POST notificaciones
+- `user-stats.js` - GET estadísticas
+- `upload-image.js` - POST imágenes
+- `send-support-email.js` - POST emails
 
 ## Instalación
 
@@ -25,28 +54,3 @@ Configura en Netlify Dashboard > Site settings > Environment variables:
 cd netlify/functions
 npm install
 ```
-
-## Funciones Disponibles
-
-- `upload-image.js` - Subir imágenes a AWS S3
-- `send-support-email.js` - Enviar emails vía AWS SES
-
-## Configuración AWS
-
-### S3 Bucket
-1. Crear bucket en AWS S3
-2. Configurar permisos públicos para lectura
-3. Habilitar CORS
-
-### SES (Simple Email Service)
-1. Verificar email de soporte
-2. Solicitar salir del sandbox (producción)
-
-## Datos
-Todo se almacena en **Firebase Realtime Database**:
-- Usuarios
-- Historias
-- Notas
-- Likes
-- Seguidores
-- Notificaciones

@@ -3575,7 +3575,7 @@ firebase.auth().onAuthStateChanged(user => {
     likeButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
     try {
-      const response = await fetch('/.netlify/functions/like-note', {
+      const response = await fetch('/.netlify/functions/likes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -4692,7 +4692,7 @@ function saveNote() {
     const isFollowing = text.textContent === 'Dejar de seguir';
     
     try {
-      const response = await fetch('/.netlify/functions/manage-following', {
+      const response = await fetch('/.netlify/functions/following', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -7056,7 +7056,7 @@ async function loadPhotos() {
   photosGrid.innerHTML = '<div class="col-span-2 text-center py-8"><i class="fas fa-spinner fa-spin text-2xl text-[#FE2C55]"></i><p class="mt-2 text-gray-500">Cargando fotos...</p></div>';
 
   try {
-    const response = await fetch('/.netlify/functions/get-notes?limit=50');
+    const response = await fetch('/.netlify/functions/notes?limit=50');
     const result = await response.json();
     
     if (!response.ok) {
@@ -7658,7 +7658,7 @@ function openPhotoDetail(photo) {
   // Función para cargar estadísticas del perfil desde AWS S3
   async function loadUserStats(userId) {
     try {
-      const response = await fetch(`/.netlify/functions/get-user-stats?userId=${userId}`);
+      const response = await fetch(`/.netlify/functions/user-stats?userId=${userId}`);
       const result = await response.json();
       
       if (!response.ok) {
@@ -8035,7 +8035,7 @@ function openPhotoDetail(photo) {
       }
 
       // Subir nota a AWS S3
-      const response = await fetch('/.netlify/functions/upload-note', {
+      const response = await fetch('/.netlify/functions/notes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -8105,7 +8105,7 @@ function openPhotoDetail(photo) {
     feedContainer.innerHTML = '<div class="text-center py-8"><i class="fas fa-spinner fa-spin text-2xl text-[#FE2C55]"></i></div>';
     
     try {
-      const response = await fetch('/.netlify/functions/get-notes?limit=50');
+      const response = await fetch('/.netlify/functions/notes?limit=50');
       const result = await response.json();
       
       if (!response.ok) {
@@ -8248,7 +8248,7 @@ async function deleteNote(noteId) {
   if (!confirm('¿Estás seguro de que quieres eliminar esta nota?')) return;
   
   try {
-    const response = await fetch('/.netlify/functions/delete-note', {
+    const response = await fetch('/.netlify/functions/notes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -8279,7 +8279,7 @@ async function likeNote(noteId) {
     if (!user) return;
 
     try {
-      const response = await fetch('/.netlify/functions/like-note', {
+      const response = await fetch('/.netlify/functions/likes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -8860,7 +8860,7 @@ async function likeNote(noteId) {
   /*********************** NOTIFICACIONES **************************/
   async function addNotification(userId, message, type = 'info') {
     try {
-      const response = await fetch('/.netlify/functions/manage-notifications', {
+      const response = await fetch('/.netlify/functions/notifications', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -8958,7 +8958,7 @@ async function likeNote(noteId) {
         document.getElementById('notifications-modal').classList.remove('hidden');
         
         // Cargar notificaciones desde AWS S3
-        const response = await fetch(`/.netlify/functions/manage-notifications?userId=${currentUser.uid}`);
+        const response = await fetch(`/.netlify/functions/notifications?userId=${currentUser.uid}`);
         const result = await response.json();
         
         if (!response.ok) {
@@ -8999,7 +8999,7 @@ async function likeNote(noteId) {
           const markAsRead = async () => {
             if (!notification.read) {
               try {
-                await fetch('/.netlify/functions/manage-notifications', {
+                await fetch('/.netlify/functions/notifications', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
