@@ -2586,11 +2586,18 @@ firebase.auth().onAuthStateChanged(user => {
         </svg>
       </button>
       <h1 class="text-xl font-bold">Community</h1>
-      <button onclick="openNoteCreation()" class="w-10 h-10 rounded-full bg-[#FE2C55] flex items-center justify-center hover:bg-red-600 transition">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-        </svg>
-      </button>
+      <div class="flex items-center space-x-2">
+        <button onclick="openZenvioAIInfo()" class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center hover:bg-blue-200 transition" title="Información sobre Zenvio AI">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </button>
+        <button onclick="openNoteCreation()" class="w-10 h-10 rounded-full bg-[#FE2C55] flex items-center justify-center hover:bg-red-600 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -2678,13 +2685,93 @@ firebase.auth().onAuthStateChanged(user => {
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
-              <span class="text-sm">Ideas</span>
+              <span class="text-sm">Genera con Zenvio AI</span>
             </button>
           </div>
         </div>
         
         <!-- AI Suggestions -->
         <div id="ai-suggestions" class="hidden mt-3 space-y-2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE INFORMACIÓN DE ZENVIO AI -->
+<div id="zenvio-ai-info-modal" class="fixed inset-0 z-50 hidden bg-white">
+  <div class="h-full flex flex-col">
+    <div class="sticky top-0 bg-white border-b border-gray-200 p-4 z-10">
+      <div class="flex items-center justify-between">
+        <button onclick="closeZenvioAIInfo()" class="text-gray-700 hover:text-[#FE2C55] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <h1 class="text-lg font-semibold text-gray-900">Zenvio AI</h1>
+        <div class="w-6"></div>
+      </div>
+    </div>
+    <div class="flex-1 overflow-y-auto p-4">
+      <div class="max-w-md mx-auto space-y-6">
+        <div class="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-6 text-white text-center">
+          <h2 class="text-xl font-bold mb-2">Zenvio AI</h2>
+          <p class="text-sm opacity-90">Inteligencia artificial para potenciar tu creatividad</p>
+        </div>
+        <button onclick="openMemorialSection()" class="w-full bg-gray-100 hover:bg-gray-200 transition-colors p-4 rounded-2xl flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
+            </div>
+            <div class="text-left">
+              <h3 class="font-semibold text-gray-900">Memorial</h3>
+              <p class="text-sm text-gray-600">Configuración de datos y privacidad</p>
+            </div>
+          </div>
+          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE MEMORIAL -->
+<div id="memorial-modal" class="fixed inset-0 z-50 hidden bg-white">
+  <div class="h-full flex flex-col">
+    <div class="sticky top-0 bg-white border-b border-gray-200 p-4 z-10">
+      <div class="flex items-center justify-between">
+        <button onclick="closeMemorialSection()" class="text-gray-700 hover:text-[#FE2C55] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <h1 class="text-lg font-semibold text-gray-900">Memorial</h1>
+        <div class="w-6"></div>
+      </div>
+    </div>
+    <div class="flex-1 overflow-y-auto p-4">
+      <div class="max-w-md mx-auto space-y-6">
+        <div class="bg-gray-50 rounded-2xl p-6 text-center">
+          <h2 class="text-xl font-bold mb-4 text-gray-900">Memorial de IA</h2>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            Todas las creaciones o registros de IA que tengas quedarán guardadas anónimas aquí para entrenamiento de IA
+          </p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
+          <div class="flex items-center justify-between">
+            <div class="flex-1">
+              <h3 class="font-semibold text-gray-900 mb-1">Función Memorial</h3>
+              <p class="text-sm text-gray-600">Permitir que las creaciones de IA se guarden para mejorar el sistema</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer ml-4">
+              <input type="checkbox" id="memorial-toggle" class="sr-only peer" checked onchange="toggleMemorial()">
+              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#FE2C55]"></div>
+            </label>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -3021,6 +3108,35 @@ firebase.auth().onAuthStateChanged(user => {
     document.getElementById('note-content').value = text;
     document.getElementById('ai-suggestions').classList.add('hidden');
     document.getElementById('char-counter').textContent = (200 - text.length) + ' characters remaining';
+  }
+
+  // Funciones para Zenvio AI Info
+  function openZenvioAIInfo() {
+    document.getElementById('zenvio-ai-info-modal').classList.remove('hidden');
+  }
+
+  function closeZenvioAIInfo() {
+    document.getElementById('zenvio-ai-info-modal').classList.add('hidden');
+  }
+
+  // Funciones para Memorial
+  function openMemorialSection() {
+    document.getElementById('zenvio-ai-info-modal').classList.add('hidden');
+    document.getElementById('memorial-modal').classList.remove('hidden');
+  }
+
+  function closeMemorialSection() {
+    document.getElementById('memorial-modal').classList.add('hidden');
+  }
+
+  function toggleMemorial() {
+    const toggle = document.getElementById('memorial-toggle');
+    const isEnabled = toggle.checked;
+    
+    localStorage.setItem('memorialEnabled', isEnabled);
+    
+    const message = isEnabled ? 'Memorial activado' : 'Memorial desactivado';
+    alert(message);
   }
 
   // Función de diagnóstico para el generador de imágenes
