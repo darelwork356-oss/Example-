@@ -1742,10 +1742,6 @@ setInterval(checkScheduledChapters, 60000);
           </svg>
         </button>
 
-
-
-
-
         <!-- Consigue Verificarte -->
         <button onclick="openVerificationModal(); closeMenuModal();" class="w-full bg-white border border-blue-200 p-4 rounded-xl hover:bg-blue-50 transition-colors flex items-center">
           <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
@@ -1758,38 +1754,6 @@ setInterval(checkScheduledChapters, 60000);
             <p class="text-sm text-blue-500">Obtén tu insignia de verificación</p>
           </div>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-
-        <!-- Cerrar Sesión -->
-        <button onclick="signOutUser(); closeMenuModal();" class="w-full bg-white border border-red-200 p-4 rounded-xl hover:bg-red-50 transition-colors flex items-center">
-          <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-          </div>
-          <div class="text-left">
-            <h3 class="font-semibold text-red-600">Cerrar Sesión</h3>
-            <p class="text-sm text-red-500">Salir de tu cuenta</p>
-          </div>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-400 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-
-        <!-- Generar Imágenes IA -->
-        <button onclick="openImageGenerator(); closeMenuModal();" class="w-full bg-white border border-purple-200 p-4 rounded-xl hover:bg-purple-50 transition-colors flex items-center">
-          <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-          </div>
-          <div class="text-left">
-            <h3 class="font-semibold text-purple-600">Generar Imágenes IA</h3>
-            <p class="text-sm text-purple-500">Crea imágenes con inteligencia artificial</p>
-          </div>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-400 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
           </svg>
         </button>
@@ -1807,6 +1771,22 @@ setInterval(checkScheduledChapters, 60000);
             <p class="text-sm text-gray-500">Privacidad y gestión de información</p>
           </div>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+
+        <!-- Cerrar Sesión -->
+        <button onclick="signOutUser(); closeMenuModal();" class="w-full bg-white border border-red-200 p-4 rounded-xl hover:bg-red-50 transition-colors flex items-center">
+          <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+          </div>
+          <div class="text-left">
+            <h3 class="font-semibold text-red-600">Cerrar Sesión</h3>
+            <p class="text-sm text-red-500">Salir de tu cuenta</p>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-400 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
           </svg>
         </button>
@@ -2626,11 +2606,6 @@ firebase.auth().onAuthStateChanged(user => {
       </button>
       <h1 class="text-xl font-bold">Community</h1>
       <div class="flex items-center space-x-2">
-        <button onclick="openImageGenerator()" class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center hover:bg-purple-200 transition" title="Generar Imágenes IA">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-        </button>
         <button onclick="openNoteCreation()" class="w-10 h-10 rounded-full bg-[#FE2C55] flex items-center justify-center hover:bg-red-600 transition">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
