@@ -1921,23 +1921,16 @@ setInterval(checkScheduledChapters, 60000);
         <h4 class="font-semibold text-gray-900 mb-3 text-sm">Ideas rápidas</h4>
         <div class="grid grid-cols-2 gap-2">
           <button onclick="document.getElementById('image-prompt').value='Un dragón mágico volando sobre un castillo medieval'" class="text-left p-2 bg-white rounded-lg border border-gray-200 hover:border-[#FE2C55] transition-colors text-xs">
-            🐉 Dragón mágico
+            Dragón mágico
           </button>
           <button onclick="document.getElementById('image-prompt').value='Un paisaje futurista con ciudades flotantes'" class="text-left p-2 bg-white rounded-lg border border-gray-200 hover:border-[#FE2C55] transition-colors text-xs">
-            🌆 Ciudad futurista
+            Ciudad futurista
           </button>
           <button onclick="document.getElementById('image-prompt').value='Un bosque encantado con criaturas mágicas'" class="text-left p-2 bg-white rounded-lg border border-gray-200 hover:border-[#FE2C55] transition-colors text-xs">
-            🌲 Bosque encantado
+            Bosque encantado
           </button>
           <button onclick="document.getElementById('image-prompt').value='Un astronauta explorando un planeta alienígena'" class="text-left p-2 bg-white rounded-lg border border-gray-200 hover:border-[#FE2C55] transition-colors text-xs">
-            🚀 Explorador espacial
-          </button>
-        </div>
-        
-        <!-- Botón de diagnóstico temporal -->
-        <div class="mt-4 pt-4 border-t border-gray-200">
-          <button onclick="testImageGeneration()" class="w-full text-xs bg-yellow-100 text-yellow-800 p-2 rounded-lg hover:bg-yellow-200 transition-colors">
-            🔍 Ejecutar diagnóstico (para desarrolladores)
+            Explorador espacial
           </button>
         </div>
       </div>
@@ -2449,11 +2442,15 @@ firebase.auth().onAuthStateChanged(user => {
               <input type="file" id="note-image" accept="image/*" class="hidden" onchange="handleNoteImagePreview(event)">
             </label>
             
-            <button onclick="openImageGenerator()" class="flex items-center space-x-2 text-gray-600 hover:text-purple-600 transition-colors">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-              </svg>
-              <span class="text-sm">IA</span>
+            <button onclick="openImageGenerator()" class="flex items-center space-x-2 text-gray-600 hover:text-purple-600 transition-colors group">
+              <div class="relative">
+                <svg class="w-5 h-5 transform group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <circle cx="11" cy="11" r="8" stroke-width="2" class="group-hover:stroke-purple-500 transition-colors"/>
+                  <path d="m21 21-4.35-4.35" stroke-width="2" class="group-hover:stroke-purple-500 transition-colors"/>
+                </svg>
+                <div class="absolute inset-0 rounded-full bg-purple-400 opacity-0 group-hover:opacity-20 group-hover:animate-ping"></div>
+              </div>
+              <span class="text-sm font-medium">IA</span>
             </button>
             
             <button onclick="getAISuggestions()" class="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors" id="ai-suggest-btn">
