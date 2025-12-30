@@ -1947,70 +1947,122 @@ setInterval(checkScheduledChapters, 60000);
 
 
 
-<!-- MODAL DE QR DEL USUARIO -->
+<!-- MODAL DE QR DEL USUARIO ESTILO INSTAGRAM -->
 <div id="qr-modal" class="fixed inset-0 z-50 hidden bg-white">
   <div class="h-full flex flex-col">
-    <!-- Header -->
+    <!-- Header estilo Instagram -->
     <div class="sticky top-0 bg-white border-b border-gray-200 p-4 z-10">
       <div class="flex items-center justify-between">
-        <button onclick="closeQRModal()" class="text-gray-700 hover:text-[#FE2C55] transition-colors">
+        <button onclick="closeQRModal()" class="text-gray-700 hover:text-gray-900 transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-        <h1 class="text-lg font-semibold text-gray-900">Mi Código QR</h1>
-        <button onclick="shareQR()" class="text-[#FE2C55] font-semibold hover:text-red-600 transition-colors">
+        <h1 class="text-lg font-semibold text-gray-900">Código QR</h1>
+        <button onclick="shareQR()" class="text-[#0095f6] font-semibold hover:text-blue-700 transition-colors">
           Compartir
         </button>
       </div>
     </div>
 
-    <!-- Contenido -->
-    <div class="flex-1 flex flex-col items-center justify-center p-8">
-      <div class="text-center mb-8">
-        <div class="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-[#FE2C55] to-[#ff6b7a] rounded-full flex items-center justify-center">
-          <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
-          </svg>
-        </div>
-        <h2 class="text-2xl font-bold text-gray-900 mb-2">Comparte tu perfil</h2>
-        <p class="text-gray-600">Otros pueden escanear este código para seguirte</p>
+    <!-- Contenido estilo Instagram -->
+    <div class="flex-1 flex flex-col items-center justify-center p-6">
+      <!-- Avatar y nombre -->
+      <div class="text-center mb-6">
+        <img id="qr-user-avatar" src="https://via.placeholder.com/80" class="w-20 h-20 rounded-full mx-auto mb-3 border-2 border-gray-200">
+        <h2 id="qr-username" class="text-xl font-semibold text-gray-900 mb-1">@usuario</h2>
+        <p class="text-gray-500 text-sm">Comparte tu perfil con otros</p>
       </div>
 
-      <!-- QR Code Container -->
-      <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 mb-8">
-        <div id="qr-code" class="w-64 h-64 flex items-center justify-center bg-gray-50 rounded-xl">
+      <!-- QR Code Container estilo Instagram -->
+      <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-200 mb-6">
+        <div id="qr-code" class="w-56 h-56 flex items-center justify-center bg-gray-50 rounded-2xl">
           <div class="text-center">
-            <div class="animate-spin w-8 h-8 border-2 border-[#FE2C55] border-t-transparent rounded-full mx-auto mb-2"></div>
-            <p class="text-sm text-gray-500">Generando QR...</p>
+            <div class="animate-spin w-6 h-6 border-2 border-gray-400 border-t-transparent rounded-full mx-auto mb-2"></div>
+            <p class="text-xs text-gray-500">Generando...</p>
           </div>
         </div>
       </div>
 
-      <!-- Información del usuario -->
-      <div class="text-center">
-        <img id="qr-user-avatar" src="https://via.placeholder.com/60" class="w-15 h-15 rounded-full mx-auto mb-3 border-2 border-[#FE2C55]">
-        <h3 id="qr-username" class="text-lg font-semibold text-gray-900">@usuario</h3>
-        <p class="text-sm text-gray-500">Zenvio Profile</p>
-      </div>
+      <!-- Texto explicativo -->
+      <p class="text-center text-gray-600 text-sm mb-8 max-w-xs leading-relaxed">
+        Las personas pueden escanear este código para ver tu perfil
+      </p>
     </div>
 
-    <!-- Botones de acción -->
-    <div class="p-4 border-t border-gray-200">
+    <!-- Botones de acción estilo Instagram -->
+    <div class="p-4 space-y-3">
+      <button onclick="openQRScanner()" class="w-full bg-[#0095f6] text-white py-3 rounded-xl font-semibold hover:bg-blue-600 transition-colors flex items-center justify-center">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+        </svg>
+        Escanear código QR
+      </button>
+      
       <div class="flex space-x-3">
-        <button onclick="downloadQR()" class="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors flex items-center justify-center">
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        <button onclick="downloadQR()" class="flex-1 bg-gray-100 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-200 transition-colors flex items-center justify-center">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
           </svg>
-          Descargar
+          Guardar
         </button>
-        <button onclick="shareQR()" class="flex-1 bg-[#FE2C55] text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition-colors flex items-center justify-center">
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <button onclick="shareQR()" class="flex-1 bg-gray-100 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-200 transition-colors flex items-center justify-center">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
           </svg>
           Compartir
         </button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE ESCÁNER QR -->
+<div id="qr-scanner-modal" class="fixed inset-0 z-50 hidden bg-black">
+  <div class="h-full flex flex-col">
+    <!-- Header del escáner -->
+    <div class="sticky top-0 bg-black p-4 z-10">
+      <div class="flex items-center justify-between">
+        <button onclick="closeQRScanner()" class="text-white hover:text-gray-300 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <h1 class="text-lg font-semibold text-white">Escanear QR</h1>
+        <div class="w-6"></div>
+      </div>
+    </div>
+
+    <!-- Área de la cámara -->
+    <div class="flex-1 relative">
+      <video id="qr-video" class="w-full h-full object-cover" autoplay muted playsinline></video>
+      
+      <!-- Overlay del escáner -->
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="relative">
+          <!-- Marco del escáner -->
+          <div class="w-64 h-64 border-2 border-white rounded-2xl relative">
+            <!-- Esquinas animadas -->
+            <div class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-[#0095f6] rounded-tl-2xl"></div>
+            <div class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-[#0095f6] rounded-tr-2xl"></div>
+            <div class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-[#0095f6] rounded-bl-2xl"></div>
+            <div class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-[#0095f6] rounded-br-2xl"></div>
+            
+            <!-- Línea de escaneo animada -->
+            <div class="absolute inset-x-0 top-1/2 h-0.5 bg-[#0095f6] animate-pulse"></div>
+          </div>
+          
+          <!-- Texto instructivo -->
+          <p class="text-white text-center mt-6 text-sm">Coloca el código QR dentro del marco</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón para activar cámara -->
+    <div class="p-4">
+      <button id="start-camera-btn" onclick="startQRCamera()" class="w-full bg-[#0095f6] text-white py-3 rounded-xl font-semibold hover:bg-blue-600 transition-colors">
+        Activar cámara
+      </button>
     </div>
   </div>
 </div>
@@ -2036,7 +2088,7 @@ setInterval(checkScheduledChapters, 60000);
       const userData = snapshot.val();
       if (userData) {
         document.getElementById('qr-username').textContent = '@' + (userData.username || 'usuario');
-        document.getElementById('qr-user-avatar').src = userData.profileImage || 'https://via.placeholder.com/60';
+        document.getElementById('qr-user-avatar').src = userData.profileImage || 'https://via.placeholder.com/80';
       }
     });
     
@@ -2045,9 +2097,9 @@ setInterval(checkScheduledChapters, 60000);
     const qrContainer = document.getElementById('qr-code');
     
     // Usar API gratuita de QR
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent(profileUrl)}`;
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=224x224&data=${encodeURIComponent(profileUrl)}`;
     
-    qrContainer.innerHTML = `<img src="${qrUrl}" alt="QR Code" class="w-full h-full rounded-xl">`;
+    qrContainer.innerHTML = `<img src="${qrUrl}" alt="QR Code" class="w-full h-full rounded-2xl">`;
   }
   
   function downloadQR() {
@@ -2077,6 +2129,45 @@ setInterval(checkScheduledChapters, 60000);
         alert('Enlace copiado al portapapeles');
       });
     }
+  }
+  
+  // Funciones del escáner QR
+  function openQRScanner() {
+    document.getElementById('qr-scanner-modal').classList.remove('hidden');
+  }
+  
+  function closeQRScanner() {
+    const video = document.getElementById('qr-video');
+    if (video.srcObject) {
+      video.srcObject.getTracks().forEach(track => track.stop());
+    }
+    document.getElementById('qr-scanner-modal').classList.add('hidden');
+  }
+  
+  function startQRCamera() {
+    const video = document.getElementById('qr-video');
+    const startBtn = document.getElementById('start-camera-btn');
+    
+    navigator.mediaDevices.getUserMedia({ 
+      video: { 
+        facingMode: 'environment',
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
+      } 
+    })
+    .then(stream => {
+      video.srcObject = stream;
+      startBtn.style.display = 'none';
+      
+      // Simular detección de QR (en una implementación real usarías una librería como jsQR)
+      setTimeout(() => {
+        alert('Funcionalidad de escaneo QR en desarrollo. Por ahora puedes compartir tu código QR.');
+      }, 3000);
+    })
+    .catch(err => {
+      console.error('Error accessing camera:', err);
+      alert('No se pudo acceder a la cámara');
+    });
   }
 </script>
 
