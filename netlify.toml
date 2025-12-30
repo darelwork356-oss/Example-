@@ -1,6 +1,10 @@
 [build]
   functions = "netlify/functions"
   publish = "."
+  command = "npm --prefix netlify/functions install"
+
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
 
 [[redirects]]
   from = "/api/*"
