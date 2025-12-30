@@ -381,34 +381,6 @@ body {
     box-shadow: 0 0 0 10px rgba(254, 44, 85, 0);
   }
   100% {
-
-function saveScheduledChapter(chapterId, publishDate) {
-  firebase.database().ref('scheduledChapters/' + chapterId).set({
-    publishDate: publishDate,
-    status: 'pending'
-  });
-}
-
-function checkScheduledChapters() {
-  const now = new Date().getTime();
-  firebase.database().ref('scheduledChapters').once('value', snapshot => {
-    snapshot.forEach(child => {
-      const scheduled = child.val();
-      if (scheduled.status === 'pending' && new Date(scheduled.publishDate).getTime() <= now) {
-        // Publicar el capítulo
-        firebase.database().ref('stories/' + currentEditingStory.id + '/chapters/' + child.key).update({
-          status: 'published'
-        });
-        // Actualizar estado del capítulo programado
-        child.ref.update({ status: 'published' });
-      }
-    });
-  });
-}
-
-// Verificar capítulos programados cada minuto
-setInterval(checkScheduledChapters, 60000);
-
     box-shadow: 0 0 0 0 rgba(16, 163, 127, 0);
   }
 }
@@ -1010,6 +982,36 @@ setInterval(checkScheduledChapters, 60000);
     /*************** FIN NUEVAS FUNCIONES ***********************/
   </script>
 </head>
+
+<script>
+// Funciones para capítulos programados
+function saveScheduledChapter(chapterId, publishDate) {
+  firebase.database().ref('scheduledChapters/' + chapterId).set({
+    publishDate: publishDate,
+    status: 'pending'
+  });
+}
+
+function checkScheduledChapters() {
+  const now = new Date().getTime();
+  firebase.database().ref('scheduledChapters').once('value', snapshot => {
+    snapshot.forEach(child => {
+      const scheduled = child.val();
+      if (scheduled.status === 'pending' && new Date(scheduled.publishDate).getTime() <= now) {
+        // Publicar el capítulo
+        firebase.database().ref('stories/' + currentEditingStory.id + '/chapters/' + child.key).update({
+          status: 'published'
+        });
+        // Actualizar estado del capítulo programado
+        child.ref.update({ status: 'published' });
+      }
+    });
+  });
+}
+
+// Verificar capítulos programados cada minuto
+setInterval(checkScheduledChapters, 60000);
+</script>
 
 <!-- MODAL DE NOTIFICACIONES -->
 <div id="notifications-modal" class="fixed inset-0 z-[9999] hidden bg-white">
@@ -1722,6 +1724,23 @@ setInterval(checkScheduledChapters, 60000);
       
       <!-- Lista de opciones del menú -->
       <div class="space-y-4">
+        <!-- Buscador de Secciones -->
+        <div class="w-full bg-white border border-gray-200 p-4 rounded-xl">
+          <div class="flex items-center space-x-3 mb-3">
+            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <div class="text-left">
+              <h3 class="font-semibold text-gray-900">Buscar Secciones</h3>
+              <p class="text-sm text-gray-500">Encuentra rápidamente lo que buscas</p>
+            </div>
+          </div>
+          <input id="section-search" type="text" placeholder="Buscar sección..." class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" oninput="searchSections()">
+          <div id="search-results" class="mt-3 space-y-2 hidden"></div>
+        </div>
+
         <!-- Soporte -->
         <button onclick="openSupportModal(); closeMenuModal();" class="w-full bg-white border border-gray-200 p-4 rounded-xl hover:bg-gray-50 transition-colors flex items-center">
           <div class="w-12 h-12 bg-[#FE2C55] bg-opacity-10 rounded-full flex items-center justify-center mr-4">
@@ -1732,6 +1751,38 @@ setInterval(checkScheduledChapters, 60000);
           <div class="text-left">
             <h3 class="font-semibold text-gray-900">Centro de Soporte</h3>
             <p class="text-sm text-gray-500">Obtén ayuda y reporta problemas</p>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+
+        <!-- Generar Imágenes IA -->
+        <button onclick="openImageGenerator(); closeMenuModal();" class="w-full bg-white border border-purple-200 p-4 rounded-xl hover:bg-purple-50 transition-colors flex items-center">
+          <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <div class="text-left">
+            <h3 class="font-semibold text-purple-600">Generar Imágenes IA</h3>
+            <p class="text-sm text-purple-500">Crea imágenes con inteligencia artificial</p>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-400 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+
+        <!-- Información y Memoria -->
+        <button onclick="openMemoriaSection(); closeMenuModal();" class="w-full bg-white border border-gray-200 p-4 rounded-xl hover:bg-gray-50 transition-colors flex items-center">
+          <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div class="text-left">
+            <h3 class="font-semibold text-gray-900">Información y Memoria</h3>
+            <p class="text-sm text-gray-500">Configuración de datos y privacidad</p>
           </div>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -2717,15 +2768,34 @@ firebase.auth().onAuthStateChanged(user => {
           <h2 class="text-xl font-bold mb-2">Zenvio AI</h2>
           <p class="text-sm opacity-90">Inteligencia artificial para potenciar tu creatividad</p>
         </div>
-        <button onclick="openMemorialSection()" class="w-full bg-gray-100 hover:bg-gray-200 transition-colors p-4 rounded-2xl flex items-center justify-between">
+        <!-- Generador de Imágenes IA -->
+        <button onclick="openImageGenerator()" class="w-full bg-purple-100 hover:bg-purple-200 transition-colors p-4 rounded-2xl flex items-center justify-between">
           <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
-              <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
             <div class="text-left">
-              <h3 class="font-semibold text-gray-900">Memorial</h3>
+              <h3 class="font-semibold text-gray-900">Generar Imágenes</h3>
+              <p class="text-sm text-gray-600">Crea imágenes con inteligencia artificial</p>
+            </div>
+          </div>
+          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+        
+        <!-- Información y Memoria -->
+        <button onclick="openMemoriaSection()" class="w-full bg-gray-100 hover:bg-gray-200 transition-colors p-4 rounded-2xl flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div class="text-left">
+              <h3 class="font-semibold text-gray-900">Información y Memoria</h3>
               <p class="text-sm text-gray-600">Configuración de datos y privacidad</p>
             </div>
           </div>
@@ -2738,36 +2808,44 @@ firebase.auth().onAuthStateChanged(user => {
   </div>
 </div>
 
-<!-- MODAL DE MEMORIAL -->
-<div id="memorial-modal" class="fixed inset-0 z-50 hidden bg-white">
+<!-- MODAL DE MEMORIA -->
+<div id="memoria-modal" class="fixed inset-0 z-50 hidden bg-white">
   <div class="h-full flex flex-col">
     <div class="sticky top-0 bg-white border-b border-gray-200 p-4 z-10">
       <div class="flex items-center justify-between">
-        <button onclick="closeMemorialSection()" class="text-gray-700 hover:text-[#FE2C55] transition-colors">
+        <button onclick="closeMemoriaSection()" class="text-gray-700 hover:text-[#FE2C55] transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <h1 class="text-lg font-semibold text-gray-900">Memorial</h1>
+        <h1 class="text-lg font-semibold text-gray-900">Información y Memoria</h1>
         <div class="w-6"></div>
       </div>
     </div>
     <div class="flex-1 overflow-y-auto p-4">
       <div class="max-w-md mx-auto space-y-6">
+        <div class="bg-blue-50 rounded-2xl p-6 text-center">
+          <h2 class="text-xl font-bold mb-4 text-gray-900">Información de IA</h2>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            Aquí puedes encontrar información sobre cómo funciona la IA en Zenvio y configurar tus preferencias de memoria.
+          </p>
+        </div>
+        
         <div class="bg-gray-50 rounded-2xl p-6 text-center">
-          <h2 class="text-xl font-bold mb-4 text-gray-900">Memorial de IA</h2>
+          <h2 class="text-xl font-bold mb-4 text-gray-900">Memoria de IA</h2>
           <p class="text-gray-600 text-sm leading-relaxed">
             Todas las creaciones o registros de IA que tengas quedarán guardadas anónimas aquí para entrenamiento de IA
           </p>
         </div>
+        
         <div class="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
           <div class="flex items-center justify-between">
             <div class="flex-1">
-              <h3 class="font-semibold text-gray-900 mb-1">Función Memorial</h3>
+              <h3 class="font-semibold text-gray-900 mb-1">Función Memoria</h3>
               <p class="text-sm text-gray-600">Permitir que las creaciones de IA se guarden para mejorar el sistema</p>
             </div>
             <label class="relative inline-flex items-center cursor-pointer ml-4">
-              <input type="checkbox" id="memorial-toggle" class="sr-only peer" checked onchange="toggleMemorial()">
+              <input type="checkbox" id="memoria-toggle" class="sr-only peer" checked onchange="toggleMemoria()">
               <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#FE2C55]"></div>
             </label>
           </div>
@@ -3119,24 +3197,65 @@ firebase.auth().onAuthStateChanged(user => {
     document.getElementById('zenvio-ai-info-modal').classList.add('hidden');
   }
 
-  // Funciones para Memorial
-  function openMemorialSection() {
+  // Funciones para Memoria
+  function openMemoriaSection() {
     document.getElementById('zenvio-ai-info-modal').classList.add('hidden');
-    document.getElementById('memorial-modal').classList.remove('hidden');
+    document.getElementById('memoria-modal').classList.remove('hidden');
   }
 
-  function closeMemorialSection() {
-    document.getElementById('memorial-modal').classList.add('hidden');
+  function closeMemoriaSection() {
+    document.getElementById('memoria-modal').classList.add('hidden');
   }
 
-  function toggleMemorial() {
-    const toggle = document.getElementById('memorial-toggle');
+  function toggleMemoria() {
+    const toggle = document.getElementById('memoria-toggle');
     const isEnabled = toggle.checked;
     
-    localStorage.setItem('memorialEnabled', isEnabled);
+    localStorage.setItem('memoriaEnabled', isEnabled);
     
-    const message = isEnabled ? 'Memorial activado' : 'Memorial desactivado';
+    const message = isEnabled ? 'Memoria activada' : 'Memoria desactivada';
     alert(message);
+  }
+
+  // Función de búsqueda de secciones
+  function searchSections() {
+    const searchTerm = document.getElementById('section-search').value.toLowerCase();
+    const resultsDiv = document.getElementById('search-results');
+    
+    if (searchTerm.length < 2) {
+      resultsDiv.classList.add('hidden');
+      return;
+    }
+    
+    const sections = [
+      { name: 'Centro de Soporte', action: 'openSupportModal(); closeMenuModal();', icon: '🆘' },
+      { name: 'Verificación', action: 'openVerificationModal(); closeMenuModal();', icon: '✅' },
+      { name: 'Generar Imágenes IA', action: 'openImageGenerator(); closeMenuModal();', icon: '🎨' },
+      { name: 'Información y Memoria', action: 'openMemoriaSection(); closeMenuModal();', icon: 'ℹ️' },
+      { name: 'Crear Historia', action: 'openStoryCreation(); closeMenuModal();', icon: '📚' },
+      { name: 'Transmitir en Vivo', action: 'openLiveStreamModal(); closeMenuModal();', icon: '📹' },
+      { name: 'Perfil', action: 'openProfile(); closeMenuModal();', icon: '👤' },
+      { name: 'Buscar', action: 'openSearch(); closeMenuModal();', icon: '🔍' },
+      { name: 'Comunidad', action: 'openCommunity(); closeMenuModal();', icon: '👥' },
+      { name: 'Cerrar Sesión', action: 'signOutUser(); closeMenuModal();', icon: '🚪' }
+    ];
+    
+    const filteredSections = sections.filter(section => 
+      section.name.toLowerCase().includes(searchTerm)
+    );
+    
+    if (filteredSections.length > 0) {
+      resultsDiv.innerHTML = filteredSections.map(section => `
+        <button onclick="${section.action}" class="w-full text-left p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors flex items-center">
+          <span class="text-lg mr-3">${section.icon}</span>
+          <span class="font-medium text-gray-900">${section.name}</span>
+        </button>
+      `).join('');
+      resultsDiv.classList.remove('hidden');
+    } else {
+      resultsDiv.innerHTML = '<p class="text-gray-500 text-sm p-3">No se encontraron secciones</p>';
+      resultsDiv.classList.remove('hidden');
+    }
   }
 
   // Función de diagnóstico para el generador de imágenes
