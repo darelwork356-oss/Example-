@@ -1947,10 +1947,138 @@ setInterval(checkScheduledChapters, 60000);
 
 
 
-<!-- MODAL DE HISTORIA BLOQUEADA -->
-<div id="story-blocked-modal">
-  <img src="https://ideogram.ai/g/hJJQb0VZSQicLDiADD7CZQ/3" alt="Historia Bloqueada" class="w-3/4 h-auto">
+<!-- MODAL DE QR DEL USUARIO -->
+<div id="qr-modal" class="fixed inset-0 z-50 hidden bg-white">
+  <div class="h-full flex flex-col">
+    <!-- Header -->
+    <div class="sticky top-0 bg-white border-b border-gray-200 p-4 z-10">
+      <div class="flex items-center justify-between">
+        <button onclick="closeQRModal()" class="text-gray-700 hover:text-[#FE2C55] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <h1 class="text-lg font-semibold text-gray-900">Mi Código QR</h1>
+        <button onclick="shareQR()" class="text-[#FE2C55] font-semibold hover:text-red-600 transition-colors">
+          Compartir
+        </button>
+      </div>
+    </div>
+
+    <!-- Contenido -->
+    <div class="flex-1 flex flex-col items-center justify-center p-8">
+      <div class="text-center mb-8">
+        <div class="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-[#FE2C55] to-[#ff6b7a] rounded-full flex items-center justify-center">
+          <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+          </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">Comparte tu perfil</h2>
+        <p class="text-gray-600">Otros pueden escanear este código para seguirte</p>
+      </div>
+
+      <!-- QR Code Container -->
+      <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 mb-8">
+        <div id="qr-code" class="w-64 h-64 flex items-center justify-center bg-gray-50 rounded-xl">
+          <div class="text-center">
+            <div class="animate-spin w-8 h-8 border-2 border-[#FE2C55] border-t-transparent rounded-full mx-auto mb-2"></div>
+            <p class="text-sm text-gray-500">Generando QR...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Información del usuario -->
+      <div class="text-center">
+        <img id="qr-user-avatar" src="https://via.placeholder.com/60" class="w-15 h-15 rounded-full mx-auto mb-3 border-2 border-[#FE2C55]">
+        <h3 id="qr-username" class="text-lg font-semibold text-gray-900">@usuario</h3>
+        <p class="text-sm text-gray-500">Zenvio Profile</p>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="p-4 border-t border-gray-200">
+      <div class="flex space-x-3">
+        <button onclick="downloadQR()" class="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors flex items-center justify-center">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          Descargar
+        </button>
+        <button onclick="shareQR()" class="flex-1 bg-[#FE2C55] text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition-colors flex items-center justify-center">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+          </svg>
+          Compartir
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script>
+  // Funciones para el QR
+  function openQRModal() {
+    const modal = document.getElementById('qr-modal');
+    modal.classList.remove('hidden');
+    generateUserQR();
+  }
+  
+  function closeQRModal() {
+    document.getElementById('qr-modal').classList.add('hidden');
+  }
+  
+  function generateUserQR() {
+    const user = firebase.auth().currentUser;
+    if (!user) return;
+    
+    // Actualizar info del usuario
+    firebase.database().ref('users/' + user.uid).once('value').then(snapshot => {
+      const userData = snapshot.val();
+      if (userData) {
+        document.getElementById('qr-username').textContent = '@' + (userData.username || 'usuario');
+        document.getElementById('qr-user-avatar').src = userData.profileImage || 'https://via.placeholder.com/60';
+      }
+    });
+    
+    // Generar QR con URL del perfil
+    const profileUrl = `${window.location.origin}?profile=${user.uid}`;
+    const qrContainer = document.getElementById('qr-code');
+    
+    // Usar API gratuita de QR
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent(profileUrl)}`;
+    
+    qrContainer.innerHTML = `<img src="${qrUrl}" alt="QR Code" class="w-full h-full rounded-xl">`;
+  }
+  
+  function downloadQR() {
+    const qrImg = document.querySelector('#qr-code img');
+    if (qrImg) {
+      const link = document.createElement('a');
+      link.download = 'mi-perfil-qr.png';
+      link.href = qrImg.src;
+      link.click();
+    }
+  }
+  
+  function shareQR() {
+    const user = firebase.auth().currentUser;
+    if (!user) return;
+    
+    const profileUrl = `${window.location.origin}?profile=${user.uid}`;
+    
+    if (navigator.share) {
+      navigator.share({
+        title: 'Mi perfil en Zenvio',
+        text: 'Sígueme en Zenvio',
+        url: profileUrl
+      });
+    } else {
+      navigator.clipboard.writeText(profileUrl).then(() => {
+        alert('Enlace copiado al portapapeles');
+      });
+    }
+  }
+</script>
 
 <body class="bg-white font-sans text-[#161823]" style="overflow: hidden;">
   
@@ -3429,6 +3557,10 @@ firebase.auth().onAuthStateChanged(user => {
           <span id="profile-following" class="font-bold text-[#FE2C55] text-xl">0</span>
           <p class="text-sm text-gray-600">Siguiendo</p>
         </button>
+        <button onclick="openQRModal()" class="text-center focus:outline-none hover:opacity-80 transition-opacity">
+          <span class="font-bold text-[#FE2C55] text-xl">QR</span>
+          <p class="text-sm text-gray-600">Código QR</p>
+        </button>
       </div>
 
 
@@ -3506,6 +3638,10 @@ firebase.auth().onAuthStateChanged(user => {
               <button onclick="openMyFollowingModal()" class="text-center focus:outline-none hover:opacity-80 transition-opacity">
                 <div id="profile-following-desktop" class="text-2xl font-bold text-white">0</div>
                 <div class="text-white text-opacity-80 text-sm">siguiendo</div>
+              </button>
+              <button onclick="openQRModal()" class="text-center focus:outline-none hover:opacity-80 transition-opacity">
+                <div class="text-2xl font-bold text-white">QR</div>
+                <div class="text-white text-opacity-80 text-sm">código</div>
               </button>
               <div class="text-center">
                 <div id="profile-stories-count-desktop" class="text-2xl font-bold text-white">0</div>
