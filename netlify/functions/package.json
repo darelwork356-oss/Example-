@@ -1,0 +1,8 @@
+{
+  "name": "zenvio-functions",
+  "version": "1.0.0",
+  "dependencies": {
+    "pg": "^8.11.3",
+    "aws-sdk": "^2.1498.0"
+  }
+}
