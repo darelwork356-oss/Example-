@@ -2746,21 +2746,21 @@ firebase.auth().onAuthStateChanged(user => {
         <!-- Paso 1: Consentimiento -->
         <div id="consent-step" class="space-y-6">
           <div class="text-center">
-            <div class="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center">
-              <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-20 h-20 mx-auto mb-4 bg-[#FE2C55] rounded-full flex items-center justify-center">
+              <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
-            <h2 class="text-xl font-bold text-gray-900 mb-2">Exportación de Datos</h2>
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Exportación de Datos</h2>
             <p class="text-gray-600">Solicita una copia de toda tu información</p>
           </div>
           
-          <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <h3 class="font-semibold text-yellow-800 mb-2">Bioconsentimiento Requerido</h3>
-            <p class="text-sm text-yellow-700 leading-relaxed">
+          <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+            <h3 class="font-semibold text-gray-900 mb-2">Consentimiento Requerido</h3>
+            <p class="text-sm text-gray-700 leading-relaxed">
               Al solicitar la exportación de tus datos, confirmas que:
             </p>
-            <ul class="text-sm text-yellow-700 mt-2 space-y-1">
+            <ul class="text-sm text-gray-700 mt-2 space-y-1">
               <li>• Eres el titular legítimo de esta cuenta</li>
               <li>• Comprendes que recibirás TODOS tus datos</li>
               <li>• Los datos incluyen información personal sensible</li>
@@ -2768,55 +2768,55 @@ firebase.auth().onAuthStateChanged(user => {
             </ul>
           </div>
           
-          <div class="space-y-3">
-            <label class="flex items-start space-x-3">
-              <input type="checkbox" id="consent-checkbox" class="mt-1">
+          <div class="space-y-4">
+            <label class="flex items-start space-x-3 cursor-pointer">
+              <input type="checkbox" id="consent-checkbox" class="mt-1 w-4 h-4 text-[#FE2C55] border-gray-300 rounded focus:ring-[#FE2C55]">
               <span class="text-sm text-gray-700">
                 Acepto los términos y condiciones para la exportación de mis datos personales
               </span>
             </label>
             
-            <label class="flex items-start space-x-3">
-              <input type="checkbox" id="responsibility-checkbox" class="mt-1">
+            <label class="flex items-start space-x-3 cursor-pointer">
+              <input type="checkbox" id="responsibility-checkbox" class="mt-1 w-4 h-4 text-[#FE2C55] border-gray-300 rounded focus:ring-[#FE2C55]">
               <span class="text-sm text-gray-700">
                 Entiendo que soy responsable del manejo seguro de mis datos exportados
               </span>
             </label>
           </div>
           
-          <button onclick="startDataExport()" id="start-export-btn" class="w-full bg-gray-300 text-gray-500 py-3 rounded-lg font-semibold cursor-not-allowed" disabled>
-            Iniciar Exportación
+          <button onclick="startDataExport()" id="start-export-btn" class="w-full bg-gray-300 text-gray-500 py-4 rounded-lg font-semibold cursor-not-allowed transition-all" disabled>
+            Acepta los términos para continuar
           </button>
         </div>
         
         <!-- Paso 2: Procesando -->
         <div id="processing-step" class="hidden space-y-6 text-center">
-          <div class="w-16 h-16 mx-auto mb-4 bg-[#FE2C55] rounded-full flex items-center justify-center">
-            <svg class="animate-spin w-8 h-8 text-white" fill="none" viewBox="0 0 24 24">
+          <div class="w-20 h-20 mx-auto mb-4 bg-[#FE2C55] rounded-full flex items-center justify-center">
+            <svg class="animate-spin w-10 h-10 text-white" fill="none" viewBox="0 0 24 24">
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
           </div>
           
-          <h2 class="text-xl font-bold text-gray-900">Preparando tus datos</h2>
+          <h2 class="text-2xl font-bold text-gray-900">Preparando tus datos</h2>
           <p class="text-gray-600">Recopilando toda tu información...</p>
           
-          <div class="bg-blue-50 rounded-lg p-4">
-            <div class="text-4xl font-bold text-[#FE2C55] mb-2" id="countdown-timer">2:00</div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <div class="text-5xl font-bold text-[#FE2C55] mb-2" id="countdown-timer">2:00</div>
             <p class="text-sm text-gray-600">Tiempo estimado restante</p>
           </div>
           
-          <div class="space-y-2 text-left">
+          <div class="space-y-3 text-left">
             <div class="flex items-center text-sm">
-              <div class="w-4 h-4 bg-green-500 rounded-full mr-3"></div>
+              <div class="w-4 h-4 bg-[#FE2C55] rounded-full mr-3"></div>
               <span class="text-gray-700">Información de perfil</span>
             </div>
             <div class="flex items-center text-sm">
-              <div class="w-4 h-4 bg-green-500 rounded-full mr-3"></div>
+              <div class="w-4 h-4 bg-[#FE2C55] rounded-full mr-3"></div>
               <span class="text-gray-700">Historias publicadas</span>
             </div>
             <div class="flex items-center text-sm">
-              <div class="w-4 h-4 bg-yellow-500 rounded-full mr-3 animate-pulse"></div>
+              <div class="w-4 h-4 bg-[#FE2C55] rounded-full mr-3 animate-pulse"></div>
               <span class="text-gray-700">Notas de comunidad</span>
             </div>
             <div class="flex items-center text-sm">
@@ -2828,22 +2828,22 @@ firebase.auth().onAuthStateChanged(user => {
         
         <!-- Paso 3: Completado -->
         <div id="completed-step" class="hidden space-y-6 text-center">
-          <div class="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
-            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="w-20 h-20 mx-auto mb-4 bg-[#FE2C55] rounded-full flex items-center justify-center">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
             </svg>
           </div>
           
-          <h2 class="text-xl font-bold text-gray-900">¡Exportación Completada!</h2>
+          <h2 class="text-2xl font-bold text-gray-900">¡Exportación Completada!</h2>
           <p class="text-gray-600">Tus datos están listos para descargar</p>
           
-          <div class="bg-green-50 border border-green-200 rounded-lg p-4">
-            <p class="text-sm text-green-700">
-              Se ha enviado una notificación a tu bandeja. También puedes descargar directamente desde aquí.
+          <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+            <p class="text-sm text-gray-700">
+              Se ha enviado una notificación. También puedes descargar directamente desde aquí.
             </p>
           </div>
           
-          <button onclick="downloadExportedData()" class="w-full bg-[#FE2C55] text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition-colors">
+          <button onclick="downloadExportedData()" class="w-full bg-[#FE2C55] text-white py-4 rounded-lg font-semibold hover:bg-red-600 transition-all">
             Descargar Datos
           </button>
         </div>
@@ -2948,28 +2948,28 @@ firebase.auth().onAuthStateChanged(user => {
       </div>
       
       <!-- Wikipedia AI Results -->
-      <div id="wikipedia-results" class="hidden bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4">
+      <div id="wikipedia-results" class="hidden bg-gray-50 border border-gray-200 rounded-lg p-4">
         <div class="flex items-start space-x-3">
-          <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+          <div class="w-8 h-8 bg-[#FE2C55] rounded-full flex items-center justify-center flex-shrink-0">
             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C20.832 18.477 19.246 18 17.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
           </div>
           <div class="flex-1">
             <div class="flex items-center justify-between mb-2">
-              <h4 class="font-semibold text-blue-900 text-sm">Resumen IA - Wikipedia</h4>
+              <h4 class="font-semibold text-gray-900 text-sm">Resumen IA</h4>
               <div id="wiki-loading" class="hidden">
-                <svg class="animate-spin h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24">
+                <svg class="animate-spin h-4 w-4 text-[#FE2C55]" fill="none" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
               </div>
             </div>
-            <div id="wiki-content" class="text-sm text-blue-800 leading-relaxed mb-3">
+            <div id="wiki-content" class="text-sm text-gray-700 leading-relaxed mb-3">
               <!-- Wikipedia content will appear here -->
             </div>
-            <a id="wiki-link" href="#" target="_blank" class="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors">
-              <span>Ir a Wikipedia</span>
+            <a id="wiki-link" href="#" target="_blank" class="inline-flex items-center text-[#FE2C55] hover:text-red-600 text-sm font-medium transition-colors">
+              <span>Ver más información</span>
               <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
@@ -3140,6 +3140,20 @@ firebase.auth().onAuthStateChanged(user => {
     const wikiLink = document.getElementById('wiki-link');
     const wikiLoading = document.getElementById('wiki-loading');
     
+    // Filtrar solo contenido relacionado con libros, películas, literatura
+    const bookKeywords = ['libro', 'novela', 'autor', 'escritor', 'literatura', 'película', 'film', 'cine', 'historia', 'cuento', 'relato', 'fantasía', 'ciencia ficción', 'romance', 'misterio', 'terror', 'aventura', 'biografía', 'ensayo', 'poesía', 'teatro', 'drama', 'comedia', 'thriller', 'suspenso'];
+    
+    const isBookRelated = bookKeywords.some(keyword => 
+      query.toLowerCase().includes(keyword) || 
+      keyword.includes(query.toLowerCase())
+    );
+    
+    if (!isBookRelated && query.length < 10) {
+      // Si no es claramente relacionado con libros/películas, no mostrar
+      wikiResults.classList.add('hidden');
+      return;
+    }
+    
     // Mostrar loading
     wikiResults.classList.remove('hidden');
     wikiLoading.classList.remove('hidden');
@@ -3154,23 +3168,57 @@ firebase.auth().onAuthStateChanged(user => {
       if (response.ok) {
         const data = await response.json();
         
-        // Mostrar resumen
-        const summary = data.extract || 'No se encontró información específica.';
-        const truncatedSummary = summary.length > 200 ? summary.substring(0, 200) + '...' : summary;
+        // Verificar si el contenido es relevante para libros/películas
+        const extract = data.extract || '';
+        const isRelevant = bookKeywords.some(keyword => 
+          extract.toLowerCase().includes(keyword) ||
+          data.title?.toLowerCase().includes(keyword)
+        );
         
-        wikiContent.textContent = truncatedSummary;
-        wikiLink.href = data.content_urls?.desktop?.page || `https://es.wikipedia.org/wiki/${encodeURIComponent(query)}`;
+        if (isRelevant || query.length >= 10) {
+          const summary = extract || 'Información disponible sobre este tema.';
+          const truncatedSummary = summary.length > 150 ? summary.substring(0, 150) + '...' : summary;
+          
+          wikiContent.textContent = truncatedSummary;
+          wikiLink.href = data.content_urls?.desktop?.page || `https://es.wikipedia.org/wiki/${encodeURIComponent(query)}`;
+        } else {
+          // No es relevante, ocultar
+          wikiResults.classList.add('hidden');
+          return;
+        }
         
       } else {
-        // Fallback a búsqueda general
-        wikiContent.textContent = `Explora más sobre "${query}" en Wikipedia para encontrar información relacionada.`;
-        wikiLink.href = `https://es.wikipedia.org/wiki/Especial:Buscar/${encodeURIComponent(query)}`;
+        // Buscar con términos relacionados con libros
+        const bookSearchTerms = [`${query} libro`, `${query} novela`, `${query} película`];
+        let found = false;
+        
+        for (const searchTerm of bookSearchTerms) {
+          try {
+            const bookResponse = await fetch(`https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(searchTerm)}`);
+            if (bookResponse.ok) {
+              const bookData = await bookResponse.json();
+              const summary = bookData.extract || `Información sobre "${query}" en el contexto literario.`;
+              const truncatedSummary = summary.length > 150 ? summary.substring(0, 150) + '...' : summary;
+              
+              wikiContent.textContent = truncatedSummary;
+              wikiLink.href = bookData.content_urls?.desktop?.page || `https://es.wikipedia.org/wiki/Especial:Buscar/${encodeURIComponent(query)}`;
+              found = true;
+              break;
+            }
+          } catch (e) {
+            continue;
+          }
+        }
+        
+        if (!found) {
+          wikiResults.classList.add('hidden');
+          return;
+        }
       }
       
     } catch (error) {
       console.error('Error buscando en Wikipedia:', error);
-      wikiContent.textContent = `Explora "${query}" en Wikipedia para obtener más contexto e información.`;
-      wikiLink.href = `https://es.wikipedia.org/wiki/Especial:Buscar/${encodeURIComponent(query)}`;
+      wikiResults.classList.add('hidden');
     } finally {
       wikiLoading.classList.add('hidden');
     }
@@ -3488,11 +3536,11 @@ firebase.auth().onAuthStateChanged(user => {
     if (!notificationsList) return;
     
     const notification = document.createElement('div');
-    notification.className = 'bg-white rounded-lg border border-gray-200 p-4 shadow-sm';
+    notification.className = 'bg-white rounded-lg border border-gray-200 p-4 shadow-sm mb-4';
     notification.innerHTML = `
       <div class="flex items-start space-x-3">
-        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="w-12 h-12 bg-[#FE2C55] rounded-full flex items-center justify-center flex-shrink-0">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
         </div>
@@ -3501,9 +3549,9 @@ firebase.auth().onAuthStateChanged(user => {
             <span class="font-semibold text-gray-900">${title}</span>
             <span class="text-xs text-gray-500">Ahora</span>
           </div>
-          <p class="text-gray-800 text-sm">${message}</p>
-          <button onclick="downloadExportedData()" class="mt-2 text-[#FE2C55] text-sm font-medium hover:text-red-600">
-            Descargar ahora
+          <p class="text-gray-700 text-sm mb-3">${message}</p>
+          <button onclick="downloadExportedData(); this.closest('.bg-white').remove();" class="w-full bg-[#FE2C55] text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-red-600 transition-colors">
+            Descargar Datos
           </button>
         </div>
       </div>
