@@ -3137,6 +3137,60 @@ firebase.auth().onAuthStateChanged(user => {
     const wikiContent = document.getElementById('wiki-content');
     const wikiLink = document.getElementById('wiki-link');
     const wikiLoading = document.getElementById('wiki-loading');
+    const categoryChips = document.querySelector('.flex.gap-2.overflow-x-auto');
+    
+    // Mostrar siempre los resultados
+    wikiResults.classList.remove('hidden');
+    wikiLoading.classList.remove('hidden');
+    wikiContent.textContent = 'Buscando...';
+    categoryChips.classList.add('hidden');
+    
+    try {
+      const cleanQuery = query.trim();
+      
+      // Buscar en Wikipedia inglés primero
+      const response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(cleanQuery)}`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.extract && data.extract.length > 5) {
+          const summary = data.extract.length > 150 ? data.extract.substring(0, 150) + '...' : data.extract;
+          wikiContent.textContent = summary;
+          wikiLink.href = data.content_urls?.desktop?.page || `https://en.wikipedia.org/wiki/${encodeURIComponent(cleanQuery)}`;
+          wikiLoading.classList.add('hidden');
+          return;
+        }
+      }
+      
+      // Si no encuentra en inglés, probar español
+      const esResponse = await fetch(`https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(cleanQuery)}`);
+      
+      if (esResponse.ok) {
+        const esData = await esResponse.json();
+        if (esData.extract && esData.extract.length > 5) {
+          const summary = esData.extract.length > 150 ? esData.extract.substring(0, 150) + '...' : esData.extract;
+          wikiContent.textContent = summary;
+          wikiLink.href = esData.content_urls?.desktop?.page || `https://es.wikipedia.org/wiki/${encodeURIComponent(cleanQuery)}`;
+          wikiLoading.classList.add('hidden');
+          return;
+        }
+      }
+      
+      // Si no encuentra nada
+      wikiContent.textContent = 'No se encontró información sobre este tema.';
+      wikiLink.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+      
+    } catch (error) {
+      wikiContent.textContent = 'Error al buscar información.';
+      wikiLink.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+    } finally {
+      wikiLoading.classList.add('hidden');
+    }
+  }
+    const wikiResults = document.getElementById('wikipedia-results');
+    const wikiContent = document.getElementById('wiki-content');
+    const wikiLink = document.getElementById('wiki-link');
+    const wikiLoading = document.getElementById('wiki-loading');
     const wikiImage = document.getElementById('wiki-image');
     const wikiImageContainer = document.getElementById('wiki-image-container');
     const wikiTypeBadge = document.getElementById('wiki-type-badge');
