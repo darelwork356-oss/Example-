@@ -3514,24 +3514,45 @@ firebase.auth().onAuthStateChanged(user => {
   }
 
   async function generateImage() {
-    const prompt = document.getElementById('image-prompt').value.trim();
-    const style = document.getElementById('image-style').value;
+    console.log('🎨 Iniciando generación de imagen...');
+    
+    const promptInput = document.getElementById('image-prompt');
+    const styleSelect = document.getElementById('image-style');
+    const generateBtn = document.getElementById('generate-btn');
+    
+    if (!promptInput || !styleSelect || !generateBtn) {
+      console.error('❌ Elementos del DOM no encontrados');
+      alert('Error: No se pudieron encontrar los elementos necesarios');
+      return;
+    }
+    
+    const prompt = promptInput.value.trim();
+    const style = styleSelect.value;
+    
+    console.log('📝 Prompt:', prompt);
+    console.log('🎨 Estilo:', style);
     
     if (!prompt) {
       alert('Por favor describe la imagen que quieres crear');
       return;
     }
     
-    const generateBtn = document.getElementById('generate-btn');
-    const originalText = generateBtn.textContent;
+    const originalText = generateBtn.innerHTML;
     
     generateBtn.disabled = true;
-    generateBtn.textContent = 'Generando...';
+    generateBtn.innerHTML = '<svg class="animate-spin h-5 w-5 mr-2 inline" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Generando...';
     
-    document.getElementById('generated-image-container').classList.remove('hidden');
-    document.getElementById('image-loading').classList.remove('hidden');
-    document.getElementById('generated-image-result').classList.add('hidden');
-    document.getElementById('generation-error').classList.add('hidden');
+    const container = document.getElementById('generated-image-container');
+    const loading = document.getElementById('image-loading');
+    const result = document.getElementById('generated-image-result');
+    const error = document.getElementById('generation-error');
+    
+    if (container) container.classList.remove('hidden');
+    if (loading) loading.classList.remove('hidden');
+    if (result) result.classList.add('hidden');
+    if (error) error.classList.add('hidden');
+    
+    console.log('⏳ Mostrando loading...');
     
     try {
       // Lista de servicios de IA gratuitos para probar
@@ -3613,20 +3634,24 @@ firebase.auth().onAuthStateChanged(user => {
       }
       
     } catch (error) {
-      console.error('Error generando imagen:', error);
-      document.getElementById('image-loading').classList.add('hidden');
-      document.getElementById('generation-error').classList.remove('hidden');
+      console.error('❌ Error generando imagen:', error);
+      
+      if (loading) loading.classList.add('hidden');
+      if (error) error.classList.remove('hidden');
       
       // Mostrar mensaje de error más específico
       const errorElement = document.querySelector('#generation-error p:last-child');
       if (errorElement) {
-        errorElement.textContent = 'Los servicios de IA están temporalmente no disponibles. Intenta de nuevo más tarde.';
+        errorElement.textContent = 'Error: ' + error.message;
       }
       
       generateBtn.disabled = false;
-      generateBtn.textContent = originalText;
+      generateBtn.innerHTML = originalText;
     }
   }
+  
+  // Asegurar que la función esté disponible globalmente
+  window.generateImage = generateImage;
 
   function useGeneratedImageForPost() {
     const generatedImageSrc = document.getElementById('generated-image').src;
