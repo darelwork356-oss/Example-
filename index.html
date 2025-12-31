@@ -2569,11 +2569,17 @@ firebase.auth().onAuthStateChanged(user => {
               <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transform -skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
               
               <div class="flex items-center space-x-4 relative z-10">
-                <div class="w-14 h-14 bg-white bg-opacity-20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <div class="w-14 h-14 bg-white bg-opacity-20 rounded-xl flex items-center justify-center backdrop-blur-sm relative">
+                  <!-- Varita mágica animada -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white transform transition-transform duration-300 group-hover:rotate-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M15 4V2M15 16v-2M8 9h2M20 9h2M17.8 11.8L19 13M17.8 6.2L19 5M3 21l9-9M12.2 6.2L11 5" stroke-linecap="round" stroke-linejoin="round"/>
                     <circle cx="15" cy="9" r="1" fill="white" opacity="0.8"/>
+                    <circle cx="18" cy="6" r="0.5" fill="white" opacity="0.6"/>
+                    <circle cx="12" cy="12" r="0.5" fill="white" opacity="0.6"/>
                   </svg>
+                  <!-- Partículas flotantes -->
+                  <div class="absolute top-1 right-1 w-1 h-1 bg-white rounded-full animate-ping opacity-75"></div>
+                  <div class="absolute bottom-1 left-1 w-1 h-1 bg-white rounded-full animate-ping opacity-50" style="animation-delay: 0.5s"></div>
                 </div>
                 <div class="flex-1">
                   <h3 class="text-white font-semibold text-base mb-1">Zenvio AI</h3>
