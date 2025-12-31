@@ -2866,7 +2866,14 @@ function escapeHtml(text) {
         </svg>
       </button>
       <h1 class="text-lg font-semibold text-gray-900">Crear</h1>
-      <div class="w-6"></div>
+      <button onclick="openZenvioChat()" class="p-2 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 hover:scale-110 transition-transform">
+        <svg class="h-5 w-5 text-white transform transition-transform duration-300 hover:rotate-12 hover:-translate-y-1" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L9 12L12 15L15 12L12 2Z"/>
+          <path d="M12 15L9 12L2 14L5 17L12 15Z"/>
+          <path d="M12 15L15 12L22 14L19 17L12 15Z"/>
+          <circle cx="12" cy="9" r="1.5" fill="white" opacity="0.8"/>
+        </svg>
+      </button>
     </div>
 
     <!-- Grid de opciones estilo Instagram -->
@@ -2905,38 +2912,6 @@ function escapeHtml(text) {
               </svg>
             </div>
             <span class="text-xs text-center font-medium text-gray-700">En Vivo</span>
-          </div>
-        </div>
-
-        <!-- Sección IA -->
-        <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">Herramientas IA</h2>
-        
-        <div class="grid grid-cols-1 gap-3">
-          <!-- Zenvio AI Chat -->
-          <div onclick="openZenvioChat()" class="cursor-pointer group">
-            <div class="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl p-4 shadow-lg group-hover:shadow-2xl transform group-hover:scale-[1.02] transition-all duration-300 relative overflow-hidden">
-              <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transform -skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
-              
-              <div class="flex items-center space-x-4 relative z-10">
-                <div class="w-14 h-14 bg-white bg-opacity-20 rounded-xl flex items-center justify-center backdrop-blur-sm relative">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white transform transition-transform duration-300 group-hover:rotate-12 group-hover:-translate-y-1" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2L9 12L12 15L15 12L12 2Z"/>
-                    <path d="M12 15L9 12L2 14L5 17L12 15Z"/>
-                    <path d="M12 15L15 12L22 14L19 17L12 15Z"/>
-                    <circle cx="12" cy="9" r="1.5" fill="white" opacity="0.8"/>
-                  </svg>
-                  <div class="absolute top-1 right-1 w-1 h-1 bg-white rounded-full animate-ping opacity-75"></div>
-                  <div class="absolute bottom-1 left-1 w-1 h-1 bg-white rounded-full animate-ping opacity-50" style="animation-delay: 0.5s"></div>
-                </div>
-                <div class="flex-1">
-                  <h3 class="text-white font-semibold text-base mb-1">Zenvio AI</h3>
-                  <p class="text-white text-opacity-90 text-xs">Chatea y genera imágenes con IA</p>
-                </div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-            </div>
           </div>
         </div>
       </div>
