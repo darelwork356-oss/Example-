@@ -3398,12 +3398,7 @@ firebase.auth().onAuthStateChanged(user => {
 
   // Función mejorada para abrir el generador
   function openImageGenerator() {
-    const modal = document.getElementById('image-generator-modal');
-    if (modal) {
-      modal.classList.remove('hidden');
-    } else {
-      alert('Error: No se encontró el generador de imágenes');
-    }
+    document.getElementById('image-generator-modal').style.display = 'block';
   }
     
     // Cambiar el botón para modo publicación (comunidad)
@@ -3436,12 +3431,7 @@ firebase.auth().onAuthStateChanged(user => {
   }
   
   function openImageGeneratorForCreation() {
-    const modal = document.getElementById('image-generator-modal');
-    if (modal) {
-      modal.classList.remove('hidden');
-    } else {
-      alert('Error: No se encontró el generador de imágenes');
-    }
+    document.getElementById('image-generator-modal').style.display = 'block';
   }
     
     // Cambiar el botón para modo creación (descargar/compartir)
