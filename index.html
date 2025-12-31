@@ -3143,15 +3143,58 @@ firebase.auth().onAuthStateChanged(user => {
     const wikiIcon = document.getElementById('wiki-icon');
     const categoryChips = document.querySelector('.flex.gap-2.overflow-x-auto');
     
-    // Palabras clave mejoradas
+    // Palabras clave mejoradas para múltiples idiomas
     const contentKeywords = {
+      // Español
       movies: ['película', 'film', 'cine', 'movie', 'cinema'],
       series: ['serie', 'tv', 'televisión', 'show', 'temporada', 'episodio'],
       books: ['libro', 'novela', 'autor', 'escritor', 'literatura', 'cuento', 'relato', 'poesía', 'ensayo'],
-      genres: ['fantasía', 'ciencia ficción', 'romance', 'misterio', 'terror', 'aventura', 'drama', 'comedia', 'thriller', 'suspenso', 'biografía', 'documental']
+      genres: ['fantasía', 'ciencia ficción', 'romance', 'misterio', 'terror', 'aventura', 'drama', 'comedia', 'thriller', 'suspenso', 'biografía', 'documental'],
+      
+      // Inglés
+      moviesEn: ['movie', 'film', 'cinema', 'picture', 'flick'],
+      seriesEn: ['series', 'tv show', 'television', 'season', 'episode'],
+      booksEn: ['book', 'novel', 'author', 'writer', 'literature', 'story', 'tale', 'poetry', 'essay'],
+      genresEn: ['fantasy', 'science fiction', 'romance', 'mystery', 'horror', 'adventure', 'drama', 'comedy', 'thriller', 'suspense', 'biography', 'documentary'],
+      
+      // Portugués
+      moviesPt: ['filme', 'cinema', 'película'],
+      seriesPt: ['série', 'programa', 'televisão', 'temporada', 'episódio'],
+      booksPt: ['livro', 'romance', 'autor', 'escritor', 'literatura', 'conto', 'poesia'],
+      genresPt: ['fantasia', 'ficção científica', 'romance', 'mistério', 'terror', 'aventura', 'drama', 'comédia'],
+      
+      // Japonés (romanizado)
+      moviesJa: ['eiga', 'cinema', 'film'],
+      seriesJa: ['anime', 'dorama', 'bangumi'],
+      booksJa: ['hon', 'shosetsu', 'sakka', 'bungaku'],
+      
+      // Coreano (romanizado)
+      moviesKo: ['yeonghwa', 'cinema'],
+      seriesKo: ['deurama', 'bangbeom'],
+      booksKo: ['chaek', 'soseol', 'jakga'],
+      
+      // Italiano
+      moviesIt: ['film', 'cinema', 'pellicola'],
+      seriesIt: ['serie', 'programma', 'televisione', 'stagione', 'episodio'],
+      booksIt: ['libro', 'romanzo', 'autore', 'scrittore', 'letteratura', 'racconto', 'poesia'],
+      genresIt: ['fantasia', 'fantascienza', 'romantico', 'mistero', 'horror', 'avventura', 'dramma', 'commedia'],
+      
+      // Francés
+      moviesFr: ['film', 'cinéma', 'pellicule'],
+      seriesFr: ['série', 'émission', 'télévision', 'saison', 'épisode'],
+      booksFr: ['livre', 'roman', 'auteur', 'écrivain', 'littérature', 'conte', 'poésie'],
+      genresFr: ['fantaisie', 'science-fiction', 'romance', 'mystère', 'horreur', 'aventure', 'drame', 'comédie']
     };
     
-    const allKeywords = [...contentKeywords.movies, ...contentKeywords.series, ...contentKeywords.books, ...contentKeywords.genres];
+    const allKeywords = [
+      ...contentKeywords.movies, ...contentKeywords.series, ...contentKeywords.books, ...contentKeywords.genres,
+      ...contentKeywords.moviesEn, ...contentKeywords.seriesEn, ...contentKeywords.booksEn, ...contentKeywords.genresEn,
+      ...contentKeywords.moviesPt, ...contentKeywords.seriesPt, ...contentKeywords.booksPt, ...contentKeywords.genresPt,
+      ...contentKeywords.moviesJa, ...contentKeywords.seriesJa, ...contentKeywords.booksJa,
+      ...contentKeywords.moviesKo, ...contentKeywords.seriesKo, ...contentKeywords.booksKo,
+      ...contentKeywords.moviesIt, ...contentKeywords.seriesIt, ...contentKeywords.booksIt, ...contentKeywords.genresIt,
+      ...contentKeywords.moviesFr, ...contentKeywords.seriesFr, ...contentKeywords.booksFr, ...contentKeywords.genresFr
+    ];
     
     const isContentRelated = allKeywords.some(keyword => 
       query.toLowerCase().includes(keyword) || 
@@ -3174,10 +3217,46 @@ firebase.auth().onAuthStateChanged(user => {
     wikiTypeBadge.classList.add('hidden');
     wikiIcon.classList.remove('hidden');
     
+    // Detectar idioma y configurar URLs de Wikipedia
+    const wikipediaLanguages = {
+      'es': 'es.wikipedia.org',
+      'en': 'en.wikipedia.org',
+      'pt': 'pt.wikipedia.org',
+      'ja': 'ja.wikipedia.org',
+      'ko': 'ko.wikipedia.org',
+      'it': 'it.wikipedia.org',
+      'fr': 'fr.wikipedia.org'
+    };
+    
+    // Detectar idioma basado en las palabras clave
+    let detectedLanguage = 'es'; // Por defecto español
+    
+    if (contentKeywords.moviesEn.some(k => query.toLowerCase().includes(k)) || 
+        contentKeywords.seriesEn.some(k => query.toLowerCase().includes(k)) ||
+        contentKeywords.booksEn.some(k => query.toLowerCase().includes(k))) {
+      detectedLanguage = 'en';
+    } else if (contentKeywords.moviesPt.some(k => query.toLowerCase().includes(k)) || 
+               contentKeywords.seriesPt.some(k => query.toLowerCase().includes(k))) {
+      detectedLanguage = 'pt';
+    } else if (contentKeywords.moviesJa.some(k => query.toLowerCase().includes(k)) || 
+               contentKeywords.seriesJa.some(k => query.toLowerCase().includes(k))) {
+      detectedLanguage = 'ja';
+    } else if (contentKeywords.moviesKo.some(k => query.toLowerCase().includes(k)) || 
+               contentKeywords.seriesKo.some(k => query.toLowerCase().includes(k))) {
+      detectedLanguage = 'ko';
+    } else if (contentKeywords.moviesIt.some(k => query.toLowerCase().includes(k)) || 
+               contentKeywords.seriesIt.some(k => query.toLowerCase().includes(k))) {
+      detectedLanguage = 'it';
+    } else if (contentKeywords.moviesFr.some(k => query.toLowerCase().includes(k)) || 
+               contentKeywords.seriesFr.some(k => query.toLowerCase().includes(k))) {
+      detectedLanguage = 'fr';
+    }
+    
     try {
-      // Buscar en Wikipedia con mejor URL encoding
+      // Buscar en Wikipedia con el idioma detectado
       const cleanQuery = query.trim().replace(/[^a-zA-Z0-9À-ſ\s]/g, '');
-      const searchUrl = `https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(cleanQuery)}`;
+      const wikiDomain = wikipediaLanguages[detectedLanguage];
+      const searchUrl = `https://${wikiDomain}/api/rest_v1/page/summary/${encodeURIComponent(cleanQuery)}`;
       
       const response = await fetch(searchUrl, {
         headers: {
@@ -3192,7 +3271,7 @@ firebase.auth().onAuthStateChanged(user => {
         const title = data.title || '';
         const fullText = (extract + ' ' + title).toLowerCase();
         
-        // Verificar relevancia mejorada
+        // Verificar relevancia mejorada con múltiples idiomas
         const isRelevant = allKeywords.some(keyword => fullText.includes(keyword));
         
         if (isRelevant) {
@@ -3200,11 +3279,14 @@ firebase.auth().onAuthStateChanged(user => {
           const truncatedSummary = summary.length > 120 ? summary.substring(0, 120) + '...' : summary;
           
           wikiContent.textContent = truncatedSummary;
-          wikiLink.href = data.content_urls?.desktop?.page || `https://es.wikipedia.org/wiki/${encodeURIComponent(cleanQuery)}`;
+          wikiLink.href = data.content_urls?.desktop?.page || `https://${wikiDomain}/wiki/${encodeURIComponent(cleanQuery)}`;
           
-          // Detección mejorada de tipo de contenido
-          const isMovie = contentKeywords.movies.some(keyword => fullText.includes(keyword));
-          const isSeries = contentKeywords.series.some(keyword => fullText.includes(keyword));
+          // Detección mejorada de tipo de contenido para múltiples idiomas
+          const allMovieKeywords = [...contentKeywords.movies, ...contentKeywords.moviesEn, ...contentKeywords.moviesPt, ...contentKeywords.moviesJa, ...contentKeywords.moviesKo, ...contentKeywords.moviesIt, ...contentKeywords.moviesFr];
+          const allSeriesKeywords = [...contentKeywords.series, ...contentKeywords.seriesEn, ...contentKeywords.seriesPt, ...contentKeywords.seriesJa, ...contentKeywords.seriesKo, ...contentKeywords.seriesIt, ...contentKeywords.seriesFr];
+          
+          const isMovie = allMovieKeywords.some(keyword => fullText.includes(keyword));
+          const isSeries = allSeriesKeywords.some(keyword => fullText.includes(keyword));
           
           if ((isMovie || isSeries) && data.thumbnail?.source) {
             // Mostrar imagen y badge
@@ -3228,44 +3310,13 @@ firebase.auth().onAuthStateChanged(user => {
           }
           
         } else {
-          wikiResults.classList.add('hidden');
-          categoryChips.classList.remove('hidden');
-          return;
+          // Si no es relevante en el idioma detectado, intentar con otros idiomas
+          await tryAlternativeLanguages(cleanQuery, wikipediaLanguages, detectedLanguage);
         }
         
       } else {
-        // Intentar búsquedas alternativas
-        const alternativeSearches = [
-          `${cleanQuery} película`,
-          `${cleanQuery} libro`,
-          `${cleanQuery} serie`
-        ];
-        
-        let found = false;
-        for (const altQuery of alternativeSearches) {
-          try {
-            const altResponse = await fetch(`https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(altQuery)}`);
-            if (altResponse.ok) {
-              const altData = await altResponse.json();
-              if (altData.extract) {
-                const summary = altData.extract.length > 120 ? altData.extract.substring(0, 120) + '...' : altData.extract;
-                wikiContent.textContent = summary;
-                wikiLink.href = altData.content_urls?.desktop?.page || `https://es.wikipedia.org/wiki/Especial:Buscar/${encodeURIComponent(query)}`;
-                found = true;
-                categoryChips.classList.add('hidden');
-                break;
-              }
-            }
-          } catch (e) {
-            continue;
-          }
-        }
-        
-        if (!found) {
-          wikiResults.classList.add('hidden');
-          categoryChips.classList.remove('hidden');
-          return;
-        }
+        // Intentar búsquedas alternativas en múltiples idiomas
+        await tryAlternativeLanguages(cleanQuery, wikipediaLanguages, detectedLanguage);
       }
       
     } catch (error) {
@@ -3274,6 +3325,41 @@ firebase.auth().onAuthStateChanged(user => {
       categoryChips.classList.remove('hidden');
     } finally {
       wikiLoading.classList.add('hidden');
+    }
+    
+    // Función auxiliar para intentar búsquedas en idiomas alternativos
+    async function tryAlternativeLanguages(cleanQuery, wikipediaLanguages, excludeLanguage) {
+      const languagesToTry = Object.keys(wikipediaLanguages).filter(lang => lang !== excludeLanguage);
+      
+      for (const lang of languagesToTry) {
+        try {
+          const altWikiDomain = wikipediaLanguages[lang];
+          const altSearchUrl = `https://${altWikiDomain}/api/rest_v1/page/summary/${encodeURIComponent(cleanQuery)}`;
+          
+          const altResponse = await fetch(altSearchUrl, {
+            headers: {
+              'User-Agent': 'ZenvioApp/1.0'
+            }
+          });
+          
+          if (altResponse.ok) {
+            const altData = await altResponse.json();
+            if (altData.extract) {
+              const summary = altData.extract.length > 120 ? altData.extract.substring(0, 120) + '...' : altData.extract;
+              wikiContent.textContent = summary;
+              wikiLink.href = altData.content_urls?.desktop?.page || `https://${altWikiDomain}/wiki/Especial:Buscar/${encodeURIComponent(query)}`;
+              categoryChips.classList.add('hidden');
+              return; // Salir si encontramos algo
+            }
+          }
+        } catch (e) {
+          continue; // Continuar con el siguiente idioma
+        }
+      }
+      
+      // Si no encontramos nada en ningún idioma
+      wikiResults.classList.add('hidden');
+      categoryChips.classList.remove('hidden');
     }
   }
 
@@ -12071,11 +12157,32 @@ document.getElementById('category-filter').addEventListener('change', performRea
       alert("Debes estar autenticado para transmitir en vivo.");
       return;
     }
-    // Todos los usuarios pueden transmitir en vivo
-    if (!user.email) {
-      alert("Por favor verifica tu correo electrónico para transmitir en vivo.");
-      return;
-    }
+    
+    // Verificar que el usuario tenga más de 2000 seguidores
+    firebase.database().ref('users/' + user.uid).once('value').then(snapshot => {
+      const userData = snapshot.val();
+      const followersCount = userData?.followersCount || 0;
+      
+      if (followersCount < 2000) {
+        alert(`Necesitas al menos 2000 seguidores para transmitir en vivo. Actualmente tienes ${followersCount} seguidores.`);
+        return;
+      }
+      
+      // Continuar con la transmisión en vivo
+      if (!user.email) {
+        alert("Por favor verifica tu correo electrónico para transmitir en vivo.");
+        return;
+      }
+      
+      startLiveStreamProcess();
+    }).catch(error => {
+      console.error('Error verificando seguidores:', error);
+      alert('Error al verificar tus seguidores. Intenta de nuevo.');
+    });
+  }
+  
+  function startLiveStreamProcess() {
+    const user = firebase.auth().currentUser;
     currentBroadcasterId = user.uid;
     let useCamera = confirm("¿Desea transmitir en vivo usando su cámara? Presione OK para cámara, Cancelar para video pregrabado.");
     if (useCamera) {
