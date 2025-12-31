@@ -3199,7 +3199,7 @@ firebase.auth().onAuthStateChanged(user => {
     const isContentRelated = allKeywords.some(keyword => 
       query.toLowerCase().includes(keyword) || 
       keyword.includes(query.toLowerCase())
-    ) || query.length >= 8;
+    ) || query.length >= 5; // Reducido para ser menos restrictivo
     
     if (!isContentRelated) {
       wikiResults.classList.add('hidden');
@@ -3229,7 +3229,7 @@ firebase.auth().onAuthStateChanged(user => {
     };
     
     // Detectar idioma basado en las palabras clave
-    let detectedLanguage = 'es'; // Por defecto español
+    let detectedLanguage = 'en'; // Por defecto inglés para mejor compatibilidad
     
     if (contentKeywords.moviesEn.some(k => query.toLowerCase().includes(k)) || 
         contentKeywords.seriesEn.some(k => query.toLowerCase().includes(k)) ||
@@ -3271,14 +3271,11 @@ firebase.auth().onAuthStateChanged(user => {
         const title = data.title || '';
         const fullText = (extract + ' ' + title).toLowerCase();
         
-        // Verificar relevancia mejorada con múltiples idiomas
-        const isRelevant = allKeywords.some(keyword => fullText.includes(keyword));
-        
-        if (isRelevant) {
-          const summary = extract || 'Información disponible sobre este tema.';
-          const truncatedSummary = summary.length > 120 ? summary.substring(0, 120) + '...' : summary;
+        // Verificar si hay contenido suficiente
+        if (extract && extract.length > 10) {
+          const summary = extract.length > 120 ? extract.substring(0, 120) + '...' : extract;
           
-          wikiContent.textContent = truncatedSummary;
+          wikiContent.textContent = summary;
           wikiLink.href = data.content_urls?.desktop?.page || `https://${wikiDomain}/wiki/${encodeURIComponent(cleanQuery)}`;
           
           // Detección mejorada de tipo de contenido para múltiples idiomas
@@ -3308,15 +3305,81 @@ firebase.auth().onAuthStateChanged(user => {
             // Contenido literario - mostrar categorías
             categoryChips.classList.remove('hidden');
           }
-          
         } else {
-          // Si no es relevante en el idioma detectado, intentar con otros idiomas
-          await tryAlternativeLanguages(cleanQuery, wikipediaLanguages, detectedLanguage);
+          // Si no hay contenido suficiente, intentar con otros idiomas
+          const alternativeSearches = [
+            `${cleanQuery}`,
+            `${cleanQuery} series`,
+            `${cleanQuery} movie`
+          ];
+          
+          let found = false;
+          for (const altQuery of alternativeSearches) {
+            for (const lang of ['en', 'es', 'pt', 'fr']) {
+              try {
+                const altWikiDomain = wikipediaLanguages[lang];
+                const altResponse = await fetch(`https://${altWikiDomain}/api/rest_v1/page/summary/${encodeURIComponent(altQuery)}`);
+                if (altResponse.ok) {
+                  const altData = await altResponse.json();
+                  if (altData.extract && altData.extract.length > 10) {
+                    const summary = altData.extract.length > 120 ? altData.extract.substring(0, 120) + '...' : altData.extract;
+                    wikiContent.textContent = summary;
+                    wikiLink.href = altData.content_urls?.desktop?.page || `https://${altWikiDomain}/wiki/${encodeURIComponent(query)}`;
+                    found = true;
+                    categoryChips.classList.add('hidden');
+                    break;
+                  }
+                }
+              } catch (e) {
+                continue;
+              }
+            }
+            if (found) break;
+          }
+          
+          if (!found) {
+            wikiResults.classList.add('hidden');
+            categoryChips.classList.remove('hidden');
+          }
         }
         
       } else {
         // Intentar búsquedas alternativas en múltiples idiomas
-        await tryAlternativeLanguages(cleanQuery, wikipediaLanguages, detectedLanguage);
+        const alternativeSearches = [
+          `${cleanQuery}`,
+          `${cleanQuery} series`,
+          `${cleanQuery} movie`,
+          `${cleanQuery} film`
+        ];
+        
+        let found = false;
+        for (const altQuery of alternativeSearches) {
+          for (const lang of ['en', 'es', 'pt', 'fr', 'it']) {
+            try {
+              const altWikiDomain = wikipediaLanguages[lang];
+              const altResponse = await fetch(`https://${altWikiDomain}/api/rest_v1/page/summary/${encodeURIComponent(altQuery)}`);
+              if (altResponse.ok) {
+                const altData = await altResponse.json();
+                if (altData.extract && altData.extract.length > 10) {
+                  const summary = altData.extract.length > 120 ? altData.extract.substring(0, 120) + '...' : altData.extract;
+                  wikiContent.textContent = summary;
+                  wikiLink.href = altData.content_urls?.desktop?.page || `https://${altWikiDomain}/wiki/${encodeURIComponent(query)}`;
+                  found = true;
+                  categoryChips.classList.add('hidden');
+                  break;
+                }
+              }
+            } catch (e) {
+              continue;
+            }
+          }
+          if (found) break;
+        }
+        
+        if (!found) {
+          wikiResults.classList.add('hidden');
+          categoryChips.classList.remove('hidden');
+        }
       }
       
     } catch (error) {
@@ -3327,40 +3390,6 @@ firebase.auth().onAuthStateChanged(user => {
       wikiLoading.classList.add('hidden');
     }
     
-    // Función auxiliar para intentar búsquedas en idiomas alternativos
-    async function tryAlternativeLanguages(cleanQuery, wikipediaLanguages, excludeLanguage) {
-      const languagesToTry = Object.keys(wikipediaLanguages).filter(lang => lang !== excludeLanguage);
-      
-      for (const lang of languagesToTry) {
-        try {
-          const altWikiDomain = wikipediaLanguages[lang];
-          const altSearchUrl = `https://${altWikiDomain}/api/rest_v1/page/summary/${encodeURIComponent(cleanQuery)}`;
-          
-          const altResponse = await fetch(altSearchUrl, {
-            headers: {
-              'User-Agent': 'ZenvioApp/1.0'
-            }
-          });
-          
-          if (altResponse.ok) {
-            const altData = await altResponse.json();
-            if (altData.extract) {
-              const summary = altData.extract.length > 120 ? altData.extract.substring(0, 120) + '...' : altData.extract;
-              wikiContent.textContent = summary;
-              wikiLink.href = altData.content_urls?.desktop?.page || `https://${altWikiDomain}/wiki/Especial:Buscar/${encodeURIComponent(query)}`;
-              categoryChips.classList.add('hidden');
-              return; // Salir si encontramos algo
-            }
-          }
-        } catch (e) {
-          continue; // Continuar con el siguiente idioma
-        }
-      }
-      
-      // Si no encontramos nada en ningún idioma
-      wikiResults.classList.add('hidden');
-      categoryChips.classList.remove('hidden');
-    }
   }
 
   // Funciones generales para manejar botones X en campos de búsqueda
