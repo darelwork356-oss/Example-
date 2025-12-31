@@ -3711,7 +3711,14 @@ firebase.auth().onAuthStateChanged(user => {
   
   // Funciones para Memoria
   function openMemoriaSection() {
-    document.getElementById('memoria-modal').classList.remove('hidden');
+    console.log('Abriendo sección de memoria');
+    const modal = document.getElementById('memoria-modal');
+    if (modal) {
+      modal.classList.remove('hidden');
+      console.log('Modal abierto correctamente');
+    } else {
+      console.error('No se encontró el modal memoria-modal');
+    }
   }
 
   function closeMemoriaSection() {
