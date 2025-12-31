@@ -1577,10 +1577,10 @@ setInterval(checkScheduledChapters, 60000);
 
 <!-- MODAL DE VERIFICACIÓN DE IDENTIDAD - PASO A PASO -->
 
-<!-- MODAL DE SOPORTE ESTILO INSTAGRAM -->
+<!-- MODAL DE SOPORTE ESTILO TIKTOK -->
 <div id="support-modal" class="fixed inset-0 z-50 hidden bg-white">
   <div class="h-full flex flex-col">
-    <!-- Header estilo Instagram -->
+    <!-- Header estilo TikTok -->
     <div class="sticky top-0 bg-white border-b border-gray-200 p-4 z-10">
       <div class="flex items-center justify-between">
         <button onclick="closeSupportModal()" class="text-gray-700 hover:text-[#FE2C55] transition-colors">
@@ -1588,7 +1588,7 @@ setInterval(checkScheduledChapters, 60000);
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <h1 class="text-lg font-semibold text-gray-900">Soporte</h1>
+        <h1 class="text-lg font-semibold text-gray-900">Centro de Soporte</h1>
         <div class="w-6"></div>
       </div>
     </div>
@@ -1598,13 +1598,8 @@ setInterval(checkScheduledChapters, 60000);
       <div class="max-w-md mx-auto space-y-6">
         
         <!-- Sección de contacto -->
-        <div class="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
-          <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-[#FE2C55]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-            Contáctanos
-          </h3>
+        <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+          <h3 class="text-xl font-bold text-gray-900 mb-6 text-center">Contáctanos</h3>
           
           <form id="support-form" class="space-y-4">
             <div>
@@ -1612,7 +1607,7 @@ setInterval(checkScheduledChapters, 60000);
                 id="support-email" 
                 type="email" 
                 placeholder="Tu email" 
-                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#FE2C55] bg-white" 
+                class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:border-[#FE2C55] bg-white transition-all" 
                 required
               >
             </div>
@@ -1620,7 +1615,7 @@ setInterval(checkScheduledChapters, 60000);
             <div>
               <select 
                 id="support-problem-type" 
-                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#FE2C55] bg-white appearance-none"
+                class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:border-[#FE2C55] bg-white appearance-none transition-all"
                 required
               >
                 <option value="">Tipo de problema</option>
@@ -1636,7 +1631,7 @@ setInterval(checkScheduledChapters, 60000);
               <textarea 
                 id="support-description" 
                 placeholder="Describe tu problema..." 
-                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#FE2C55] resize-none" 
+                class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:border-[#FE2C55] resize-none transition-all" 
                 rows="4"
                 minlength="20"
                 required
@@ -1646,34 +1641,29 @@ setInterval(checkScheduledChapters, 60000);
 
             <button 
               type="submit" 
-              class="w-full bg-[#FE2C55] text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition-colors"
+              class="w-full bg-[#FE2C55] text-white py-4 rounded-lg font-semibold hover:bg-red-600 transition-all"
             >
-              Enviar
+              Enviar Reporte
             </button>
           </form>
         </div>
 
         <!-- Sección de ayuda rápida -->
-        <div class="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
-          <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-[#FE2C55]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            Ayuda Rápida
-          </h3>
+        <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">Ayuda Rápida</h3>
           
           <div class="space-y-3">
-            <button class="w-full text-left p-3 rounded-lg hover:bg-gray-50 transition-colors border border-gray-200">
+            <button onclick="fillQuickHelp('login')" class="w-full text-left p-4 rounded-lg hover:bg-gray-50 transition-colors border border-gray-200">
               <div class="font-medium text-gray-900">No puedo iniciar sesión</div>
               <div class="text-sm text-gray-500">Problemas con email o contraseña</div>
             </button>
             
-            <button class="w-full text-left p-3 rounded-lg hover:bg-gray-50 transition-colors border border-gray-200">
+            <button onclick="fillQuickHelp('story')" class="w-full text-left p-4 rounded-lg hover:bg-gray-50 transition-colors border border-gray-200">
               <div class="font-medium text-gray-900">Problema con mi historia</div>
               <div class="text-sm text-gray-500">No se publica o no aparece</div>
             </button>
             
-            <button class="w-full text-left p-3 rounded-lg hover:bg-gray-50 transition-colors border border-gray-200">
+            <button onclick="fillQuickHelp('report')" class="w-full text-left p-4 rounded-lg hover:bg-gray-50 transition-colors border border-gray-200">
               <div class="font-medium text-gray-900">Reportar contenido</div>
               <div class="text-sm text-gray-500">Contenido inapropiado o spam</div>
             </button>
@@ -1687,8 +1677,8 @@ setInterval(checkScheduledChapters, 60000);
   <!-- Modal de éxito -->
   <div id="support-success-message" class="fixed inset-0 bg-white hidden z-60">
     <div class="h-full flex flex-col items-center justify-center p-8">
-      <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div class="w-20 h-20 bg-[#FE2C55] rounded-full flex items-center justify-center mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
         </svg>
       </div>
@@ -1696,12 +1686,12 @@ setInterval(checkScheduledChapters, 60000);
       <h2 class="text-2xl font-bold text-gray-900 mb-4 text-center">¡Mensaje enviado!</h2>
       
       <p class="text-gray-600 mb-8 text-center max-w-sm">
-        Hemos recibido tu solicitud. Te responderemos pronto.
+        Hemos recibido tu solicitud. Te responderemos pronto en tus notificaciones.
       </p>
 
       <button 
         onclick="closeSupportModal()" 
-        class="bg-[#FE2C55] text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-600 transition-colors"
+        class="bg-[#FE2C55] text-white px-8 py-4 rounded-lg font-semibold hover:bg-red-600 transition-colors"
       >
         Cerrar
       </button>
@@ -3153,16 +3143,22 @@ firebase.auth().onAuthStateChanged(user => {
     const wikiIcon = document.getElementById('wiki-icon');
     const categoryChips = document.querySelector('.flex.gap-2.overflow-x-auto');
     
-    // Filtrar solo contenido relacionado con libros, películas, literatura
-    const bookKeywords = ['libro', 'novela', 'autor', 'escritor', 'literatura', 'película', 'film', 'cine', 'historia', 'cuento', 'relato', 'fantasía', 'ciencia ficción', 'romance', 'misterio', 'terror', 'aventura', 'biografía', 'ensayo', 'poesía', 'teatro', 'drama', 'comedia', 'thriller', 'suspenso', 'serie', 'documental'];
-    const movieKeywords = ['película', 'film', 'cine', 'serie', 'documental', 'tv', 'televisión'];
+    // Palabras clave mejoradas
+    const contentKeywords = {
+      movies: ['película', 'film', 'cine', 'movie', 'cinema'],
+      series: ['serie', 'tv', 'televisión', 'show', 'temporada', 'episodio'],
+      books: ['libro', 'novela', 'autor', 'escritor', 'literatura', 'cuento', 'relato', 'poesía', 'ensayo'],
+      genres: ['fantasía', 'ciencia ficción', 'romance', 'misterio', 'terror', 'aventura', 'drama', 'comedia', 'thriller', 'suspenso', 'biografía', 'documental']
+    };
     
-    const isBookRelated = bookKeywords.some(keyword => 
+    const allKeywords = [...contentKeywords.movies, ...contentKeywords.series, ...contentKeywords.books, ...contentKeywords.genres];
+    
+    const isContentRelated = allKeywords.some(keyword => 
       query.toLowerCase().includes(keyword) || 
       keyword.includes(query.toLowerCase())
-    );
+    ) || query.length >= 8;
     
-    if (!isBookRelated && query.length < 10) {
+    if (!isContentRelated) {
       wikiResults.classList.add('hidden');
       categoryChips.classList.remove('hidden');
       return;
@@ -3171,61 +3167,63 @@ firebase.auth().onAuthStateChanged(user => {
     // Mostrar loading
     wikiResults.classList.remove('hidden');
     wikiLoading.classList.remove('hidden');
-    wikiContent.textContent = 'Buscando información relacionada...';
+    wikiContent.textContent = 'Analizando contenido...';
     
-    // Ocultar imagen y badge por defecto
+    // Reset UI
     wikiImageContainer.classList.add('hidden');
     wikiTypeBadge.classList.add('hidden');
     wikiIcon.classList.remove('hidden');
     
     try {
-      // Buscar en Wikipedia API
-      const searchUrl = `https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`;
+      // Buscar en Wikipedia con mejor URL encoding
+      const cleanQuery = query.trim().replace(/[^a-zA-Z0-9À-ſ\s]/g, '');
+      const searchUrl = `https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(cleanQuery)}`;
       
-      const response = await fetch(searchUrl);
+      const response = await fetch(searchUrl, {
+        headers: {
+          'User-Agent': 'ZenvioApp/1.0'
+        }
+      });
       
       if (response.ok) {
         const data = await response.json();
         
-        // Verificar si el contenido es relevante
         const extract = data.extract || '';
         const title = data.title || '';
-        const isRelevant = bookKeywords.some(keyword => 
-          extract.toLowerCase().includes(keyword) ||
-          title.toLowerCase().includes(keyword)
-        );
+        const fullText = (extract + ' ' + title).toLowerCase();
         
-        if (isRelevant || query.length >= 10) {
+        // Verificar relevancia mejorada
+        const isRelevant = allKeywords.some(keyword => fullText.includes(keyword));
+        
+        if (isRelevant) {
           const summary = extract || 'Información disponible sobre este tema.';
-          const truncatedSummary = summary.length > 150 ? summary.substring(0, 150) + '...' : summary;
+          const truncatedSummary = summary.length > 120 ? summary.substring(0, 120) + '...' : summary;
           
           wikiContent.textContent = truncatedSummary;
-          wikiLink.href = data.content_urls?.desktop?.page || `https://es.wikipedia.org/wiki/${encodeURIComponent(query)}`;
+          wikiLink.href = data.content_urls?.desktop?.page || `https://es.wikipedia.org/wiki/${encodeURIComponent(cleanQuery)}`;
           
-          // Detectar si es película/serie y mostrar imagen
-          const isMovie = movieKeywords.some(keyword => 
-            extract.toLowerCase().includes(keyword) ||
-            title.toLowerCase().includes(keyword) ||
-            query.toLowerCase().includes(keyword)
-          );
+          // Detección mejorada de tipo de contenido
+          const isMovie = contentKeywords.movies.some(keyword => fullText.includes(keyword));
+          const isSeries = contentKeywords.series.some(keyword => fullText.includes(keyword));
           
-          if (isMovie && data.thumbnail?.source) {
+          if ((isMovie || isSeries) && data.thumbnail?.source) {
+            // Mostrar imagen y badge
             wikiImage.src = data.thumbnail.source;
+            wikiImage.onerror = function() {
+              wikiImageContainer.classList.add('hidden');
+              wikiIcon.classList.remove('hidden');
+            };
+            
             wikiImageContainer.classList.remove('hidden');
             wikiIcon.classList.add('hidden');
-            
-            // Determinar tipo
-            const isSeries = extract.toLowerCase().includes('serie') || 
-                           extract.toLowerCase().includes('televisión') ||
-                           title.toLowerCase().includes('serie');
             
             wikiTypeBadge.textContent = isSeries ? 'Serie' : 'Película';
             wikiTypeBadge.classList.remove('hidden');
             
-            // Ocultar categorías cuando hay contenido de IA
+            // Ocultar categorías
             categoryChips.classList.add('hidden');
           } else {
-            // Mostrar categorías si no hay contenido de película
+            // Contenido literario - mostrar categorías
             categoryChips.classList.remove('hidden');
           }
           
@@ -3236,23 +3234,27 @@ firebase.auth().onAuthStateChanged(user => {
         }
         
       } else {
-        // Buscar con términos relacionados
-        const bookSearchTerms = [`${query} libro`, `${query} novela`, `${query} película`];
-        let found = false;
+        // Intentar búsquedas alternativas
+        const alternativeSearches = [
+          `${cleanQuery} película`,
+          `${cleanQuery} libro`,
+          `${cleanQuery} serie`
+        ];
         
-        for (const searchTerm of bookSearchTerms) {
+        let found = false;
+        for (const altQuery of alternativeSearches) {
           try {
-            const bookResponse = await fetch(`https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(searchTerm)}`);
-            if (bookResponse.ok) {
-              const bookData = await bookResponse.json();
-              const summary = bookData.extract || `Información sobre "${query}" en el contexto literario.`;
-              const truncatedSummary = summary.length > 150 ? summary.substring(0, 150) + '...' : summary;
-              
-              wikiContent.textContent = truncatedSummary;
-              wikiLink.href = bookData.content_urls?.desktop?.page || `https://es.wikipedia.org/wiki/Especial:Buscar/${encodeURIComponent(query)}`;
-              found = true;
-              categoryChips.classList.add('hidden');
-              break;
+            const altResponse = await fetch(`https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(altQuery)}`);
+            if (altResponse.ok) {
+              const altData = await altResponse.json();
+              if (altData.extract) {
+                const summary = altData.extract.length > 120 ? altData.extract.substring(0, 120) + '...' : altData.extract;
+                wikiContent.textContent = summary;
+                wikiLink.href = altData.content_urls?.desktop?.page || `https://es.wikipedia.org/wiki/Especial:Buscar/${encodeURIComponent(query)}`;
+                found = true;
+                categoryChips.classList.add('hidden');
+                break;
+              }
             }
           } catch (e) {
             continue;
