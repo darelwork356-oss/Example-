@@ -3186,8 +3186,82 @@ firebase.auth().onAuthStateChanged(user => {
     alert(message);
   }
   
-  function exportUserData() {
-    alert('Función de exportación de datos en desarrollo');
+  async function exportUserData() {
+    const user = firebase.auth().currentUser;
+    if (!user) {
+      alert('Debes iniciar sesión para exportar datos');
+      return;
+    }
+
+    const exportBtn = document.querySelector('button[onclick="exportUserData()"]');
+    const originalText = exportBtn.textContent;
+    exportBtn.disabled = true;
+    exportBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Exportando...';
+
+    try {
+      // Obtener datos del usuario
+      const userData = await firebase.database().ref('users/' + user.uid).once('value');
+      const userInfo = userData.val() || {};
+
+      // Obtener historias
+      const storiesResponse = await fetch(`/.netlify/functions/get-stories?userId=${user.uid}`);
+      const storiesData = storiesResponse.ok ? await storiesResponse.json() : { stories: [] };
+
+      // Obtener notas
+      const notesResponse = await fetch(`/.netlify/functions/notes?userId=${user.uid}`);
+      const notesData = notesResponse.ok ? await notesResponse.json() : { notes: [] };
+
+      // Crear objeto de exportación
+      const exportData = {
+        usuario: {
+          id: user.uid,
+          email: user.email,
+          nombre: userInfo.username || 'No especificado',
+          fechaCreacion: new Date(user.metadata.creationTime).toLocaleDateString('es-ES'),
+          ultimoAcceso: new Date(user.metadata.lastSignInTime).toLocaleDateString('es-ES')
+        },
+        estadisticas: {
+          totalHistorias: storiesData.stories?.length || 0,
+          totalNotas: notesData.notes?.length || 0,
+          seguidores: userInfo.followersCount || 0,
+          siguiendo: userInfo.followingCount || 0
+        },
+        historias: storiesData.stories?.map(story => ({
+          id: story.id,
+          titulo: story.title,
+          categoria: story.category,
+          fechaCreacion: new Date(story.timestamp).toLocaleDateString('es-ES'),
+          vistas: story.views || 0,
+          likes: story.likes || 0
+        })) || [],
+        notas: notesData.notes?.map(note => ({
+          id: note.id,
+          contenido: note.content,
+          fechaCreacion: new Date(note.timestamp).toLocaleDateString('es-ES'),
+          likes: note.likes || 0
+        })) || [],
+        fechaExportacion: new Date().toLocaleString('es-ES')
+      };
+
+      // Crear y descargar archivo JSON
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `zenvio-datos-${user.uid}-${Date.now()}.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+
+      // Mostrar mensaje de éxito
+      alert('Datos exportados correctamente. El archivo se ha descargado.');
+
+    } catch (error) {
+      console.error('Error exportando datos:', error);
+      alert('Error al exportar datos: ' + error.message);
+    } finally {
+      exportBtn.disabled = false;
+      exportBtn.textContent = originalText;
+    }
   }
   
   function deleteUserData() {
