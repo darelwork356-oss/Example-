@@ -21,8 +21,8 @@ exports.handler = async (event) => {
     try {
       await s3.headObject({ Bucket: BUCKET, Key: likeKey }).promise();
       return {
-        statusCode: 429,
-        body: JSON.stringify({ message: 'Ya diste like' })
+        statusCode: 409,
+        body: JSON.stringify({ error: 'User already liked this note' })
       };
     } catch (e) {
       // No existe, continuar

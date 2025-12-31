@@ -2659,35 +2659,34 @@ function sendChatMessage() {
   }
 }
 
-async function getLlamaAIResponse(userMessage) {
-  const messagesContainer = document.getElementById('chat-messages');
-  
-  try {
-    // Usar API alternativa gratuita sin autenticación
-    const response = await fetch('https://api.together.xyz/inference', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: 'togethercomputer/llama-2-7b-chat',
-        prompt: userMessage,
-        max_tokens: 250,
-        temperature: 0.7,
-        top_p: 0.9,
-        stop: ['\n\n']
-      })
-    });
-    
-    removeTypingAnimation();
-    
-    if (response.ok) {
-      const data = await response.json();
-      let aiResponse = data.output?.choices?.[0]?.text || data.choices?.[0]?.text || '';
-      
-      if (!aiResponse) {
-        throw new Error('Sin respuesta');
-      }
+	async function getLlamaAIResponse(userMessage) {
+	  const messagesContainer = document.getElementById('chat-messages');
+	  
+	  try {
+	    // Usar Groq vía Netlify Function (evita exponer la API key en el navegador)
+	    const response = await fetch('/.netlify/functions/groq-chat', {
+	      method: 'POST',
+	      headers: {
+	        'Content-Type': 'application/json'
+	      },
+	      body: JSON.stringify({
+	        model: 'llama3-8b-8192',
+	        message: userMessage,
+	        max_tokens: 250,
+	        temperature: 0.7,
+	        top_p: 0.9
+	      })
+	    });
+	    
+	    removeTypingAnimation();
+	    
+	    if (response.ok) {
+	      const data = await response.json();
+	      let aiResponse = data.content || data.raw?.choices?.[0]?.message?.content || '';
+	      
+	      if (!aiResponse) {
+	        throw new Error('Sin respuesta');
+	      }
       
       aiResponse = aiResponse.trim();
       
@@ -4271,66 +4270,6 @@ function escapeHtml(text) {
 <style>
   /* Estilos TikTok */
   * {
-
-
-  async function handleNoteLike(noteId, likeButton) {
-    const user = firebase.auth().currentUser;
-    if (!user) {
-      alert('Debes iniciar sesión para dar like');
-      return;
-    }
-
-    // Verificar si ya dio like
-    if (likeButton.classList.contains('text-[#FE2C55]')) {
-      alert('Ya diste like a esta nota');
-      return;
-    }
-
-    const originalHTML = likeButton.innerHTML;
-    likeButton.disabled = true;
-    likeButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-
-    try {
-      const response = await fetch('/.netlify/functions/likes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          noteId: noteId,
-          userId: user.uid
-        })
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        if (response.status === 429) {
-          alert(result.message || 'Has alcanzado el límite de likes por hoy');
-        } else {
-          throw new Error(result.error || 'Error al dar like');
-        }
-        likeButton.disabled = false;
-        likeButton.innerHTML = originalHTML;
-        return;
-      }
-
-      // Actualizar UI
-      likeButton.classList.add('text-[#FE2C55]');
-      const likesCount = likeButton.querySelector('.likes-count');
-      if (likesCount) {
-        likesCount.textContent = result.likes;
-      }
-      likeButton.disabled = false;
-      likeButton.innerHTML = `<i class="fas fa-heart"></i> <span class="likes-count">${result.likes}</span>`;
-      
-    } catch (error) {
-      console.error('Error al dar like:', error);
-      alert('Error al dar like. Por favor intenta de nuevo.');
-      likeButton.disabled = false;
-      likeButton.innerHTML = originalHTML;
-    }
-  }
 
     margin: 0;
     padding: 0;
@@ -7823,11 +7762,12 @@ function showLiveNotification(message, type = 'info') {
     <h2 class="text-xl font-bold mb-4 text-center text-white">Enviar Regalo</h2>
     <div class="gift-grid">
 
-async function loadPhotos() {
-  const photosGrid = document.getElementById('photos-grid');
-  if (!photosGrid) return;
-  
-  photosGrid.innerHTML = '<div class="col-span-2 text-center py-8"><i class="fas fa-spinner fa-spin text-2xl text-[#FE2C55]"></i><p class="mt-2 text-gray-500">Cargando fotos...</p></div>';
+	<script>
+	async function loadPhotos() {
+	  const photosGrid = document.getElementById('photos-grid');
+	  if (!photosGrid) return;
+	  
+	  photosGrid.innerHTML = '<div class="col-span-2 text-center py-8"><i class="fas fa-spinner fa-spin text-2xl text-[#FE2C55]"></i><p class="mt-2 text-gray-500">Cargando fotos...</p></div>';
 
   try {
     const response = await fetch('/.netlify/functions/notes?limit=50');
@@ -7867,10 +7807,10 @@ async function loadPhotos() {
   }
 }
 
-function openPhotoDetail(photo) {
-  const modal = document.createElement('div');
-  modal.className = 'fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4';
-  modal.innerHTML = `
+	function openPhotoDetail(photo) {
+	  const modal = document.createElement('div');
+	  modal.className = 'fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4';
+	  modal.innerHTML = `
     <div class="max-w-2xl w-full bg-white rounded-xl overflow-hidden">
       <img src="${photo.imageUrl || ''}" alt="" class="w-full h-auto">
       <div class="p-4">
@@ -7893,14 +7833,15 @@ function openPhotoDetail(photo) {
     <button onclick="this.parentElement.remove()" class="absolute top-4 right-4 text-white text-xl">
       <i class="fas fa-times"></i>
     </button>
-  `;
-  document.body.appendChild(modal);
-}
-
-      <!-- Ítems originales (algunos se muestran como GIF y otros en video para un look moderno) -->
-      <div class="gift-item bg-black/20 backdrop-blur-sm rounded-lg" onclick="sendGift('cupido')">
-        <img src="https://i.pinimg.com/originals/2d/f8/97/2df897364f655a0b14070a9e2f95d602.gif" alt="Cupido">
-        <span class="text-[#00D6C9]">Cupido</span>
+	  `;
+	  document.body.appendChild(modal);
+	}
+	</script>
+	
+	      <!-- Ítems originales (algunos se muestran como GIF y otros en video para un look moderno) -->
+	      <div class="gift-item bg-black/20 backdrop-blur-sm rounded-lg" onclick="sendGift('cupido')">
+	        <img src="https://i.pinimg.com/originals/2d/f8/97/2df897364f655a0b14070a9e2f95d602.gif" alt="Cupido">
+	        <span class="text-[#00D6C9]">Cupido</span>
       </div>
       <div class="gift-item bg-black/20 backdrop-blur-sm rounded-lg" onclick="sendGift('diamante')">
         <img src="https://i.pinimg.com/originals/79/a5/49/79a54992591652b1595c6c61c49170fb.gif" alt="Diamante">
@@ -9050,17 +8991,23 @@ function moderarNota(noteId, content) {
   }, 5000);
 }
 
-async function deleteNote(noteId) {
-  if (!confirm('¿Estás seguro de que quieres eliminar esta nota?')) return;
-  
-  try {
-    const response = await fetch('/.netlify/functions/notes', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ noteId })
-    });
+	async function deleteNote(noteId) {
+	  if (!confirm('¿Estás seguro de que quieres eliminar esta nota?')) return;
+	  
+	  try {
+	    const user = firebase.auth().currentUser;
+	    if (!user) {
+	      alert('Debes iniciar sesión para eliminar una nota');
+	      return;
+	    }
+	  
+	    const response = await fetch('/.netlify/functions/notes', {
+	      method: 'POST',
+	      headers: {
+	        'Content-Type': 'application/json',
+	      },
+	      body: JSON.stringify({ noteId, userId: user.uid })
+	    });
 
     const result = await response.json();
     
@@ -14790,41 +14737,4 @@ firebase.auth().onAuthStateChanged(user => {
 
 <script src="stories.js"></script>
 </body>
-</html>
-
-// Manejar formulario de soporte
-document.addEventListener('DOMContentLoaded', function() {
-  const supportForm = document.getElementById('support-form');
-  const supportDescription = document.getElementById('support-description');
-  const charCount = document.getElementById('char-count');
-  
-  if (supportDescription && charCount) {
-    supportDescription.addEventListener('input', function() {
-      const count = this.value.length;
-      charCount.textContent = count >= 20 ? `${count} caracteres` : `Mínimo 20 caracteres (${count}/20)`;
-      charCount.style.color = count >= 20 ? '#10a37f' : '#6b7280';
-    });
-  }
-  
-  if (supportForm) {
-    supportForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const email = document.getElementById('support-email').value;
-      const problemType = document.getElementById('support-problem-type').value;
-      const description = document.getElementById('support-description').value;
-      
-      if (description.length < 20) {
-        alert('La descripción debe tener al menos 20 caracteres');
-        return;
-      }
-      
-      // Simular envío
-      setTimeout(() => {
-        document.querySelector('#support-modal > div:first-child').classList.add('hidden');
-        document.getElementById('support-success-message').classList.remove('hidden');
-      }, 500);
-    });
-  }
-});
 </html>
