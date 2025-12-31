@@ -2535,7 +2535,7 @@ firebase.auth().onAuthStateChanged(user => {
         </div>
         <div class="flex-1">
           <div class="bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-xs">
-            <p class="text-gray-900 text-sm">¡Hola! Soy Zenvio AI. Puedo ayudarte a crear historias, generar ideas y responder tus preguntas. ¿En qué puedo ayudarte hoy?</p>
+            <p class="text-gray-900 text-sm">¡Hola! Soy Zenvio AI. Puedo ayudarte a crear historias, generar ideas, responder preguntas y <strong>generar imágenes</strong>. Solo pídeme "genera una imagen de..." ¿En qué puedo ayudarte hoy?</p>
           </div>
           <span class="text-xs text-gray-500 mt-1 block">Ahora</span>
         </div>
@@ -2546,7 +2546,7 @@ firebase.auth().onAuthStateChanged(user => {
     <div class="border-t border-gray-200 p-4">
       <div class="flex items-end space-x-2">
         <div class="flex-1 bg-gray-100 rounded-full px-4 py-2 flex items-center">
-          <input id="chat-input" type="text" placeholder="Escribe un mensaje..." class="flex-1 bg-transparent border-0 focus:outline-none text-gray-900 placeholder-gray-500" onkeypress="if(event.key==='Enter') sendChatMessage()">
+          <input id="chat-input" type="text" placeholder="Escribe un mensaje o pide una imagen..." class="flex-1 bg-transparent border-0 focus:outline-none text-gray-900 placeholder-gray-500" onkeypress="if(event.key==='Enter') sendChatMessage()">
         </div>
         <button onclick="sendChatMessage()" class="w-10 h-10 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-full flex items-center justify-center hover:scale-105 transition-transform">
           <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -2583,7 +2583,7 @@ function sendChatMessage() {
   userMsg.innerHTML = `
     <div class="flex-1 flex justify-end">
       <div class="bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-2xl rounded-tr-none p-3 max-w-xs">
-        <p class="text-white text-sm">${message}</p>
+        <p class="text-white text-sm">${escapeHtml(message)}</p>
       </div>
     </div>
   `;
@@ -2592,11 +2592,158 @@ function sendChatMessage() {
   input.value = '';
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
   
-  // Simular respuesta de IA (placeholder)
-  setTimeout(() => {
-    const aiMsg = document.createElement('div');
-    aiMsg.className = 'flex items-start space-x-3';
-    aiMsg.innerHTML = `
+  // Detectar si el usuario pide generar una imagen
+  const imageKeywords = ['genera una imagen', 'crea una imagen', 'genera imagen', 'crea imagen', 'dibuja', 'imagen de', 'foto de', 'picture of', 'generate image', 'create image'];
+  const isImageRequest = imageKeywords.some(keyword => message.toLowerCase().includes(keyword));
+  
+  if (isImageRequest) {
+    // Mostrar animación de escritura
+    showTypingAnimation();
+    
+    setTimeout(() => {
+      removeTypingAnimation();
+      
+      // Extraer el prompt de la imagen
+      let imagePrompt = message;
+      imageKeywords.forEach(keyword => {
+        imagePrompt = imagePrompt.toLowerCase().replace(keyword, '').trim();
+      });
+      
+      if (!imagePrompt) {
+        imagePrompt = 'imagen creativa y artística';
+      }
+      
+      // Mostrar mensaje de generación
+      const generatingMsg = document.createElement('div');
+      generatingMsg.className = 'flex items-start space-x-3';
+      generatingMsg.id = 'generating-image-msg';
+      generatingMsg.innerHTML = `
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-white animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        </div>
+        <div class="flex-1">
+          <div class="bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-xs">
+            <div class="flex items-center space-x-2">
+              <div class="flex space-x-1">
+                <div class="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style="animation-delay: 0s"></div>
+                <div class="w-2 h-2 bg-pink-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+              </div>
+              <p class="text-gray-900 text-sm font-medium">Generando imagen...</p>
+            </div>
+          </div>
+          <span class="text-xs text-gray-500 mt-1 block">Ahora</span>
+        </div>
+      `;
+      messagesContainer.appendChild(generatingMsg);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      
+      // Generar la imagen
+      generateImageInChat(imagePrompt);
+    }, 1500);
+  } else {
+    // Respuesta de texto normal con animación de escritura
+    showTypingAnimation();
+    
+    setTimeout(() => {
+      removeTypingAnimation();
+      
+      const aiMsg = document.createElement('div');
+      aiMsg.className = 'flex items-start space-x-3';
+      aiMsg.innerHTML = `
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2L9 12L12 15L15 12L12 2Z"/>
+            <path d="M12 15L9 12L2 14L5 17L12 15Z"/>
+            <path d="M12 15L15 12L22 14L19 17L12 15Z"/>
+          </svg>
+        </div>
+        <div class="flex-1">
+          <div class="bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-xs">
+            <p class="text-gray-900 text-sm">Entiendo tu mensaje. Próximamente integraremos la IA completa para darte respuestas más inteligentes. 🚀<br><br>💡 <strong>Tip:</strong> Puedes pedirme "genera una imagen de..." para crear imágenes con IA.</p>
+          </div>
+          <span class="text-xs text-gray-500 mt-1 block">Ahora</span>
+        </div>
+      `;
+      messagesContainer.appendChild(aiMsg);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }, 1500);
+  }
+}
+
+function showTypingAnimation() {
+  const messagesContainer = document.getElementById('chat-messages');
+  const typingMsg = document.createElement('div');
+  typingMsg.className = 'flex items-start space-x-3';
+  typingMsg.id = 'typing-indicator';
+  typingMsg.innerHTML = `
+    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 flex items-center justify-center flex-shrink-0">
+      <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2L9 12L12 15L15 12L12 2Z"/>
+        <path d="M12 15L9 12L2 14L5 17L12 15Z"/>
+        <path d="M12 15L15 12L22 14L19 17L12 15Z"/>
+      </svg>
+    </div>
+    <div class="flex-1">
+      <div class="bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-xs">
+        <div class="flex space-x-1">
+          <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0s"></div>
+          <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+          <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+        </div>
+      </div>
+    </div>
+  `;
+  messagesContainer.appendChild(typingMsg);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function removeTypingAnimation() {
+  const typingIndicator = document.getElementById('typing-indicator');
+  if (typingIndicator) {
+    typingIndicator.remove();
+  }
+}
+
+async function generateImageInChat(prompt) {
+  const messagesContainer = document.getElementById('chat-messages');
+  
+  try {
+    // Mejorar el prompt
+    const enhancedPrompt = `${prompt}, high quality, detailed, artistic`;
+    const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(enhancedPrompt)}?width=512&height=512&seed=${Math.floor(Math.random() * 1000000)}&nologo=true`;
+    
+    // Precargar la imagen
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    
+    await new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => reject(new Error('Timeout')), 15000);
+      
+      img.onload = () => {
+        clearTimeout(timeout);
+        resolve();
+      };
+      
+      img.onerror = () => {
+        clearTimeout(timeout);
+        reject(new Error('Error al cargar imagen'));
+      };
+      
+      img.src = imageUrl;
+    });
+    
+    // Remover mensaje de generación
+    const generatingMsg = document.getElementById('generating-image-msg');
+    if (generatingMsg) generatingMsg.remove();
+    
+    // Mostrar imagen generada
+    const imageMsg = document.createElement('div');
+    imageMsg.className = 'flex items-start space-x-3';
+    imageMsg.innerHTML = `
       <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 flex items-center justify-center flex-shrink-0">
         <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2L9 12L12 15L15 12L12 2Z"/>
@@ -2606,14 +2753,93 @@ function sendChatMessage() {
       </div>
       <div class="flex-1">
         <div class="bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-xs">
-          <p class="text-gray-900 text-sm">Entiendo tu mensaje. Próximamente integraremos la IA completa para darte respuestas más inteligentes. 🚀</p>
+          <p class="text-gray-900 text-sm mb-2">¡Aquí está tu imagen! ✨</p>
+          <img src="${imageUrl}" class="w-full rounded-lg mb-2" alt="Imagen generada">
+          <div class="flex space-x-2">
+            <button onclick="downloadChatImage('${imageUrl}')" class="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs py-2 px-3 rounded-lg hover:opacity-90 transition-opacity">
+              <svg class="w-3 h-3 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Descargar
+            </button>
+            <button onclick="shareChatImage('${imageUrl}')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs py-2 px-3 rounded-lg hover:opacity-90 transition-opacity">
+              <svg class="w-3 h-3 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+              </svg>
+              Compartir
+            </button>
+          </div>
         </div>
         <span class="text-xs text-gray-500 mt-1 block">Ahora</span>
       </div>
     `;
-    messagesContainer.appendChild(aiMsg);
+    messagesContainer.appendChild(imageMsg);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
-  }, 1000);
+    
+  } catch (error) {
+    console.error('Error generando imagen:', error);
+    
+    // Remover mensaje de generación
+    const generatingMsg = document.getElementById('generating-image-msg');
+    if (generatingMsg) generatingMsg.remove();
+    
+    // Mostrar error
+    const errorMsg = document.createElement('div');
+    errorMsg.className = 'flex items-start space-x-3';
+    errorMsg.innerHTML = `
+      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 flex items-center justify-center flex-shrink-0">
+        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2L9 12L12 15L15 12L12 2Z"/>
+          <path d="M12 15L9 12L2 14L5 17L12 15Z"/>
+          <path d="M12 15L15 12L22 14L19 17L12 15Z"/>
+        </svg>
+      </div>
+      <div class="flex-1">
+        <div class="bg-red-50 border border-red-200 rounded-2xl rounded-tl-none p-3 max-w-xs">
+          <p class="text-red-800 text-sm">❌ No pude generar la imagen. Por favor intenta de nuevo con una descripción diferente.</p>
+        </div>
+        <span class="text-xs text-gray-500 mt-1 block">Ahora</span>
+      </div>
+    `;
+    messagesContainer.appendChild(errorMsg);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+}
+
+function downloadChatImage(imageUrl) {
+  const link = document.createElement('a');
+  link.href = imageUrl;
+  link.download = 'zenvio-ai-image.jpg';
+  link.click();
+}
+
+function shareChatImage(imageUrl) {
+  if (navigator.share) {
+    fetch(imageUrl)
+      .then(res => res.blob())
+      .then(blob => {
+        const file = new File([blob], 'zenvio-ai-image.jpg', { type: 'image/jpeg' });
+        navigator.share({
+          title: 'Imagen generada con Zenvio AI',
+          files: [file]
+        });
+      })
+      .catch(() => {
+        navigator.clipboard.writeText(imageUrl).then(() => {
+          alert('Enlace copiado al portapapeles');
+        });
+      });
+  } else {
+    navigator.clipboard.writeText(imageUrl).then(() => {
+      alert('Enlace copiado al portapapeles');
+    });
+  }
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
 }
 </script>
 
