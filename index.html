@@ -2663,20 +2663,19 @@ async function getLlamaAIResponse(userMessage) {
   const messagesContainer = document.getElementById('chat-messages');
   
   try {
-    // Usar API gratuita de Hugging Face con Llama
-    const response = await fetch('https://api-inference.huggingface.co/models/meta-llama/Llama-2-7b-chat-hf', {
+    // Usar API alternativa gratuita sin autenticación
+    const response = await fetch('https://api.together.xyz/inference', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        inputs: userMessage,
-        parameters: {
-          max_new_tokens: 250,
-          temperature: 0.7,
-          top_p: 0.95,
-          return_full_text: false
-        }
+        model: 'togethercomputer/llama-2-7b-chat',
+        prompt: userMessage,
+        max_tokens: 250,
+        temperature: 0.7,
+        top_p: 0.9,
+        stop: ['\n\n']
       })
     });
     
@@ -2684,9 +2683,12 @@ async function getLlamaAIResponse(userMessage) {
     
     if (response.ok) {
       const data = await response.json();
-      let aiResponse = data[0]?.generated_text || 'Lo siento, no pude generar una respuesta.';
+      let aiResponse = data.output?.choices?.[0]?.text || data.choices?.[0]?.text || '';
       
-      // Limpiar la respuesta
+      if (!aiResponse) {
+        throw new Error('Sin respuesta');
+      }
+      
       aiResponse = aiResponse.trim();
       
       const aiMsg = document.createElement('div');
@@ -2713,10 +2715,12 @@ async function getLlamaAIResponse(userMessage) {
       throw new Error('API no disponible');
     }
   } catch (error) {
-    console.error('Error con Llama AI:', error);
+    console.error('Error con IA:', error);
     removeTypingAnimation();
     
-    // Respuesta de fallback
+    // Usar respuestas inteligentes locales
+    const aiResponse = getSmartLocalResponse(userMessage);
+    
     const aiMsg = document.createElement('div');
     aiMsg.className = 'flex items-start space-x-3';
     aiMsg.innerHTML = `
@@ -2730,7 +2734,7 @@ async function getLlamaAIResponse(userMessage) {
       </div>
       <div class="flex-1">
         <div class="bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-xs">
-          <p class="text-gray-900 text-sm">Entiendo tu mensaje. 🚀<br><br>💡 <strong>Tip:</strong> Puedes pedirme "genera una imagen de..." para crear imágenes con IA.</p>
+          <p class="text-gray-900 text-sm">${aiResponse}</p>
         </div>
         <span class="text-xs text-gray-500 mt-1 block">Ahora</span>
       </div>
@@ -2738,6 +2742,74 @@ async function getLlamaAIResponse(userMessage) {
     messagesContainer.appendChild(aiMsg);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
   }
+}
+
+function getSmartLocalResponse(message) {
+  const msg = message.toLowerCase();
+  
+  // Respuestas sobre escritura
+  if (msg.includes('escribir') || msg.includes('historia') || msg.includes('cuento')) {
+    const responses = [
+      '¡Excelente pregunta! Para escribir una buena historia, comienza con un personaje interesante y un conflicto que resolver. ¿Qué tipo de historia quieres crear?',
+      'La clave está en crear personajes con los que los lectores puedan conectar. Piensa en sus motivaciones, miedos y deseos. ¿Necesitas ayuda con algún personaje?',
+      'Un buen inicio es crucial. Intenta comenzar con una escena que enganche al lector desde la primera línea. ¿Quieres que te dé ejemplos?'
+    ];
+    return responses[Math.floor(Math.random() * responses.length)];
+  }
+  
+  // Respuestas sobre ideas
+  if (msg.includes('idea') || msg.includes('inspiración') || msg.includes('tema')) {
+    const responses = [
+      '¡Claro! Aquí hay una idea: Un mundo donde los sueños se pueden robar y vender. ¿Qué pasaría si alguien robara tu mejor sueño?',
+      '¿Qué tal esto? Una persona descubre que puede ver 5 minutos en el futuro, pero solo cuando está en peligro. ¿Cómo usarías ese poder?',
+      'Idea interesante: En una ciudad donde está prohibido llorar, alguien descubre que sus lágrimas tienen poderes mágicos. ¿Te gusta?'
+    ];
+    return responses[Math.floor(Math.random() * responses.length)];
+  }
+  
+  // Respuestas sobre personajes
+  if (msg.includes('personaje') || msg.includes('protagonista') || msg.includes('héroe')) {
+    const responses = [
+      'Los mejores personajes tienen defectos que los hacen humanos. Piensa en qué los hace vulnerables y qué los hace fuertes.',
+      'Dale a tu personaje un objetivo claro y obstáculos que superar. La tensión entre lo que quieren y lo que los detiene crea drama.',
+      'Un buen personaje cambia a lo largo de la historia. ¿Cómo será diferente tu protagonista al final?'
+    ];
+    return responses[Math.floor(Math.random() * responses.length)];
+  }
+  
+  // Respuestas sobre géneros
+  if (msg.includes('terror') || msg.includes('miedo') || msg.includes('horror')) {
+    return 'El terror funciona mejor cuando sugieres más de lo que muestras. Deja que la imaginación del lector haga el trabajo. ¿Quieres consejos específicos?';
+  }
+  
+  if (msg.includes('romance') || msg.includes('amor')) {
+    return 'En el romance, la química entre personajes es clave. Crea momentos de tensión, malentendidos y conexión emocional. ¿En qué necesitas ayuda?';
+  }
+  
+  if (msg.includes('fantasía') || msg.includes('magia')) {
+    return 'En fantasía, establece reglas claras para tu sistema de magia. La consistencia es importante para que los lectores crean en tu mundo.';
+  }
+  
+  // Saludos
+  if (msg.includes('hola') || msg.includes('hey') || msg.includes('hi')) {
+    return '¡Hola! 🚀 Soy Zenvio AI. Puedo ayudarte a crear historias, generar ideas o crear imágenes. ¿En qué te ayudo hoy?';
+  }
+  
+  // Agradecimientos
+  if (msg.includes('gracias') || msg.includes('thanks')) {
+    return '¡De nada! Estoy aquí para ayudarte. ¿Necesitas algo más? 🚀';
+  }
+  
+  // Respuesta genérica inteligente
+  const genericResponses = [
+    'Interesante pregunta. ¿Podrías darme más detalles para ayudarte mejor?',
+    'Entiendo. ¿Esto es para una historia que estás escribiendo? Puedo darte ideas específicas.',
+    '¡Me gusta por dónde vas! Cuéntame más sobre lo que tienes en mente.',
+    'Esa es una buena dirección. ¿Quieres que exploremos esa idea juntos?',
+    'Puedo ayudarte con eso. También puedo generar imágenes si me dices "genera una imagen de..." 🎨'
+  ];
+  
+  return genericResponses[Math.floor(Math.random() * genericResponses.length)];
 }
 
 function showTypingAnimation() {
