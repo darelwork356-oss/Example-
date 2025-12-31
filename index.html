@@ -2751,7 +2751,134 @@ firebase.auth().onAuthStateChanged(user => {
   </div>
 </div>
 
-<!-- MODAL DE CONFIGURACIÓN DE DATOS -->
+<!-- MODAL DE EXPORTACIÓN DE DATOS -->
+<div id="data-export-modal" class="fixed inset-0 z-50 hidden bg-white">
+  <div class="h-full flex flex-col">
+    <div class="sticky top-0 bg-white border-b border-gray-200 p-4 z-10">
+      <div class="flex items-center justify-between">
+        <button onclick="closeDataExportSection()" class="text-gray-700 hover:text-[#FE2C55] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <h1 class="text-lg font-semibold text-gray-900">Exportar Datos</h1>
+        <div class="w-6"></div>
+      </div>
+    </div>
+    
+    <!-- Contenido principal -->
+    <div class="flex-1 overflow-y-auto p-4">
+      <div class="max-w-md mx-auto">
+        
+        <!-- Paso 1: Consentimiento -->
+        <div id="consent-step" class="space-y-6">
+          <div class="text-center">
+            <div class="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center">
+              <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <h2 class="text-xl font-bold text-gray-900 mb-2">Exportación de Datos</h2>
+            <p class="text-gray-600">Solicita una copia de toda tu información</p>
+          </div>
+          
+          <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+            <h3 class="font-semibold text-yellow-800 mb-2">Bioconsentimiento Requerido</h3>
+            <p class="text-sm text-yellow-700 leading-relaxed">
+              Al solicitar la exportación de tus datos, confirmas que:
+            </p>
+            <ul class="text-sm text-yellow-700 mt-2 space-y-1">
+              <li>• Eres el titular legítimo de esta cuenta</li>
+              <li>• Comprendes que recibirás TODOS tus datos</li>
+              <li>• Los datos incluyen información personal sensible</li>
+              <li>• Eres responsable del uso de estos datos</li>
+            </ul>
+          </div>
+          
+          <div class="space-y-3">
+            <label class="flex items-start space-x-3">
+              <input type="checkbox" id="consent-checkbox" class="mt-1">
+              <span class="text-sm text-gray-700">
+                Acepto los términos y condiciones para la exportación de mis datos personales
+              </span>
+            </label>
+            
+            <label class="flex items-start space-x-3">
+              <input type="checkbox" id="responsibility-checkbox" class="mt-1">
+              <span class="text-sm text-gray-700">
+                Entiendo que soy responsable del manejo seguro de mis datos exportados
+              </span>
+            </label>
+          </div>
+          
+          <button onclick="startDataExport()" id="start-export-btn" class="w-full bg-gray-300 text-gray-500 py-3 rounded-lg font-semibold cursor-not-allowed" disabled>
+            Iniciar Exportación
+          </button>
+        </div>
+        
+        <!-- Paso 2: Procesando -->
+        <div id="processing-step" class="hidden space-y-6 text-center">
+          <div class="w-16 h-16 mx-auto mb-4 bg-[#FE2C55] rounded-full flex items-center justify-center">
+            <svg class="animate-spin w-8 h-8 text-white" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </div>
+          
+          <h2 class="text-xl font-bold text-gray-900">Preparando tus datos</h2>
+          <p class="text-gray-600">Recopilando toda tu información...</p>
+          
+          <div class="bg-blue-50 rounded-lg p-4">
+            <div class="text-4xl font-bold text-[#FE2C55] mb-2" id="countdown-timer">2:00</div>
+            <p class="text-sm text-gray-600">Tiempo estimado restante</p>
+          </div>
+          
+          <div class="space-y-2 text-left">
+            <div class="flex items-center text-sm">
+              <div class="w-4 h-4 bg-green-500 rounded-full mr-3"></div>
+              <span class="text-gray-700">Información de perfil</span>
+            </div>
+            <div class="flex items-center text-sm">
+              <div class="w-4 h-4 bg-green-500 rounded-full mr-3"></div>
+              <span class="text-gray-700">Historias publicadas</span>
+            </div>
+            <div class="flex items-center text-sm">
+              <div class="w-4 h-4 bg-yellow-500 rounded-full mr-3 animate-pulse"></div>
+              <span class="text-gray-700">Notas de comunidad</span>
+            </div>
+            <div class="flex items-center text-sm">
+              <div class="w-4 h-4 bg-gray-300 rounded-full mr-3"></div>
+              <span class="text-gray-500">Estadísticas de actividad</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Paso 3: Completado -->
+        <div id="completed-step" class="hidden space-y-6 text-center">
+          <div class="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          
+          <h2 class="text-xl font-bold text-gray-900">¡Exportación Completada!</h2>
+          <p class="text-gray-600">Tus datos están listos para descargar</p>
+          
+          <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+            <p class="text-sm text-green-700">
+              Se ha enviado una notificación a tu bandeja. También puedes descargar directamente desde aquí.
+            </p>
+          </div>
+          
+          <button onclick="downloadExportedData()" class="w-full bg-[#FE2C55] text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition-colors">
+            Descargar Datos
+          </button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
 <div id="memoria-modal" class="fixed inset-0 z-50 hidden bg-white">
   <div class="h-full flex flex-col">
     <div class="sticky top-0 bg-white border-b border-gray-200 p-4 z-10">
@@ -3157,61 +3284,76 @@ firebase.auth().onAuthStateChanged(user => {
     document.getElementById('char-counter').textContent = (200 - text.length) + ' characters remaining';
   }
 
-  // Funciones para Memoria
-  function openMemoriaSection() {
-    document.getElementById('memoria-modal').classList.remove('hidden');
-  }
-
-  function closeMemoriaSection() {
-    document.getElementById('memoria-modal').classList.add('hidden');
-  }
-
-  function toggleMemoria() {
-    const toggle = document.getElementById('memoria-toggle');
-    const isEnabled = toggle.checked;
+  function openDataExportSection() {
+    document.getElementById('data-export-modal').classList.remove('hidden');
     
-    localStorage.setItem('memoriaEnabled', isEnabled);
+    // Configurar checkboxes
+    const consentCheckbox = document.getElementById('consent-checkbox');
+    const responsibilityCheckbox = document.getElementById('responsibility-checkbox');
+    const startBtn = document.getElementById('start-export-btn');
     
-    const message = isEnabled ? 'Memoria activada' : 'Memoria desactivada';
-    alert(message);
-  }
-  
-  function toggleAnalytics() {
-    const toggle = document.getElementById('analytics-toggle');
-    const isEnabled = toggle.checked;
-    
-    localStorage.setItem('analyticsEnabled', isEnabled);
-    
-    const message = isEnabled ? 'Análisis activado' : 'Análisis desactivado';
-    alert(message);
-  }
-  
-  async function exportUserData() {
-    const user = firebase.auth().currentUser;
-    if (!user) {
-      alert('Debes iniciar sesión para exportar datos');
-      return;
+    function updateButton() {
+      if (consentCheckbox.checked && responsibilityCheckbox.checked) {
+        startBtn.disabled = false;
+        startBtn.className = 'w-full bg-[#FE2C55] text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition-colors';
+        startBtn.textContent = 'Iniciar Exportación';
+      } else {
+        startBtn.disabled = true;
+        startBtn.className = 'w-full bg-gray-300 text-gray-500 py-3 rounded-lg font-semibold cursor-not-allowed';
+        startBtn.textContent = 'Acepta los términos para continuar';
+      }
     }
-
-    const exportBtn = document.querySelector('button[onclick="exportUserData()"]');
-    const originalText = exportBtn.textContent;
-    exportBtn.disabled = true;
-    exportBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Exportando...';
-
+    
+    consentCheckbox.addEventListener('change', updateButton);
+    responsibilityCheckbox.addEventListener('change', updateButton);
+  }
+  
+  function closeDataExportSection() {
+    document.getElementById('data-export-modal').classList.add('hidden');
+  }
+  
+  function startDataExport() {
+    // Cambiar a paso de procesamiento
+    document.getElementById('consent-step').classList.add('hidden');
+    document.getElementById('processing-step').classList.remove('hidden');
+    
+    // Iniciar cronómetro de 2 minutos
+    let timeLeft = 120; // 2 minutos en segundos
+    const timer = document.getElementById('countdown-timer');
+    
+    const countdown = setInterval(() => {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timer.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+      
+      timeLeft--;
+      
+      if (timeLeft < 0) {
+        clearInterval(countdown);
+        completeDataExport();
+      }
+    }, 1000);
+  }
+  
+  async function completeDataExport() {
+    // Cambiar a paso completado
+    document.getElementById('processing-step').classList.add('hidden');
+    document.getElementById('completed-step').classList.remove('hidden');
+    
+    // Generar datos de exportación
+    const user = firebase.auth().currentUser;
+    if (!user) return;
+    
     try {
-      // Obtener datos del usuario
       const userData = await firebase.database().ref('users/' + user.uid).once('value');
       const userInfo = userData.val() || {};
-
-      // Obtener historias
+      
       const storiesResponse = await fetch(`/.netlify/functions/get-stories?userId=${user.uid}`);
       const storiesData = storiesResponse.ok ? await storiesResponse.json() : { stories: [] };
-
-      // Obtener notas
+      
       const notesResponse = await fetch(`/.netlify/functions/notes?userId=${user.uid}`);
       const notesData = notesResponse.ok ? await notesResponse.json() : { notes: [] };
-
-      // Crear objeto de exportación
+      
       const exportData = {
         usuario: {
           id: user.uid,
@@ -3242,26 +3384,84 @@ firebase.auth().onAuthStateChanged(user => {
         })) || [],
         fechaExportacion: new Date().toLocaleString('es-ES')
       };
-
-      // Crear y descargar archivo JSON
-      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `zenvio-datos-${user.uid}-${Date.now()}.json`;
-      link.click();
-      URL.revokeObjectURL(url);
-
-      // Mostrar mensaje de éxito
-      alert('Datos exportados correctamente. El archivo se ha descargado.');
-
+      
+      // Guardar datos para descarga
+      window.exportedUserData = exportData;
+      
+      // Enviar notificación
+      addNotificationToUser('Exportación de datos completada', 'Tus datos están listos para descargar');
+      
     } catch (error) {
-      console.error('Error exportando datos:', error);
-      alert('Error al exportar datos: ' + error.message);
-    } finally {
-      exportBtn.disabled = false;
-      exportBtn.textContent = originalText;
+      console.error('Error preparando exportación:', error);
     }
+  }
+  
+  function downloadExportedData() {
+    if (!window.exportedUserData) {
+      alert('No hay datos para descargar');
+      return;
+    }
+    
+    const blob = new Blob([JSON.stringify(window.exportedUserData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `zenvio-datos-${Date.now()}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+  
+  function addNotificationToUser(title, message) {
+    const notificationsList = document.getElementById('notifications-list');
+    if (!notificationsList) return;
+    
+    const notification = document.createElement('div');
+    notification.className = 'bg-white rounded-lg border border-gray-200 p-4 shadow-sm';
+    notification.innerHTML = `
+      <div class="flex items-start space-x-3">
+        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+        <div class="flex-1">
+          <div class="flex items-center justify-between mb-1">
+            <span class="font-semibold text-gray-900">${title}</span>
+            <span class="text-xs text-gray-500">Ahora</span>
+          </div>
+          <p class="text-gray-800 text-sm">${message}</p>
+          <button onclick="downloadExportedData()" class="mt-2 text-[#FE2C55] text-sm font-medium hover:text-red-600">
+            Descargar ahora
+          </button>
+        </div>
+      </div>
+    `;
+    
+    notificationsList.insertBefore(notification, notificationsList.firstChild);
+  }
+
+  function toggleMemoria() {
+    const toggle = document.getElementById('memoria-toggle');
+    const isEnabled = toggle.checked;
+    
+    localStorage.setItem('memoriaEnabled', isEnabled);
+    
+    const message = isEnabled ? 'Memoria activada' : 'Memoria desactivada';
+    alert(message);
+  }
+  
+  function toggleAnalytics() {
+    const toggle = document.getElementById('analytics-toggle');
+    const isEnabled = toggle.checked;
+    
+    localStorage.setItem('analyticsEnabled', isEnabled);
+    
+    const message = isEnabled ? 'Análisis activado' : 'Análisis desactivado';
+    alert(message);
+  }
+  
+  function exportUserData() {
+    openDataExportSection();
   }
   
   function deleteUserData() {
