@@ -9,30 +9,68 @@ const s3 = new AWS.S3({
 const BUCKET = process.env.ZENVIO_AWS_S3_BUCKET || process.env.AWS_S3_BUCKET;
 
 exports.handler = async (event) => {
-  if (event.httpMethod !== 'GET') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
-  }
-
   try {
-    const { userId } = event.queryStringParameters || {};
+    const { userId, type } = event.queryStringParameters || {};
     
-    const [notes, followers, following] = await Promise.all([
-      s3.listObjectsV2({ Bucket: BUCKET, Prefix: `notes/${userId}/` }).promise(),
-      s3.listObjectsV2({ Bucket: BUCKET, Prefix: `followers/${userId}/` }).promise(),
-      s3.listObjectsV2({ Bucket: BUCKET, Prefix: `following/${userId}/` }).promise()
-    ]);
-    
+    if (!userId || !type) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: 'userId and type are required' })
+      };
+    }
+
+    let count = 0;
+
+    if (type === 'stories') {
+      // Contar historias del usuario
+      const params = {
+        Bucket: BUCKET,
+        Prefix: `stories/${userId}/`
+      };
+      
+      const data = await s3.listObjectsV2(params).promise();
+      count = data.Contents ? data.Contents.length : 0;
+      
+    } else if (type === 'notes') {
+      // Contar notas del usuario
+      const params = {
+        Bucket: BUCKET,
+        Prefix: `notes/${userId}/`
+      };
+      
+      const data = await s3.listObjectsV2(params).promise();
+      count = data.Contents ? data.Contents.length : 0;
+      
+    } else {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: 'Invalid type. Use "stories" or "notes"' })
+      };
+    }
+
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        notes: notes.KeyCount,
-        followers: followers.KeyCount,
-        following: following.KeyCount
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
+      },
+      body: JSON.stringify({ 
+        userId,
+        type,
+        count 
       })
     };
+    
   } catch (error) {
+    console.error('Error getting user stats:', error);
     return {
       statusCode: 500,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
+      },
       body: JSON.stringify({ error: error.message })
     };
   }

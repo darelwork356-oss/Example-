@@ -3234,6 +3234,9 @@ firebase.auth().onAuthStateChanged(user => {
     
     modal.classList.remove('hidden');
     
+    // Cargar estadísticas del usuario
+    loadCreatorStats();
+    
     const imagePrompt = document.getElementById('image-prompt');
     if (imagePrompt) {
       imagePrompt.focus();
@@ -7891,19 +7894,51 @@ function openPhotoDetail(photo) {
     switchCommunityTab('add');
   }
 
-  function loadCreatorStats() {
+  async function loadCreatorStats() {
     const user = firebase.auth().currentUser;
     if (!user) return;
 
-    // Cargar estadísticas de historias
-    firebase.database().ref('stories').orderByChild('userId').equalTo(user.uid).once('value').then(snapshot => {
-      document.getElementById('creator-stories-count').textContent = snapshot.numChildren();
-    });
+    // Mostrar indicadores de carga
+    const storiesCountEl = document.getElementById('creator-stories-count');
+    const notesCountEl = document.getElementById('creator-notes-count');
+    
+    if (storiesCountEl) storiesCountEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    if (notesCountEl) notesCountEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
-    // Cargar estadísticas de notas
-    firebase.database().ref('communityNotes').orderByChild('authorId').equalTo(user.uid).once('value').then(snapshot => {
-      document.getElementById('creator-notes-count').textContent = snapshot.numChildren();
-    });
+    try {
+      // Cargar estadísticas de historias desde AWS S3
+      const storiesResponse = await fetch(`/.netlify/functions/user-stats?userId=${user.uid}&type=stories`);
+      if (storiesResponse.ok) {
+        const storiesData = await storiesResponse.json();
+        const storiesCount = storiesData.count || 0;
+        if (storiesCountEl) storiesCountEl.textContent = storiesCount;
+      } else {
+        // Fallback: contar historias manualmente
+        const allStoriesResponse = await fetch('/.netlify/functions/get-stories');
+        if (allStoriesResponse.ok) {
+          const allStoriesData = await allStoriesResponse.json();
+          const userStories = allStoriesData.stories ? allStoriesData.stories.filter(story => story.userId === user.uid) : [];
+          if (storiesCountEl) storiesCountEl.textContent = userStories.length;
+        } else {
+          if (storiesCountEl) storiesCountEl.textContent = '0';
+        }
+      }
+
+      // Cargar estadísticas de notas desde AWS S3
+      const notesResponse = await fetch(`/.netlify/functions/notes?userId=${user.uid}`);
+      if (notesResponse.ok) {
+        const notesData = await notesResponse.json();
+        const notesCount = notesData.notes ? notesData.notes.length : 0;
+        if (notesCountEl) notesCountEl.textContent = notesCount;
+      } else {
+        if (notesCountEl) notesCountEl.textContent = '0';
+      }
+    } catch (error) {
+      console.error('Error loading creator stats:', error);
+      // Mostrar 0 en caso de error
+      if (storiesCountEl) storiesCountEl.textContent = '0';
+      if (notesCountEl) notesCountEl.textContent = '0';
+    }
   }
 
   // 社区功能
