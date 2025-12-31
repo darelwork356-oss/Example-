@@ -1852,7 +1852,7 @@ setInterval(checkScheduledChapters, 60000);
 
 <!-- Modal de Generador de Imágenes IA estilo Instagram -->
 <div id="image-generator-modal" class="fixed inset-0 bg-white hidden overflow-y-auto" style="z-index: 10000;">
-  <div class="w-full h-full">
+  <div class="w-full h-full flex flex-col">
     <!-- Header estilo Instagram -->
     <div class="sticky top-0 bg-white border-b border-gray-200 p-4 z-10">
       <div class="flex items-center justify-between">
@@ -1861,33 +1861,35 @@ setInterval(checkScheduledChapters, 60000);
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <h1 class="text-lg font-semibold text-gray-900">Nueva publicación</h1>
-        <button onclick="generateImage()" id="generate-btn" class="text-[#0095f6] font-semibold hover:text-blue-700 transition-colors">
-          Siguiente
-        </button>
+        <h1 class="text-lg font-semibold text-gray-900">Generar con IA</h1>
+        <div class="w-6"></div>
       </div>
     </div>
     
     <!-- Estadísticas del Creator Hub -->
-    <div class="bg-white p-4 border-b border-gray-200">
+    <div class="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4">
       <div class="flex justify-around text-center">
         <div>
-          <div id="creator-stories-count" class="text-2xl font-bold text-[#FE2C55]">0</div>
-          <div class="text-xs text-gray-600">Historias</div>
+          <div id="creator-stories-count" class="text-2xl font-bold">0</div>
+          <div class="text-xs opacity-90">Historias</div>
         </div>
         <div>
-          <div id="creator-notes-count" class="text-2xl font-bold text-[#FE2C55]">0</div>
-          <div class="text-xs text-gray-600">Notas</div>
+          <div id="creator-notes-count" class="text-2xl font-bold">0</div>
+          <div class="text-xs opacity-90">Notas</div>
+        </div>
+        <div>
+          <div class="text-2xl font-bold">∞</div>
+          <div class="text-xs opacity-90">Imágenes IA</div>
         </div>
       </div>
     </div>
     
-    <!-- Contenido principal estilo Instagram -->
-    <div class="p-0">
+    <!-- Contenido principal -->
+    <div class="flex-1 flex flex-col">
       <!-- Área de imagen generada -->
-      <div id="generated-image-container" class="hidden">
-        <div class="bg-white">
-          <div id="image-loading" class="hidden aspect-square bg-gray-100 flex items-center justify-center">
+      <div id="generated-image-container" class="hidden flex-1">
+        <div class="bg-white h-full flex flex-col">
+          <div id="image-loading" class="hidden flex-1 bg-gray-100 flex items-center justify-center">
             <div class="text-center">
               <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
                 <svg class="animate-spin h-8 w-8 text-white" fill="none" viewBox="0 0 24 24">
@@ -1900,11 +1902,11 @@ setInterval(checkScheduledChapters, 60000);
             </div>
           </div>
           
-          <div id="generated-image-result" class="hidden">
-            <img id="generated-image" class="w-full aspect-square object-cover" alt="Imagen generada">
+          <div id="generated-image-result" class="hidden flex-1 flex items-center justify-center bg-gray-50">
+            <img id="generated-image" class="max-w-full max-h-full object-contain rounded-lg shadow-lg" alt="Imagen generada">
           </div>
           
-          <div id="generation-error" class="hidden aspect-square bg-gray-100 flex items-center justify-center">
+          <div id="generation-error" class="hidden flex-1 bg-gray-100 flex items-center justify-center">
             <div class="text-center p-8">
               <div class="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
                 <svg class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1918,56 +1920,74 @@ setInterval(checkScheduledChapters, 60000);
         </div>
       </div>
       
-      <!-- Área de descripción estilo Instagram -->
-      <div class="p-4 border-b border-gray-200">
-        <div class="flex items-start space-x-3">
-          <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
-            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <circle cx="11" cy="11" r="8" stroke-width="2"/>
-              <path d="m21 21-4.35-4.35" stroke-width="2"/>
-            </svg>
-          </div>
-          <div class="flex-1">
-            <textarea id="image-prompt" placeholder="Describe la imagen que quieres crear..." 
-                      class="w-full border-0 resize-none text-gray-900 placeholder-gray-500 focus:outline-none text-base bg-transparent" 
-                      rows="3" maxlength="200"></textarea>
-            <div class="flex justify-between items-center mt-2">
-              <span id="char-counter" class="text-xs text-gray-400">0/200</span>
-              <select id="image-style" class="text-xs bg-transparent border-0 text-gray-600 focus:outline-none">
-                <option value="realistic">Realista</option>
-                <option value="anime">Anime</option>
-                <option value="cartoon">Caricatura</option>
-                <option value="digital-art">Arte Digital</option>
-              </select>
+      <!-- Área de descripción y controles -->
+      <div class="bg-white border-t border-gray-200">
+        <!-- Input de prompt -->
+        <div class="p-4">
+          <div class="flex items-start space-x-3">
+            <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8" stroke-width="2"/>
+                <path d="m21 21-4.35-4.35" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="flex-1">
+              <textarea id="image-prompt" placeholder="Describe la imagen que quieres crear..." 
+                        class="w-full border-0 resize-none text-gray-900 placeholder-gray-500 focus:outline-none text-base bg-transparent" 
+                        rows="2" maxlength="200"></textarea>
+              <div class="flex justify-between items-center mt-2">
+                <span id="char-counter" class="text-xs text-gray-400">0/200</span>
+                <select id="image-style" class="text-xs bg-transparent border border-gray-300 rounded px-2 py-1 text-gray-600 focus:outline-none focus:border-purple-500">
+                  <option value="realistic">Realista</option>
+                  <option value="anime">Anime</option>
+                  <option value="cartoon">Caricatura</option>
+                  <option value="digital-art">Arte Digital</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      
-      <!-- Sugerencias estilo Instagram -->
-      <div class="p-4">
-        <h4 class="font-semibold text-gray-900 mb-3 text-sm">Sugerencias</h4>
-        <div class="flex flex-wrap gap-2">
-          <button onclick="document.getElementById('image-prompt').value='Dragón mágico volando sobre castillo medieval'" class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs hover:bg-gray-200 transition-colors">
-            Dragón mágico
-          </button>
-          <button onclick="document.getElementById('image-prompt').value='Paisaje futurista con ciudades flotantes'" class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs hover:bg-gray-200 transition-colors">
-            Ciudad futurista
-          </button>
-          <button onclick="document.getElementById('image-prompt').value='Bosque encantado con criaturas mágicas'" class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs hover:bg-gray-200 transition-colors">
-            Bosque encantado
-          </button>
-          <button onclick="document.getElementById('image-prompt').value='Astronauta explorando planeta alienígena'" class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs hover:bg-gray-200 transition-colors">
-            Explorador espacial
+        
+        <!-- Sugerencias rápidas -->
+        <div class="px-4 pb-4">
+          <h4 class="font-medium text-gray-900 mb-3 text-sm">Sugerencias rápidas</h4>
+          <div class="grid grid-cols-2 gap-2">
+            <button onclick="document.getElementById('image-prompt').value='Dragón mágico volando sobre castillo medieval'; updateCharCounter();" class="p-3 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg text-left hover:from-blue-100 hover:to-indigo-100 transition-all">
+              <div class="font-medium text-blue-900 text-sm">🐉 Dragón Épico</div>
+              <div class="text-xs text-blue-600">Fantasía medieval</div>
+            </button>
+            <button onclick="document.getElementById('image-prompt').value='Paisaje futurista con ciudades flotantes'; updateCharCounter();" class="p-3 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg text-left hover:from-purple-100 hover:to-pink-100 transition-all">
+              <div class="font-medium text-purple-900 text-sm">🏙️ Futuro</div>
+              <div class="text-xs text-purple-600">Ciencia ficción</div>
+            </button>
+            <button onclick="document.getElementById('image-prompt').value='Bosque encantado con criaturas mágicas'; updateCharCounter();" class="p-3 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg text-left hover:from-green-100 hover:to-emerald-100 transition-all">
+              <div class="font-medium text-green-900 text-sm">🌲 Naturaleza</div>
+              <div class="text-xs text-green-600">Mundo mágico</div>
+            </button>
+            <button onclick="document.getElementById('image-prompt').value='Astronauta explorando planeta alienígena'; updateCharCounter();" class="p-3 bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 rounded-lg text-left hover:from-orange-100 hover:to-red-100 transition-all">
+              <div class="font-medium text-orange-900 text-sm">🚀 Espacio</div>
+              <div class="text-xs text-orange-600">Exploración</div>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Botones de acción -->
+        <div class="p-4 border-t border-gray-100">
+          <div id="use-image-section" class="hidden mb-3">
+            <button onclick="useGeneratedImage()" class="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 rounded-lg font-semibold hover:from-green-600 hover:to-emerald-700 transition-all flex items-center justify-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              Usar esta imagen
+            </button>
+          </div>
+          <button onclick="generateImage()" id="generate-btn" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all flex items-center justify-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            Generar Imagen
           </button>
         </div>
-      </div>
-      
-      <!-- Botón de acción estilo Instagram -->
-      <div id="use-image-section" class="hidden p-4 border-t border-gray-200">
-        <button onclick="useGeneratedImage()" class="w-full bg-[#0095f6] text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors">
-          Usar imagen
-        </button>
       </div>
     </div>
   </div>
