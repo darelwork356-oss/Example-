@@ -3183,121 +3183,317 @@ function escapeHtml(text) {
 
 
 
-<!-- Search View - TikTok Style -->
+<!-- Search View - Instagram Style -->
 <div id="search-view" class="fixed inset-0 bg-white text-black overflow-y-auto hidden z-50">
-  <div class="p-4">
-
-    <!-- Back Button -->
-    <button onclick="closeSearch()" class="text-gray-800 mb-4 flex items-center font-medium hover:text-[#FE2C55] transition">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <polyline points="15 18 9 12 15 6" />
-      </svg>
-      <span id="btn-volver-search">Back</span>
-    </button>
-
-    <!-- Search Bar and Category Filter -->
-    <div class="space-y-4 mb-6">
-      <div class="relative group">
-        <input id="search-input" type="text" placeholder="Search for stories or authors" class="w-full pl-12 pr-12 py-3 rounded-full bg-gray-100 text-black border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#FE2C55] focus:border-transparent text-base group" oninput="handleSearchInput()">
-        <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#FE2C55] group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="8" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-purple-500 transition-colors" />
-          <path d="m21 21-4.35-4.35" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-purple-500 transition-colors" />
+  <!-- Header estilo Instagram -->
+  <div class="sticky top-0 bg-white border-b border-gray-200 p-4 z-10">
+    <div class="flex items-center space-x-3">
+      <button onclick="closeSearch()" class="text-gray-700 hover:text-[#FE2C55] transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
-        <div class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 rounded-full bg-purple-400 opacity-0 group-hover:opacity-20 group-hover:animate-ping pointer-events-none"></div>
-        <button id="clear-search-btn" class="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors hidden" onclick="clearSearchInput()">
+      </button>
+      
+      <!-- Barra de búsqueda estilo Instagram -->
+      <div class="flex-1 relative">
+        <input id="search-input" type="text" placeholder="Buscar historias y autores" class="w-full pl-10 pr-10 py-2 rounded-lg bg-gray-100 text-black border-0 focus:outline-none focus:bg-white focus:ring-1 focus:ring-gray-300 text-base transition-all" oninput="handleSearchInput()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="m21 21-4.35-4.35" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <button id="clear-search-btn" class="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 hover:text-gray-600 transition-colors hidden" onclick="clearSearchInput()">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
           </svg>
         </button>
       </div>
-      
-      <!-- Wikipedia AI Results -->
-      <div id="wikipedia-results" class="hidden bg-gray-50 border border-gray-200 rounded-lg p-4">
-        <div class="flex items-start space-x-3">
-          <!-- Imagen o icono -->
-          <div class="flex-shrink-0">
-            <div id="wiki-image-container" class="hidden">
-              <img id="wiki-image" class="w-16 h-24 object-cover rounded-lg" alt="Imagen">
-              <div id="wiki-type-badge" class="hidden mt-1 text-xs bg-[#FE2C55] text-white px-2 py-1 rounded text-center font-medium">Película</div>
-            </div>
-            <div id="wiki-icon" class="w-8 h-8 bg-[#FE2C55] rounded-full flex items-center justify-center">
-              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C20.832 18.477 19.246 18 17.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>
-            </div>
-          </div>
-          <div class="flex-1">
-            <div class="flex items-center justify-between mb-2">
-              <h4 class="font-semibold text-gray-900 text-sm">Resumen IA</h4>
-              <div id="wiki-loading" class="hidden">
-                <svg class="animate-spin h-4 w-4 text-[#FE2C55]" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-              </div>
-            </div>
-            <div id="wiki-content" class="text-sm text-gray-700 leading-relaxed mb-3">
-              <!-- Wikipedia content will appear here -->
-            </div>
-            <a id="wiki-link" href="#" target="_blank" class="inline-flex items-center text-[#FE2C55] hover:text-red-600 text-sm font-medium transition-colors">
-              <span>Ver más información</span>
-              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </a>
-          </div>
+    </div>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="flex-1">
+    <!-- Sección de búsquedas recientes/sugerencias cuando no hay búsqueda -->
+    <div id="search-suggestions" class="p-4">
+      <div class="mb-6">
+        <h3 class="text-base font-semibold text-gray-900 mb-3">Recientes</h3>
+        <div class="space-y-3" id="recent-searches">
+          <!-- Búsquedas recientes se cargarán aquí -->
         </div>
       </div>
       
-      <div class="flex gap-2 overflow-x-auto pb-2">
-        <button class="category-chip active" data-value="">All</button>
-        <button class="category-chip" data-value="aventura">Adventure</button>
-        <button class="category-chip" data-value="romance">Romance</button>
-        <button class="category-chip" data-value="misterio">Mystery</button>
-        <button class="category-chip" data-value="fantasia">Fantasy</button>
-        <button class="category-chip" data-value="terror">Horror</button>
-      </div>
-      <select id="category-filter" class="hidden">
-        <option value="">All Categories</option>
-        <option value="aventura">Adventure</option>
-        <option value="romance">Romance</option>
-        <option value="misterio">Mystery</option>
-        <option value="fantasia">Fantasy</option>
-        <option value="terror">Horror</option>
-      </select>
-    </div>
-
-    <!-- Search Results -->
-    <h2 id="search-results-title" class="text-xl font-bold mb-4 text-black">Search Results</h2>
-    <div class="flex justify-around border-b border-gray-200 mb-4">
-      <button data-tab="books" class="tab-button py-2 w-1/2 text-center font-medium text-gray-500 hover:text-[#FE2C55] active">
-        Stories
-      </button>
-      <button data-tab="authors" class="tab-button py-2 w-1/2 text-center font-medium text-gray-500 hover:text-[#FE2C55]">
-        Authors
-      </button>
-    </div>
-
-    <!-- Stories Section -->
-    <div id="books-section" class="block">
-      <h3 id="search-books-title" class="text-base font-semibold mb-3 text-[#FE2C55]">Stories</h3>
-      <div id="search-books-carousel" class="flex space-x-3 overflow-x-auto mb-6 p-1 scrollbar-hide">
-        <!-- Stories will be loaded from Firebase here -->
+      <div class="mb-6">
+        <h3 class="text-base font-semibold text-gray-900 mb-3">Descubrir</h3>
+        <div class="grid grid-cols-2 gap-3" id="discover-grid">
+          <!-- Grid de descubrimiento estilo Instagram -->
+        </div>
       </div>
     </div>
 
-    <!-- Authors Section -->
-    <div id="authors-section" class="hidden">
-      <h3 id="search-authors-title" class="text-base font-semibold mb-3 text-[#FE2C55]">Authors</h3>
-      <div id="search-authors-list" class="space-y-3">
-        <!-- Authors will be loaded from Firebase here -->
+    <!-- Resultados de búsqueda -->
+    <div id="search-results" class="hidden">
+      <!-- Filtros de categoría estilo Instagram -->
+      <div class="px-4 py-3 border-b border-gray-100">
+        <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+          <button class="category-chip-instagram active" data-value="">Todo</button>
+          <button class="category-chip-instagram" data-value="aventura">Aventura</button>
+          <button class="category-chip-instagram" data-value="romance">Romance</button>
+          <button class="category-chip-instagram" data-value="misterio">Misterio</button>
+          <button class="category-chip-instagram" data-value="fantasia">Fantasía</button>
+          <button class="category-chip-instagram" data-value="terror">Terror</button>
+        </div>
       </div>
-    </div>
+      
+      <!-- Tabs estilo Instagram -->
+      <div class="flex border-b border-gray-200">
+        <button data-tab="books" class="tab-button-instagram flex-1 py-3 text-center font-medium border-b-2 border-[#FE2C55] text-[#FE2C55] active">
+          <svg class="w-5 h-5 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C20.832 18.477 19.246 18 17.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+          <span class="text-xs">Historias</span>
+        </button>
+        <button data-tab="authors" class="tab-button-instagram flex-1 py-3 text-center font-medium border-b-2 border-transparent text-gray-500">
+          <svg class="w-5 h-5 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          <span class="text-xs">Autores</span>
+        </button>
+      </div>
+
+      <!-- Contenido de resultados -->
+      <div class="p-4">
+        <!-- Stories Section -->
+        <div id="books-section" class="block">
+          <div id="search-books-grid" class="grid grid-cols-3 gap-1">
+            <!-- Stories will be loaded here in grid format -->
+          </div>
+        </div>
+
+        <!-- Authors Section -->
+        <div id="authors-section" class="hidden">
+          <div id="search-authors-list" class="space-y-3">
+            <!-- Authors will be loaded here -->
+          </div>
+        </div>
+      </div>
   </div>
 </div>
 
 <script>
-  // Script para cambiar entre tabs
+  // Script para cambiar entre tabs estilo Instagram
+  document.querySelectorAll('.tab-button-instagram').forEach(button => {
+    button.addEventListener('click', () => {
+      // Remover active de todos los botones
+      document.querySelectorAll('.tab-button-instagram').forEach(btn => {
+        btn.classList.remove('active');
+        btn.classList.add('text-gray-500', 'border-transparent');
+        btn.classList.remove('text-[#FE2C55]', 'border-[#FE2C55]');
+      });
+      
+      // Agregar active al botón clickeado
+      button.classList.add('active');
+      button.classList.remove('text-gray-500', 'border-transparent');
+      button.classList.add('text-[#FE2C55]', 'border-[#FE2C55]');
+      
+      // Mostrar la sección correspondiente
+      const tabName = button.getAttribute('data-tab');
+      if (tabName === 'books') {
+        document.getElementById('books-section').classList.remove('hidden');
+        document.getElementById('books-section').classList.add('block');
+        document.getElementById('authors-section').classList.add('hidden');
+        document.getElementById('authors-section').classList.remove('block');
+      } else {
+        document.getElementById('authors-section').classList.remove('hidden');
+        document.getElementById('authors-section').classList.add('block');
+        document.getElementById('books-section').classList.add('hidden');
+        document.getElementById('books-section').classList.remove('block');
+      }
+    });
+  });
+
+  // Manejar chips de categoría estilo Instagram
+  document.addEventListener('DOMContentLoaded', function() {
+    const categoryChips = document.querySelectorAll('.category-chip-instagram');
+    
+    categoryChips.forEach(chip => {
+      chip.addEventListener('click', function() {
+        categoryChips.forEach(c => c.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Aquí puedes agregar la lógica de filtrado
+        const category = this.getAttribute('data-value');
+        filterSearchResults(category);
+      });
+    });
+  });
+
+  // Función para mostrar/ocultar secciones de búsqueda
+  function toggleSearchSections(hasQuery) {
+    const suggestions = document.getElementById('search-suggestions');
+    const results = document.getElementById('search-results');
+    
+    if (hasQuery) {
+      suggestions.classList.add('hidden');
+      results.classList.remove('hidden');
+    } else {
+      suggestions.classList.remove('hidden');
+      results.classList.add('hidden');
+    }
+  }
+
+  // Función para cargar contenido de descubrimiento
+  function loadDiscoverContent() {
+    const discoverGrid = document.getElementById('discover-grid');
+    const discoverItems = [
+      { title: 'Aventura', image: 'https://picsum.photos/200/200?random=1' },
+      { title: 'Romance', image: 'https://picsum.photos/200/200?random=2' },
+      { title: 'Misterio', image: 'https://picsum.photos/200/200?random=3' },
+      { title: 'Fantasía', image: 'https://picsum.photos/200/200?random=4' }
+    ];
+    
+    discoverGrid.innerHTML = discoverItems.map(item => `
+      <div class="discover-item" onclick="searchByCategory('${item.title.toLowerCase()}')">
+        <img src="${item.image}" alt="${item.title}">
+        <div class="discover-overlay">
+          <span class="discover-text">${item.title}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Función para buscar por categoría
+  function searchByCategory(category) {
+    const searchInput = document.getElementById('search-input');
+    searchInput.value = category;
+    handleSearchInput();
+  }
+
+  // Función para cargar búsquedas recientes
+  function loadRecentSearches() {
+    const recentSearches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+    const recentContainer = document.getElementById('recent-searches');
+    
+    if (recentSearches.length === 0) {
+      recentContainer.innerHTML = '<p class="text-gray-500 text-sm">No hay búsquedas recientes</p>';
+      return;
+    }
+    
+    recentContainer.innerHTML = recentSearches.slice(0, 5).map(search => `
+      <div class="recent-search-item" onclick="searchRecent('${search}')">
+        <div class="recent-search-icon">
+          <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <span class="recent-search-text">${search}</span>
+        <div class="recent-search-remove" onclick="removeRecentSearch('${search}', event)">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Función para buscar desde recientes
+  function searchRecent(query) {
+    const searchInput = document.getElementById('search-input');
+    searchInput.value = query;
+    handleSearchInput();
+  }
+
+  // Función para remover búsqueda reciente
+  function removeRecentSearch(search, event) {
+    event.stopPropagation();
+    let recentSearches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+    recentSearches = recentSearches.filter(s => s !== search);
+    localStorage.setItem('recentSearches', JSON.stringify(recentSearches));
+    loadRecentSearches();
+  }
+
+  // Función para agregar búsqueda a recientes
+  function addToRecentSearches(query) {
+    if (!query.trim()) return;
+    
+    let recentSearches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+    recentSearches = recentSearches.filter(s => s !== query); // Remover si ya existe
+    recentSearches.unshift(query); // Agregar al inicio
+    recentSearches = recentSearches.slice(0, 10); // Mantener solo 10
+    
+    localStorage.setItem('recentSearches', JSON.stringify(recentSearches));
+  }
+
+  // Función para filtrar resultados de búsqueda
+  function filterSearchResults(category) {
+    // Aquí puedes implementar la lógica de filtrado
+    console.log('Filtrando por categoría:', category);
+  }
+
+  // Actualizar la función handleSearchInput
+  function handleSearchInputInstagram() {
+    const searchTerm = document.getElementById('search-input').value.trim();
+    
+    // Mostrar/ocultar botón de limpiar
+    toggleClearButton('search-input', 'clear-search-btn');
+    
+    // Mostrar/ocultar secciones
+    toggleSearchSections(searchTerm.length > 0);
+    
+    if (searchTerm.length > 0) {
+      // Agregar a búsquedas recientes cuando se hace la búsqueda
+      addToRecentSearches(searchTerm);
+      
+      // Aquí puedes agregar la lógica de búsqueda real
+      performSearch(searchTerm);
+    }
+  }
+
+  // Función para realizar búsqueda
+  function performSearch(query) {
+    // Simular resultados de búsqueda
+    const booksGrid = document.getElementById('search-books-grid');
+    const authorsList = document.getElementById('search-authors-list');
+    
+    // Limpiar resultados anteriores
+    booksGrid.innerHTML = '';
+    authorsList.innerHTML = '';
+    
+    // Simular carga de historias en grid
+    for (let i = 1; i <= 9; i++) {
+      const storyItem = document.createElement('div');
+      storyItem.className = 'story-result-item';
+      storyItem.innerHTML = `<img src="https://picsum.photos/200/200?random=${i + 10}" alt="Historia ${i}">`;
+      booksGrid.appendChild(storyItem);
+    }
+    
+    // Simular carga de autores
+    for (let i = 1; i <= 5; i++) {
+      const authorItem = document.createElement('div');
+      authorItem.className = 'author-result-item';
+      authorItem.innerHTML = `
+        <img src="https://picsum.photos/100/100?random=${i + 20}" alt="Autor ${i}" class="author-avatar">
+        <div class="author-info">
+          <div class="author-username">autor${i}</div>
+          <div class="author-stats">${Math.floor(Math.random() * 1000)} seguidores</div>
+        </div>
+        <button class="follow-btn-instagram">Seguir</button>
+      `;
+      authorsList.appendChild(authorItem);
+    }
+  }
+
+  // Inicializar contenido cuando se abre la búsqueda
+  function openSearchInstagram() {
+    document.getElementById('search-view').classList.remove('hidden');
+    loadDiscoverContent();
+    loadRecentSearches();
+    
+    // Focus en el input de búsqueda
+    setTimeout(() => {
+      document.getElementById('search-input').focus();
+    }, 100);
+  }
+
+  // Script para cambiar entre tabs (mantener compatibilidad)
   document.querySelectorAll('.tab-button').forEach(button => {
     button.addEventListener('click', () => {
       // Remover active de todos los botones
@@ -3380,11 +3576,9 @@ function escapeHtml(text) {
     if (authorsList) authorsList.innerHTML = '';
   }
   
+  // Actualizar handleSearchInput para usar la nueva función
   function handleSearchInput() {
-    const searchTerm = document.getElementById('search-input').value.trim();
-    
-    // Mostrar/ocultar botón de limpiar
-    toggleClearButton('search-input', 'clear-search-btn');
+    handleSearchInputInstagram();
   }
   
 
@@ -4285,6 +4479,218 @@ function escapeHtml(text) {
     color: #FE2C55;
     border-bottom: 2px solid #FE2C55;
     font-weight: 500;
+  }
+
+  /* Estilos Instagram para búsqueda */
+  .category-chip-instagram {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #dbdbdb;
+    background: white;
+    color: #262626;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .category-chip-instagram:hover {
+    border-color: #c7c7c7;
+  }
+
+  .category-chip-instagram.active {
+    background: #262626;
+    color: white;
+    border-color: #262626;
+  }
+
+  .tab-button-instagram {
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .tab-button-instagram:hover:not(.active) {
+    color: #8e8e8e;
+  }
+
+  .tab-button-instagram.active {
+    color: #262626;
+    border-color: #262626;
+  }
+
+  .tab-button-instagram svg {
+    transition: all 0.2s ease;
+  }
+
+  /* Grid de descubrimiento estilo Instagram */
+  .discover-item {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .discover-item:hover {
+    transform: scale(1.02);
+  }
+
+  .discover-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .discover-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: 12px;
+  }
+
+  .discover-text {
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+
+  /* Búsquedas recientes estilo Instagram */
+  .recent-search-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .recent-search-item:hover {
+    background-color: #fafafa;
+    margin: 0 -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 8px;
+  }
+
+  .recent-search-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+
+  .recent-search-text {
+    flex: 1;
+    color: #262626;
+    font-size: 14px;
+  }
+
+  .recent-search-remove {
+    color: #8e8e8e;
+    padding: 4px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .recent-search-remove:hover {
+    color: #262626;
+  }
+
+  /* Grid de resultados estilo Instagram */
+  #search-books-grid .story-result-item {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  #search-books-grid .story-result-item:hover {
+    opacity: 0.8;
+  }
+
+  #search-books-grid .story-result-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Autores estilo Instagram */
+  .author-result-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .author-result-item:hover {
+    background-color: #fafafa;
+    margin: 0 -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 8px;
+  }
+
+  .author-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    margin-right: 12px;
+    flex-shrink: 0;
+    object-fit: cover;
+  }
+
+  .author-info {
+    flex: 1;
+  }
+
+  .author-username {
+    font-weight: 600;
+    color: #262626;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  .author-stats {
+    color: #8e8e8e;
+    font-size: 12px;
+  }
+
+  .follow-btn-instagram {
+    background: #0095f6;
+    color: white;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .follow-btn-instagram:hover {
+    background: #1877f2;
+  }
+
+  .follow-btn-instagram.following {
+    background: transparent;
+    color: #262626;
+    border: 1px solid #dbdbdb;
+  }
+
+  .follow-btn-instagram.following:hover {
+    background: #fafafa;
   }
 
   .category-chip {
@@ -14738,3 +15144,111 @@ firebase.auth().onAuthStateChanged(user => {
 <script src="stories.js"></script>
 </body>
 </html>
+
+<script>
+// Funciones de navegación para la búsqueda estilo Instagram
+function openSearch() {
+  document.getElementById('main-app').classList.add('hidden');
+  openSearchInstagram();
+}
+
+function closeSearch() {
+  document.getElementById('search-view').classList.add('hidden');
+  document.getElementById('main-app').classList.remove('hidden');
+  
+  // Limpiar el input de búsqueda
+  const searchInput = document.getElementById('search-input');
+  if (searchInput) {
+    searchInput.value = '';
+    document.getElementById('clear-search-btn').classList.add('hidden');
+  }
+  
+  // Mostrar sugerencias y ocultar resultados
+  toggleSearchSections(false);
+}
+
+// Otras funciones de navegación necesarias
+function openHome() {
+  // Ocultar todas las vistas
+  document.querySelectorAll('[id$="-view"], [id$="-modal"]').forEach(el => {
+    if (el.id !== 'main-app') {
+      el.classList.add('hidden');
+    }
+  });
+  
+  // Mostrar la aplicación principal
+  document.getElementById('main-app').classList.remove('hidden');
+}
+
+function openCreatorHub() {
+  document.getElementById('main-app').classList.add('hidden');
+  document.getElementById('creator-hub-view').classList.remove('hidden');
+}
+
+function closeCreatorHub() {
+  document.getElementById('creator-hub-view').classList.add('hidden');
+  document.getElementById('main-app').classList.remove('hidden');
+}
+
+function openCommunity() {
+  document.getElementById('main-app').classList.add('hidden');
+  document.getElementById('community-view').classList.remove('hidden');
+}
+
+function closeCommunity() {
+  document.getElementById('community-view').classList.add('hidden');
+  document.getElementById('main-app').classList.remove('hidden');
+}
+
+function openProfile() {
+  document.getElementById('main-app').classList.add('hidden');
+  document.getElementById('profile-view').classList.remove('hidden');
+}
+
+function openNotifications() {
+  document.getElementById('notifications-modal').classList.remove('hidden');
+}
+
+function closeNotifications() {
+  document.getElementById('notifications-modal').classList.add('hidden');
+}
+
+function openMenuModal() {
+  document.getElementById('menu-modal').classList.remove('hidden');
+}
+
+function closeMenuModal() {
+  document.getElementById('menu-modal').classList.add('hidden');
+}
+
+function openSupportModal() {
+  document.getElementById('support-modal').classList.remove('hidden');
+}
+
+function closeSupportModal() {
+  document.getElementById('support-modal').classList.add('hidden');
+}
+
+function openVerificationModal() {
+  document.getElementById('verification-modal').classList.remove('hidden');
+}
+
+function closeVerificationModal() {
+  document.getElementById('verification-modal').classList.add('hidden');
+}
+
+function openNoteCreation() {
+  document.getElementById('add-note-form').classList.remove('hidden');
+}
+
+// Inicializar la búsqueda cuando se carga la página
+document.addEventListener('DOMContentLoaded', function() {
+  // Cargar contenido inicial si es necesario
+  if (typeof loadDiscoverContent === 'function') {
+    loadDiscoverContent();
+  }
+  if (typeof loadRecentSearches === 'function') {
+    loadRecentSearches();
+  }
+});
+</script>
