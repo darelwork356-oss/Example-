@@ -2524,11 +2524,38 @@ firebase.auth().onAuthStateChanged(user => {
           <circle cx="12" cy="9" r="1.5" fill="white" opacity="0.8"/>
         </svg>
       </h1>
-      <div class="w-6"></div>
+      <button onclick="openZenvioMenu()" class="text-gray-700 hover:text-purple-600 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="5" r="1"/>
+          <circle cx="12" cy="12" r="1"/>
+          <circle cx="12" cy="19" r="1"/>
+        </svg>
+      </button>
     </div>
 
-    <!-- Chat messages -->
-    <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4">
+    <!-- Tabs de funcionalidades -->
+    <div class="flex-shrink-0 border-b border-gray-200 bg-gray-50">
+      <div class="flex overflow-x-auto scrollbar-hide">
+        <button onclick="switchZenvioTab('chat')" class="zenvio-tab active px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 border-purple-600 text-purple-600">
+          💬 Chat
+        </button>
+        <button onclick="switchZenvioTab('story-generator')" class="zenvio-tab px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 border-transparent text-gray-600 hover:text-purple-600">
+          📖 Generador de Historias
+        </button>
+        <button onclick="switchZenvioTab('character-creator')" class="zenvio-tab px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 border-transparent text-gray-600 hover:text-purple-600">
+          👤 Creador de Personajes
+        </button>
+        <button onclick="switchZenvioTab('plot-twist')" class="zenvio-tab px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 border-transparent text-gray-600 hover:text-purple-600">
+          🎭 Giros de Trama
+        </button>
+        <button onclick="switchZenvioTab('world-builder')" class="zenvio-tab px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 border-transparent text-gray-600 hover:text-purple-600">
+          🌍 Constructor de Mundos
+        </button>
+      </div>
+    </div>
+
+    <!-- Chat Tab -->
+    <div id="zenvio-tab-chat" class="zenvio-tab-content flex-1 overflow-y-auto p-4 space-y-4">
       <!-- Mensaje de bienvenida -->
       <div class="flex items-start space-x-3">
         <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 flex items-center justify-center flex-shrink-0">
@@ -2548,7 +2575,191 @@ firebase.auth().onAuthStateChanged(user => {
       </div>
     </div>
 
-    <!-- Input area -->
+    <!-- Story Generator Tab -->
+    <div id="zenvio-tab-story-generator" class="zenvio-tab-content hidden flex-1 overflow-y-auto p-4">
+      <div class="max-w-2xl mx-auto">
+        <div class="text-center mb-6">
+          <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-full flex items-center justify-center">
+            <span class="text-3xl">📖</span>
+          </div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-2">Generador de Historias</h2>
+          <p class="text-gray-600">Crea historias completas con IA en segundos</p>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Género</label>
+            <select id="story-genre" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+              <option value="fantasia">Fantasía</option>
+              <option value="ciencia-ficcion">Ciencia Ficción</option>
+              <option value="romance">Romance</option>
+              <option value="terror">Terror</option>
+              <option value="misterio">Misterio</option>
+              <option value="aventura">Aventura</option>
+              <option value="drama">Drama</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Tema o Idea Principal</label>
+            <textarea id="story-theme" rows="3" placeholder="Ej: Un joven descubre que puede viajar en el tiempo..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Longitud</label>
+            <select id="story-length" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+              <option value="corta">Corta (500 palabras)</option>
+              <option value="media">Media (1000 palabras)</option>
+              <option value="larga">Larga (2000 palabras)</option>
+            </select>
+          </div>
+
+          <button onclick="generateStory()" class="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+            ✨ Generar Historia
+          </button>
+        </div>
+
+        <div id="generated-story-result" class="hidden mt-6 bg-gray-50 rounded-lg p-4">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="font-bold text-gray-900">Tu Historia Generada</h3>
+            <button onclick="copyStory()" class="text-purple-600 hover:text-purple-700 text-sm font-medium">
+              📋 Copiar
+            </button>
+          </div>
+          <div id="story-output" class="text-gray-700 leading-relaxed whitespace-pre-wrap"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Character Creator Tab -->
+    <div id="zenvio-tab-character-creator" class="zenvio-tab-content hidden flex-1 overflow-y-auto p-4">
+      <div class="max-w-2xl mx-auto">
+        <div class="text-center mb-6">
+          <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-full flex items-center justify-center">
+            <span class="text-3xl">👤</span>
+          </div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-2">Creador de Personajes</h2>
+          <p class="text-gray-600">Diseña personajes únicos y memorables</p>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Tipo de Personaje</label>
+            <select id="character-type" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+              <option value="protagonista">Protagonista</option>
+              <option value="antagonista">Antagonista</option>
+              <option value="secundario">Secundario</option>
+              <option value="mentor">Mentor</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Características Especiales</label>
+            <input type="text" id="character-traits" placeholder="Ej: valiente, misterioso, con poderes mágicos..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+          </div>
+
+          <button onclick="generateCharacter()" class="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+            ✨ Crear Personaje
+          </button>
+        </div>
+
+        <div id="generated-character-result" class="hidden mt-6 space-y-4">
+          <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-4 border border-purple-200">
+            <h3 class="font-bold text-purple-900 mb-3">Perfil del Personaje</h3>
+            <div id="character-output" class="space-y-2 text-gray-700"></div>
+          </div>
+          <button onclick="copyCharacter()" class="w-full bg-white border border-purple-300 text-purple-600 py-2 rounded-lg font-medium hover:bg-purple-50 transition-colors">
+            📋 Copiar Perfil
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plot Twist Tab -->
+    <div id="zenvio-tab-plot-twist" class="zenvio-tab-content hidden flex-1 overflow-y-auto p-4">
+      <div class="max-w-2xl mx-auto">
+        <div class="text-center mb-6">
+          <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-full flex items-center justify-center">
+            <span class="text-3xl">🎭</span>
+          </div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-2">Generador de Giros de Trama</h2>
+          <p class="text-gray-600">Sorprende a tus lectores con giros inesperados</p>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Contexto de tu Historia</label>
+            <textarea id="plot-context" rows="4" placeholder="Describe brevemente tu historia actual..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"></textarea>
+          </div>
+
+          <button onclick="generatePlotTwist()" class="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+            🎲 Generar Giro de Trama
+          </button>
+        </div>
+
+        <div id="generated-twist-result" class="hidden mt-6">
+          <div class="bg-gradient-to-br from-pink-50 to-purple-50 rounded-lg p-4 border border-pink-200">
+            <h3 class="font-bold text-pink-900 mb-3">💡 Giro de Trama Sugerido</h3>
+            <p id="twist-output" class="text-gray-700 leading-relaxed"></p>
+          </div>
+          <div class="mt-4 flex space-x-2">
+            <button onclick="generatePlotTwist()" class="flex-1 bg-white border border-purple-300 text-purple-600 py-2 rounded-lg font-medium hover:bg-purple-50 transition-colors">
+              🔄 Otro Giro
+            </button>
+            <button onclick="copyTwist()" class="flex-1 bg-white border border-purple-300 text-purple-600 py-2 rounded-lg font-medium hover:bg-purple-50 transition-colors">
+              📋 Copiar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- World Builder Tab -->
+    <div id="zenvio-tab-world-builder" class="zenvio-tab-content hidden flex-1 overflow-y-auto p-4">
+      <div class="max-w-2xl mx-auto">
+        <div class="text-center mb-6">
+          <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-full flex items-center justify-center">
+            <span class="text-3xl">🌍</span>
+          </div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-2">Constructor de Mundos</h2>
+          <p class="text-gray-600">Crea mundos ficticios detallados y coherentes</p>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Tipo de Mundo</label>
+            <select id="world-type" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+              <option value="fantasia">Fantasía Medieval</option>
+              <option value="futurista">Futurista/Sci-Fi</option>
+              <option value="post-apocaliptico">Post-Apocalíptico</option>
+              <option value="magico">Realismo Mágico</option>
+              <option value="steampunk">Steampunk</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Elementos Especiales</label>
+            <input type="text" id="world-elements" placeholder="Ej: magia, tecnología avanzada, criaturas míticas..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+          </div>
+
+          <button onclick="generateWorld()" class="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+            ✨ Construir Mundo
+          </button>
+        </div>
+
+        <div id="generated-world-result" class="hidden mt-6">
+          <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-4 border border-blue-200">
+            <h3 class="font-bold text-blue-900 mb-3">🌍 Tu Mundo Creado</h3>
+            <div id="world-output" class="space-y-3 text-gray-700"></div>
+          </div>
+          <button onclick="copyWorld()" class="w-full mt-4 bg-white border border-purple-300 text-purple-600 py-2 rounded-lg font-medium hover:bg-purple-50 transition-colors">
+            📋 Copiar Descripción
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input area (solo para el tab de chat) -->
     <div class="border-t border-gray-200 p-4">
       <div class="flex items-end space-x-2">
         <div class="flex-1 bg-gray-100 rounded-full px-4 py-2 flex items-center">
@@ -2575,13 +2786,345 @@ function closeZenvioChat() {
   document.getElementById('creator-hub-view').classList.remove('hidden');
 }
 
+// Función para cambiar entre tabs de Zenvio AI
+function switchZenvioTab(tabName) {
+  // Ocultar todos los contenidos
+  document.querySelectorAll('.zenvio-tab-content').forEach(content => {
+    content.classList.add('hidden');
+  });
+  
+  // Remover active de todos los tabs
+  document.querySelectorAll('.zenvio-tab').forEach(tab => {
+    tab.classList.remove('active', 'border-purple-600', 'text-purple-600');
+    tab.classList.add('border-transparent', 'text-gray-600');
+  });
+  
+  // Mostrar el contenido seleccionado
+  const selectedContent = document.getElementById(`zenvio-tab-${tabName}`);
+  if (selectedContent) {
+    selectedContent.classList.remove('hidden');
+  }
+  
+  // Activar el tab seleccionado
+  event.target.classList.add('active', 'border-purple-600', 'text-purple-600');
+  event.target.classList.remove('border-transparent', 'text-gray-600');
+}
+
+// Generador de Historias
+async function generateStory() {
+  const genre = document.getElementById('story-genre').value;
+  const theme = document.getElementById('story-theme').value.trim();
+  const length = document.getElementById('story-length').value;
+  
+  if (!theme) {
+    alert('Por favor ingresa un tema o idea para tu historia');
+    return;
+  }
+  
+  const btn = event.target;
+  const originalText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<svg class="animate-spin h-5 w-5 mx-auto" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+  
+  try {
+    const prompt = `Escribe una historia ${length} de género ${genre} sobre: ${theme}. Hazla emocionante y bien estructurada con inicio, desarrollo y final.`;
+    
+    const response = await fetch('/.netlify/functions/groq-chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'llama3-8b-8192',
+        message: prompt,
+        max_tokens: length === 'larga' ? 2000 : (length === 'media' ? 1000 : 500),
+        temperature: 0.8
+      })
+    });
+    
+    const data = await response.json();
+    const story = data.content || data.raw?.choices?.[0]?.message?.content || generarHistoriaLocal(genre, theme, length);
+    
+    document.getElementById('story-output').textContent = story;
+    document.getElementById('generated-story-result').classList.remove('hidden');
+    
+  } catch (error) {
+    console.error('Error:', error);
+    const story = generarHistoriaLocal(genre, theme, length);
+    document.getElementById('story-output').textContent = story;
+    document.getElementById('generated-story-result').classList.remove('hidden');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+  }
+}
+
+function generarHistoriaLocal(genre, theme, length) {
+  const historias = {
+    fantasia: `En un reino olvidado donde ${theme}, un joven héroe descubre un antiguo secreto que cambiará su destino para siempre. Con la ayuda de aliados inesperados y enfrentando peligros inimaginables, debe encontrar el coraje para salvar su mundo de la oscuridad que amenaza con consumirlo todo.`,
+    'ciencia-ficcion': `En el año 2157, cuando ${theme}, la humanidad se encuentra al borde de un descubrimiento que redefinirá su existencia. Un científico brillante debe tomar decisiones imposibles mientras navega por las complejidades de la tecnología avanzada y los dilemas éticos que esta presenta.`,
+    romance: `Cuando ${theme}, dos almas destinadas se encuentran en las circunstancias más inesperadas. A través de obstáculos, malentendidos y momentos de pura magia, descubren que el amor verdadero puede superar cualquier barrera.`,
+    terror: `En la oscuridad de la noche, donde ${theme}, comienza una pesadilla que desafía toda lógica. Lo que parecía ser una noche tranquila se convierte en una lucha desesperada por la supervivencia contra fuerzas que no deberían existir.`,
+    misterio: `Cuando ${theme}, un detective perspicaz se ve envuelto en un caso que desafía toda explicación. Cada pista revela más preguntas que respuestas, y la verdad resulta ser más sorprendente de lo que nadie podía imaginar.`,
+    aventura: `En tierras inexploradas donde ${theme}, un grupo de valientes aventureros emprende un viaje épico. Enfrentando peligros naturales, enemigos formidables y sus propios miedos, descubren que el verdadero tesoro es el camino que recorren juntos.`,
+    drama: `En medio de ${theme}, vidas entrelazadas enfrentan decisiones que cambiarán su futuro. Entre conflictos personales, secretos revelados y momentos de profunda humanidad, cada personaje debe encontrar su propio camino hacia la redención.`
+  };
+  
+  return historias[genre] || historias.fantasia;
+}
+
+function copyStory() {
+  const story = document.getElementById('story-output').textContent;
+  navigator.clipboard.writeText(story).then(() => {
+    event.target.textContent = '✔ Copiado';
+    setTimeout(() => {
+      event.target.textContent = '📋 Copiar';
+    }, 2000);
+  });
+}
+
+// Creador de Personajes
+async function generateCharacter() {
+  const type = document.getElementById('character-type').value;
+  const traits = document.getElementById('character-traits').value.trim();
+  
+  const btn = event.target;
+  const originalText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<svg class="animate-spin h-5 w-5 mx-auto" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+  
+  try {
+    const prompt = `Crea un perfil detallado de personaje tipo ${type} con estas características: ${traits || 'sorpréndeme'}. Incluye: nombre, edad, apariencia, personalidad, habilidades, debilidades, historia de fondo y motivaciones.`;
+    
+    const response = await fetch('/.netlify/functions/groq-chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'llama3-8b-8192',
+        message: prompt,
+        max_tokens: 500,
+        temperature: 0.9
+      })
+    });
+    
+    const data = await response.json();
+    const character = data.content || data.raw?.choices?.[0]?.message?.content || generarPersonajeLocal(type, traits);
+    
+    mostrarPersonaje(character);
+    
+  } catch (error) {
+    console.error('Error:', error);
+    const character = generarPersonajeLocal(type, traits);
+    mostrarPersonaje(character);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+  }
+}
+
+function generarPersonajeLocal(type, traits) {
+  const nombres = ['Aria', 'Kael', 'Luna', 'Draven', 'Seraphina', 'Thorne', 'Nova', 'Zephyr'];
+  const nombre = nombres[Math.floor(Math.random() * nombres.length)];
+  const edad = Math.floor(Math.random() * 30) + 18;
+  
+  return `**Nombre:** ${nombre}\n**Edad:** ${edad} años\n**Tipo:** ${type}\n**Características:** ${traits || 'Misterioso y carismático'}\n**Apariencia:** Cabello oscuro, ojos penetrantes, porte distinguido\n**Personalidad:** Determinado, inteligente, con un pasado complejo\n**Habilidades:** Estrategia, liderazgo, combate\n**Debilidades:** Confianza excesiva, recuerdos dolorosos\n**Historia:** Criado en circunstancias difíciles, ha forjado su propio camino\n**Motivación:** Busca redención y un propósito mayor`;
+}
+
+function mostrarPersonaje(character) {
+  const output = document.getElementById('character-output');
+  const lines = character.split('\n');
+  output.innerHTML = lines.map(line => {
+    if (line.startsWith('**')) {
+      return `<div class="font-semibold text-purple-900">${line.replace(/\*\*/g, '')}</div>`;
+    }
+    return `<div>${line}</div>`;
+  }).join('');
+  document.getElementById('generated-character-result').classList.remove('hidden');
+}
+
+function copyCharacter() {
+  const character = document.getElementById('character-output').textContent;
+  navigator.clipboard.writeText(character).then(() => {
+    event.target.textContent = '✔ Copiado';
+    setTimeout(() => {
+      event.target.textContent = '📋 Copiar Perfil';
+    }, 2000);
+  });
+}
+
+// Generador de Giros de Trama
+async function generatePlotTwist() {
+  const context = document.getElementById('plot-context').value.trim();
+  
+  const btn = event.target;
+  const originalText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<svg class="animate-spin h-5 w-5 mx-auto" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+  
+  try {
+    const prompt = context 
+      ? `Basado en esta historia: "${context}", sugiere un giro de trama sorprendente e inesperado que cambie todo.`
+      : 'Sugiere un giro de trama original y sorprendente para una historia.';
+    
+    const response = await fetch('/.netlify/functions/groq-chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'llama3-8b-8192',
+        message: prompt,
+        max_tokens: 200,
+        temperature: 1.0
+      })
+    });
+    
+    const data = await response.json();
+    const twist = data.content || data.raw?.choices?.[0]?.message?.content || generarGiroLocal();
+    
+    document.getElementById('twist-output').textContent = twist;
+    document.getElementById('generated-twist-result').classList.remove('hidden');
+    
+  } catch (error) {
+    console.error('Error:', error);
+    const twist = generarGiroLocal();
+    document.getElementById('twist-output').textContent = twist;
+    document.getElementById('generated-twist-result').classList.remove('hidden');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+  }
+}
+
+function generarGiroLocal() {
+  const giros = [
+    'El mentor del protagonista resulta ser el verdadero villano que ha estado manipulando los eventos desde el principio.',
+    'Todo lo que ha sucedido es en realidad una simulación, y el protagonista está a punto de despertar en un mundo completamente diferente.',
+    'El antagonista y el protagonista son en realidad la misma persona de líneas temporales diferentes.',
+    'La persona que parecía ser el villano estaba en realidad protegiendo al mundo de una amenaza aún mayor.',
+    'El protagonista descubre que tiene un hermano gemelo que ha estado viviendo su vida en paralelo.',
+    'La historia entera ha sido narrada desde la perspectiva del villano, y el "héroe" es en realidad el antagonista.',
+    'El mundo en el que viven los personajes está dentro de un libro que alguien está escribiendo en tiempo real.',
+    'El mejor amigo del protagonista ha estado muerto todo el tiempo, y solo él puede verlo.'
+  ];
+  return giros[Math.floor(Math.random() * giros.length)];
+}
+
+function copyTwist() {
+  const twist = document.getElementById('twist-output').textContent;
+  navigator.clipboard.writeText(twist).then(() => {
+    event.target.textContent = '✔ Copiado';
+    setTimeout(() => {
+      event.target.textContent = '📋 Copiar';
+    }, 2000);
+  });
+}
+
+// Constructor de Mundos
+async function generateWorld() {
+  const type = document.getElementById('world-type').value;
+  const elements = document.getElementById('world-elements').value.trim();
+  
+  const btn = event.target;
+  const originalText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<svg class="animate-spin h-5 w-5 mx-auto" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+  
+  try {
+    const prompt = `Crea un mundo ficticio detallado de tipo ${type} con estos elementos: ${elements || 'sorpréndeme'}. Incluye: nombre del mundo, geografía, clima, sistema político, cultura, tecnología/magia, especies/razas, y conflictos principales.`;
+    
+    const response = await fetch('/.netlify/functions/groq-chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'llama3-8b-8192',
+        message: prompt,
+        max_tokens: 600,
+        temperature: 0.9
+      })
+    });
+    
+    const data = await response.json();
+    const world = data.content || data.raw?.choices?.[0]?.message?.content || generarMundoLocal(type, elements);
+    
+    mostrarMundo(world);
+    
+  } catch (error) {
+    console.error('Error:', error);
+    const world = generarMundoLocal(type, elements);
+    mostrarMundo(world);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+  }
+}
+
+function generarMundoLocal(type, elements) {
+  const mundos = {
+    fantasia: `**Nombre:** Aethermoor\n**Geografía:** Continente dividido por montañas mágicas y bosques ancestrales\n**Clima:** Variado, con zonas de eterna primavera y regiones de niebla perpetua\n**Sistema Político:** Reinos unidos bajo un consejo de magos\n**Cultura:** Sociedad basada en el honor y la magia\n**Magia:** Energía elemental canalizada a través de cristales antiguos\n**Especies:** Humanos, elfos, enanos, y criaturas míticas\n**Conflicto:** La magia está desapareciendo misteriosamente`,
+    futurista: `**Nombre:** Neo-Terra\n**Geografía:** Megaciudades verticales conectadas por redes de transporte cuántico\n**Clima:** Controlado artificialmente\n**Sistema Político:** Corporatocracia con IA gobernante\n**Cultura:** Sociedad hiperconectada y transhumanista\n**Tecnología:** Implantes neuronales, realidad aumentada, viajes espaciales\n**Especies:** Humanos mejorados, androides conscientes\n**Conflicto:** Lucha por la identidad humana en la era de la IA`,
+    'post-apocaliptico': `**Nombre:** Las Tierras Rotas\n**Geografía:** Ruinas de ciudades antiguas, desiertos radiactivos\n**Clima:** Extremo e impredecible\n**Sistema Político:** Tribus y facciones en constante conflicto\n**Cultura:** Supervivencia y adaptación\n**Tecnología:** Mezcla de tecnología salvada y primitiva\n**Especies:** Humanos mutados, criaturas evolucionadas\n**Conflicto:** Recursos escasos y secretos del pasado`,
+    magico: `**Nombre:** Lumina\n**Geografía:** Mundo paralelo que se superpone con la realidad\n**Clima:** Influenciado por emociones colectivas\n**Sistema Político:** Democracia oculta de magos\n**Cultura:** Coexistencia secreta con el mundo mundano\n**Magia:** Sutil, entretejida en la vida cotidiana\n**Especies:** Humanos con diferentes niveles de sensibilidad mágica\n**Conflicto:** Mantener el equilibrio entre ambos mundos`,
+    steampunk: `**Nombre:** Engranaje Prime\n**Geografía:** Imperio industrial con ciudades de vapor y engranajes\n**Clima:** Perpetuamente nublado por la industria\n**Sistema Político:** Monarquía industrial\n**Cultura:** Era victoriana con tecnología avanzada de vapor\n**Tecnología:** Máquinas de vapor, autómatas, dirigibles\n**Especies:** Humanos, autómatas conscientes\n**Conflicto:** Revolución de los trabajadores contra la aristocracia`
+  };
+  
+  return mundos[type] || mundos.fantasia;
+}
+
+function mostrarMundo(world) {
+  const output = document.getElementById('world-output');
+  const lines = world.split('\n');
+  output.innerHTML = lines.map(line => {
+    if (line.startsWith('**')) {
+      return `<div class="font-semibold text-blue-900 mt-2">${line.replace(/\*\*/g, '')}</div>`;
+    }
+    return `<div class="text-gray-700">${line}</div>`;
+  }).join('');
+  document.getElementById('generated-world-result').classList.remove('hidden');
+}
+
+function copyWorld() {
+  const world = document.getElementById('world-output').textContent;
+  navigator.clipboard.writeText(world).then(() => {
+    event.target.textContent = '✔ Copiado';
+    setTimeout(() => {
+      event.target.textContent = '📋 Copiar Descripción';
+    }, 2000);
+  });
+}
+
+// Menú de Zenvio AI
+function openZenvioMenu() {
+  const menu = document.createElement('div');
+  menu.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[60]';
+  menu.innerHTML = `
+    <div class="bg-white rounded-2xl p-6 max-w-sm mx-4 transform transition-all">
+      <h3 class="text-xl font-bold text-gray-900 mb-4 text-center">Zenvio AI</h3>
+      <div class="space-y-3">
+        <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-4 border border-purple-200">
+          <p class="text-sm text-gray-700 leading-relaxed">
+            🤖 <strong>Zenvio AI</strong> es tu asistente creativo impulsado por inteligencia artificial.
+          </p>
+        </div>
+        <div class="text-sm text-gray-600 space-y-2">
+          <p>✨ Genera historias completas</p>
+          <p>👤 Crea personajes únicos</p>
+          <p>🎭 Inventa giros de trama</p>
+          <p>🌍 Construye mundos ficticios</p>
+          <p>🖼️ Genera imágenes con IA</p>
+        </div>
+        <button onclick="this.closest('.fixed').remove()" class="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+          Entendido
+        </button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(menu);
+}
+
 function sendChatMessage() {
   const input = document.getElementById('chat-input');
   const message = input.value.trim();
   
   if (!message) return;
   
-  const messagesContainer = document.getElementById('chat-messages');
+  const messagesContainer = document.getElementById('zenvio-tab-chat');
   
   // Mensaje del usuario
   const userMsg = document.createElement('div');
@@ -2660,7 +3203,7 @@ function sendChatMessage() {
 }
 
 	async function getLlamaAIResponse(userMessage) {
-	  const messagesContainer = document.getElementById('chat-messages');
+	  const messagesContainer = document.getElementById('zenvio-tab-chat');
 	  
 	  try {
 	    // Usar Groq vía Netlify Function (evita exponer la API key en el navegador)
@@ -2812,7 +3355,7 @@ function getSmartLocalResponse(message) {
 }
 
 function showTypingAnimation() {
-  const messagesContainer = document.getElementById('chat-messages');
+  const messagesContainer = document.getElementById('zenvio-tab-chat');
   const typingMsg = document.createElement('div');
   typingMsg.className = 'flex items-start space-x-3';
   typingMsg.id = 'typing-indicator';
@@ -2847,7 +3390,7 @@ function removeTypingAnimation() {
 }
 
 async function generateImageInChat(prompt) {
-  const messagesContainer = document.getElementById('chat-messages');
+  const messagesContainer = document.getElementById('zenvio-tab-chat');
   
   try {
     // Mejorar el prompt
@@ -4403,6 +4946,41 @@ function escapeHtml(text) {
     66% {
       transform: translateY(-2px) rotate(10deg);
     }
+  }
+
+  /* Estilos para tabs de Zenvio AI */
+  .zenvio-tab {
+    transition: all 0.3s ease;
+  }
+  
+  .zenvio-tab.active {
+    border-color: #9333ea;
+    color: #9333ea;
+  }
+  
+  .zenvio-tab-content {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Scrollbar oculto para tabs */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   /* Estilos del autor */
