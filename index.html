@@ -2534,22 +2534,22 @@ firebase.auth().onAuthStateChanged(user => {
     </div>
 
     <!-- Tabs de funcionalidades -->
-    <div class="flex-shrink-0 border-b border-gray-200 bg-gray-50">
+    <div class="flex-shrink-0 border-b border-gray-200 bg-white">
       <div class="flex overflow-x-auto scrollbar-hide">
-        <button onclick="switchZenvioTab('chat')" class="zenvio-tab active px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 border-purple-600 text-purple-600">
-          💬 Chat
+        <button onclick="switchZenvioTab('chat')" class="zenvio-tab active px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 border-[#FE2C55] text-[#FE2C55]">
+          Chat
         </button>
-        <button onclick="switchZenvioTab('story-generator')" class="zenvio-tab px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 border-transparent text-gray-600 hover:text-purple-600">
-          📖 Generador de Historias
+        <button onclick="switchZenvioTab('story-generator')" class="zenvio-tab px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 border-transparent text-gray-600 hover:text-[#FE2C55]">
+          Generador de Historias
         </button>
-        <button onclick="switchZenvioTab('character-creator')" class="zenvio-tab px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 border-transparent text-gray-600 hover:text-purple-600">
-          👤 Creador de Personajes
+        <button onclick="switchZenvioTab('character-creator')" class="zenvio-tab px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 border-transparent text-gray-600 hover:text-[#FE2C55]">
+          Creador de Personajes
         </button>
-        <button onclick="switchZenvioTab('plot-twist')" class="zenvio-tab px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 border-transparent text-gray-600 hover:text-purple-600">
-          🎭 Giros de Trama
+        <button onclick="switchZenvioTab('plot-twist')" class="zenvio-tab px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 border-transparent text-gray-600 hover:text-[#FE2C55]">
+          Giros de Trama
         </button>
-        <button onclick="switchZenvioTab('world-builder')" class="zenvio-tab px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 border-transparent text-gray-600 hover:text-purple-600">
-          🌍 Constructor de Mundos
+        <button onclick="switchZenvioTab('world-builder')" class="zenvio-tab px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 border-transparent text-gray-600 hover:text-[#FE2C55]">
+          Constructor de Mundos
         </button>
       </div>
     </div>
@@ -2579,11 +2579,8 @@ firebase.auth().onAuthStateChanged(user => {
     <div id="zenvio-tab-story-generator" class="zenvio-tab-content hidden flex-1 overflow-y-auto p-4">
       <div class="max-w-2xl mx-auto">
         <div class="text-center mb-6">
-          <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-full flex items-center justify-center">
-            <span class="text-3xl">📖</span>
-          </div>
           <h2 class="text-2xl font-bold text-gray-900 mb-2">Generador de Historias</h2>
-          <p class="text-gray-600">Crea historias completas con IA en segundos</p>
+          <p class="text-gray-500 text-sm">Crea historias completas con IA en segundos</p>
         </div>
 
         <div class="space-y-4">
@@ -2614,16 +2611,16 @@ firebase.auth().onAuthStateChanged(user => {
             </select>
           </div>
 
-          <button onclick="generateStory()" class="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
-            ✨ Generar Historia
+          <button onclick="generateStory()" class="w-full bg-[#FE2C55] text-white py-3 rounded-full font-semibold hover:bg-red-600 transition-colors">
+            Generar Historia
           </button>
         </div>
 
-        <div id="generated-story-result" class="hidden mt-6 bg-gray-50 rounded-lg p-4">
+        <div id="generated-story-result" class="hidden mt-6 bg-gray-50 rounded-xl p-4 border border-gray-200">
           <div class="flex justify-between items-center mb-3">
             <h3 class="font-bold text-gray-900">Tu Historia Generada</h3>
-            <button onclick="copyStory()" class="text-purple-600 hover:text-purple-700 text-sm font-medium">
-              📋 Copiar
+            <button onclick="copyStory()" class="text-[#FE2C55] hover:text-red-600 text-sm font-medium">
+              Copiar
             </button>
           </div>
           <div id="story-output" class="text-gray-700 leading-relaxed whitespace-pre-wrap"></div>
@@ -2635,11 +2632,8 @@ firebase.auth().onAuthStateChanged(user => {
     <div id="zenvio-tab-character-creator" class="zenvio-tab-content hidden flex-1 overflow-y-auto p-4">
       <div class="max-w-2xl mx-auto">
         <div class="text-center mb-6">
-          <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-full flex items-center justify-center">
-            <span class="text-3xl">👤</span>
-          </div>
           <h2 class="text-2xl font-bold text-gray-900 mb-2">Creador de Personajes</h2>
-          <p class="text-gray-600">Diseña personajes únicos y memorables</p>
+          <p class="text-gray-500 text-sm">Diseña personajes únicos y memorables</p>
         </div>
 
         <div class="space-y-4">
@@ -2658,18 +2652,18 @@ firebase.auth().onAuthStateChanged(user => {
             <input type="text" id="character-traits" placeholder="Ej: valiente, misterioso, con poderes mágicos..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
           </div>
 
-          <button onclick="generateCharacter()" class="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
-            ✨ Crear Personaje
+          <button onclick="generateCharacter()" class="w-full bg-[#FE2C55] text-white py-3 rounded-full font-semibold hover:bg-red-600 transition-colors">
+            Crear Personaje
           </button>
         </div>
 
         <div id="generated-character-result" class="hidden mt-6 space-y-4">
-          <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-4 border border-purple-200">
-            <h3 class="font-bold text-purple-900 mb-3">Perfil del Personaje</h3>
+          <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
+            <h3 class="font-bold text-gray-900 mb-3">Perfil del Personaje</h3>
             <div id="character-output" class="space-y-2 text-gray-700"></div>
           </div>
-          <button onclick="copyCharacter()" class="w-full bg-white border border-purple-300 text-purple-600 py-2 rounded-lg font-medium hover:bg-purple-50 transition-colors">
-            📋 Copiar Perfil
+          <button onclick="copyCharacter()" class="w-full bg-white border border-gray-300 text-[#FE2C55] py-2 rounded-full font-medium hover:bg-gray-50 transition-colors">
+            Copiar Perfil
           </button>
         </div>
       </div>
@@ -2679,11 +2673,8 @@ firebase.auth().onAuthStateChanged(user => {
     <div id="zenvio-tab-plot-twist" class="zenvio-tab-content hidden flex-1 overflow-y-auto p-4">
       <div class="max-w-2xl mx-auto">
         <div class="text-center mb-6">
-          <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-full flex items-center justify-center">
-            <span class="text-3xl">🎭</span>
-          </div>
           <h2 class="text-2xl font-bold text-gray-900 mb-2">Generador de Giros de Trama</h2>
-          <p class="text-gray-600">Sorprende a tus lectores con giros inesperados</p>
+          <p class="text-gray-500 text-sm">Sorprende a tus lectores con giros inesperados</p>
         </div>
 
         <div class="space-y-4">
@@ -2692,22 +2683,22 @@ firebase.auth().onAuthStateChanged(user => {
             <textarea id="plot-context" rows="4" placeholder="Describe brevemente tu historia actual..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"></textarea>
           </div>
 
-          <button onclick="generatePlotTwist()" class="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
-            🎲 Generar Giro de Trama
+          <button onclick="generatePlotTwist()" class="w-full bg-[#FE2C55] text-white py-3 rounded-full font-semibold hover:bg-red-600 transition-colors">
+            Generar Giro de Trama
           </button>
         </div>
 
         <div id="generated-twist-result" class="hidden mt-6">
-          <div class="bg-gradient-to-br from-pink-50 to-purple-50 rounded-lg p-4 border border-pink-200">
-            <h3 class="font-bold text-pink-900 mb-3">💡 Giro de Trama Sugerido</h3>
+          <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
+            <h3 class="font-bold text-gray-900 mb-3">Giro de Trama Sugerido</h3>
             <p id="twist-output" class="text-gray-700 leading-relaxed"></p>
           </div>
           <div class="mt-4 flex space-x-2">
-            <button onclick="generatePlotTwist()" class="flex-1 bg-white border border-purple-300 text-purple-600 py-2 rounded-lg font-medium hover:bg-purple-50 transition-colors">
-              🔄 Otro Giro
+            <button onclick="generatePlotTwist()" class="flex-1 bg-white border border-gray-300 text-[#FE2C55] py-2 rounded-full font-medium hover:bg-gray-50 transition-colors">
+              Otro Giro
             </button>
-            <button onclick="copyTwist()" class="flex-1 bg-white border border-purple-300 text-purple-600 py-2 rounded-lg font-medium hover:bg-purple-50 transition-colors">
-              📋 Copiar
+            <button onclick="copyTwist()" class="flex-1 bg-white border border-gray-300 text-[#FE2C55] py-2 rounded-full font-medium hover:bg-gray-50 transition-colors">
+              Copiar
             </button>
           </div>
         </div>
@@ -2718,11 +2709,8 @@ firebase.auth().onAuthStateChanged(user => {
     <div id="zenvio-tab-world-builder" class="zenvio-tab-content hidden flex-1 overflow-y-auto p-4">
       <div class="max-w-2xl mx-auto">
         <div class="text-center mb-6">
-          <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-full flex items-center justify-center">
-            <span class="text-3xl">🌍</span>
-          </div>
           <h2 class="text-2xl font-bold text-gray-900 mb-2">Constructor de Mundos</h2>
-          <p class="text-gray-600">Crea mundos ficticios detallados y coherentes</p>
+          <p class="text-gray-500 text-sm">Crea mundos ficticios detallados y coherentes</p>
         </div>
 
         <div class="space-y-4">
@@ -2742,18 +2730,18 @@ firebase.auth().onAuthStateChanged(user => {
             <input type="text" id="world-elements" placeholder="Ej: magia, tecnología avanzada, criaturas míticas..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
           </div>
 
-          <button onclick="generateWorld()" class="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
-            ✨ Construir Mundo
+          <button onclick="generateWorld()" class="w-full bg-[#FE2C55] text-white py-3 rounded-full font-semibold hover:bg-red-600 transition-colors">
+            Construir Mundo
           </button>
         </div>
 
         <div id="generated-world-result" class="hidden mt-6">
-          <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-4 border border-blue-200">
-            <h3 class="font-bold text-blue-900 mb-3">🌍 Tu Mundo Creado</h3>
+          <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
+            <h3 class="font-bold text-gray-900 mb-3">Tu Mundo Creado</h3>
             <div id="world-output" class="space-y-3 text-gray-700"></div>
           </div>
-          <button onclick="copyWorld()" class="w-full mt-4 bg-white border border-purple-300 text-purple-600 py-2 rounded-lg font-medium hover:bg-purple-50 transition-colors">
-            📋 Copiar Descripción
+          <button onclick="copyWorld()" class="w-full mt-4 bg-white border border-gray-300 text-[#FE2C55] py-2 rounded-full font-medium hover:bg-gray-50 transition-colors">
+            Copiar Descripción
           </button>
         </div>
       </div>
@@ -2795,7 +2783,7 @@ function switchZenvioTab(tabName) {
   
   // Remover active de todos los tabs
   document.querySelectorAll('.zenvio-tab').forEach(tab => {
-    tab.classList.remove('active', 'border-purple-600', 'text-purple-600');
+    tab.classList.remove('active', 'border-[#FE2C55]', 'text-[#FE2C55]');
     tab.classList.add('border-transparent', 'text-gray-600');
   });
   
@@ -2806,7 +2794,7 @@ function switchZenvioTab(tabName) {
   }
   
   // Activar el tab seleccionado
-  event.target.classList.add('active', 'border-purple-600', 'text-purple-600');
+  event.target.classList.add('active', 'border-[#FE2C55]', 'text-[#FE2C55]');
   event.target.classList.remove('border-transparent', 'text-gray-600');
 }
 
@@ -2874,9 +2862,9 @@ function generarHistoriaLocal(genre, theme, length) {
 function copyStory() {
   const story = document.getElementById('story-output').textContent;
   navigator.clipboard.writeText(story).then(() => {
-    event.target.textContent = '✔ Copiado';
+    event.target.textContent = 'Copiado';
     setTimeout(() => {
-      event.target.textContent = '📋 Copiar';
+      event.target.textContent = 'Copiar';
     }, 2000);
   });
 }
@@ -2933,7 +2921,7 @@ function mostrarPersonaje(character) {
   const lines = character.split('\n');
   output.innerHTML = lines.map(line => {
     if (line.startsWith('**')) {
-      return `<div class="font-semibold text-purple-900">${line.replace(/\*\*/g, '')}</div>`;
+      return `<div class="font-semibold text-gray-900">${line.replace(/\*\*/g, '')}</div>`;
     }
     return `<div>${line}</div>`;
   }).join('');
@@ -2943,9 +2931,9 @@ function mostrarPersonaje(character) {
 function copyCharacter() {
   const character = document.getElementById('character-output').textContent;
   navigator.clipboard.writeText(character).then(() => {
-    event.target.textContent = '✔ Copiado';
+    event.target.textContent = 'Copiado';
     setTimeout(() => {
-      event.target.textContent = '📋 Copiar Perfil';
+      event.target.textContent = 'Copiar Perfil';
     }, 2000);
   });
 }
@@ -3009,9 +2997,9 @@ function generarGiroLocal() {
 function copyTwist() {
   const twist = document.getElementById('twist-output').textContent;
   navigator.clipboard.writeText(twist).then(() => {
-    event.target.textContent = '✔ Copiado';
+    event.target.textContent = 'Copiado';
     setTimeout(() => {
-      event.target.textContent = '📋 Copiar';
+      event.target.textContent = 'Copiar';
     }, 2000);
   });
 }
@@ -3072,7 +3060,7 @@ function mostrarMundo(world) {
   const lines = world.split('\n');
   output.innerHTML = lines.map(line => {
     if (line.startsWith('**')) {
-      return `<div class="font-semibold text-blue-900 mt-2">${line.replace(/\*\*/g, '')}</div>`;
+      return `<div class="font-semibold text-gray-900 mt-2">${line.replace(/\*\*/g, '')}</div>`;
     }
     return `<div class="text-gray-700">${line}</div>`;
   }).join('');
@@ -3082,9 +3070,9 @@ function mostrarMundo(world) {
 function copyWorld() {
   const world = document.getElementById('world-output').textContent;
   navigator.clipboard.writeText(world).then(() => {
-    event.target.textContent = '✔ Copiado';
+    event.target.textContent = 'Copiado';
     setTimeout(() => {
-      event.target.textContent = '📋 Copiar Descripción';
+      event.target.textContent = 'Copiar Descripción';
     }, 2000);
   });
 }
@@ -3097,19 +3085,19 @@ function openZenvioMenu() {
     <div class="bg-white rounded-2xl p-6 max-w-sm mx-4 transform transition-all">
       <h3 class="text-xl font-bold text-gray-900 mb-4 text-center">Zenvio AI</h3>
       <div class="space-y-3">
-        <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-4 border border-purple-200">
+        <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
           <p class="text-sm text-gray-700 leading-relaxed">
-            🤖 <strong>Zenvio AI</strong> es tu asistente creativo impulsado por inteligencia artificial.
+            <strong>Zenvio AI</strong> es tu asistente creativo impulsado por inteligencia artificial.
           </p>
         </div>
         <div class="text-sm text-gray-600 space-y-2">
-          <p>✨ Genera historias completas</p>
-          <p>👤 Crea personajes únicos</p>
-          <p>🎭 Inventa giros de trama</p>
-          <p>🌍 Construye mundos ficticios</p>
-          <p>🖼️ Genera imágenes con IA</p>
+          <p>• Genera historias completas</p>
+          <p>• Crea personajes únicos</p>
+          <p>• Inventa giros de trama</p>
+          <p>• Construye mundos ficticios</p>
+          <p>• Genera imágenes con IA</p>
         </div>
-        <button onclick="this.closest('.fixed').remove()" class="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+        <button onclick="this.closest('.fixed').remove()" class="w-full bg-[#FE2C55] text-white py-3 rounded-full font-semibold hover:bg-red-600 transition-colors">
           Entendido
         </button>
       </div>
@@ -4954,8 +4942,8 @@ function escapeHtml(text) {
   }
   
   .zenvio-tab.active {
-    border-color: #9333ea;
-    color: #9333ea;
+    border-color: #FE2C55;
+    color: #FE2C55;
   }
   
   .zenvio-tab-content {
