@@ -3621,7 +3621,7 @@ function escapeHtml(text) {
   <!-- Header estilo Instagram -->
   <div class="sticky top-0 bg-white border-b border-gray-200 p-4 z-10">
     <div class="flex items-center justify-between">
-      <button onclick="closeCommunity()" class="text-gray-700 hover:text-[#FE2C55] transition-colors">
+      <button onclick="closeCommunity()" class="text-gray-700 hover:text-[#FE2C55] transition-colors hidden">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
@@ -3757,7 +3757,7 @@ function escapeHtml(text) {
   <div class="p-4">
 
     <!-- Back Button -->
-    <button onclick="closeSearch()" class="text-gray-800 mb-4 flex items-center font-medium hover:text-[#FE2C55] transition">
+    <button onclick="closeSearch()" class="text-gray-800 mb-4 flex items-center font-medium hover:text-[#FE2C55] transition hidden">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <polyline points="15 18 9 12 15 6" />
       </svg>
@@ -5061,7 +5061,7 @@ function escapeHtml(text) {
   <div class="block lg:hidden p-4 max-w-md mx-auto">
     <!-- Header con botón volver y botones de acción -->
     <div class="flex justify-between items-center mb-4">
-      <button onclick="openHome()" class="text-[#FE2C55] font-medium flex items-center">
+      <button onclick="openHome()" class="text-[#FE2C55] font-medium flex items-center hidden">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <polyline points="15 18 9 12 15 6" />
         </svg>
@@ -5851,7 +5851,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="author-profile-modal" class="fixed inset-0 overflow-y-auto z-50 hidden bg-gradient-to-b from-white to-[#f9f9f9] text-black">
   <div class="p-4 relative">
     <!-- Botón de volver -->
-    <button onclick="closeAuthorProfile()" class="text-[#FE2C55] mb-4 flex items-center">
+    <button onclick="closeAuthorProfile()" class="text-[#FE2C55] mb-4 flex items-center hidden">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <polyline points="15 18 9 12 15 6" />
       </svg>
@@ -6055,7 +6055,7 @@ function saveNote() {
     <!-- Header fijo -->
     <div class="sticky top-0 z-10 bg-white border-b border-gray-200 p-4">
       <div class="flex items-center justify-between">
-        <button onclick="closeStoryCreation()" class="text-gray-700">
+        <button onclick="closeStoryCreation()" class="text-gray-700 hidden">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
