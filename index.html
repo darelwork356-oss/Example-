@@ -3756,7 +3756,7 @@ function escapeHtml(text) {
 
 
 <!-- Search View - TikTok Style -->
-<div id="search-view" class="fixed inset-0 bg-white text-black overflow-y-auto hidden z-50">
+<div id="search-view" class="fixed inset-0 text-white overflow-y-auto hidden z-50" style="background: linear-gradient(180deg, #393B3D 0%, #2B2D2F 100%);">
   <div class="p-4">
 
     <!-- Back Button -->
@@ -3770,13 +3770,13 @@ function escapeHtml(text) {
     <!-- Search Bar and Category Filter -->
     <div class="space-y-4 mb-6">
       <div class="relative group">
-        <input id="search-input" type="text" placeholder="Search for stories or authors" class="w-full pl-12 pr-12 py-3 rounded-full bg-gray-100 text-black border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#FE2C55] focus:border-transparent text-base group" oninput="handleSearchInput()">
-        <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#FE2C55] group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <input id="search-input" type="text" placeholder="Buscar historias o autores" class="w-full pl-12 pr-12 py-3 rounded-lg text-white placeholder-gray-400 border-0 focus:outline-none focus:ring-2 focus:ring-[#00A2FF]" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);" oninput="handleSearchInput()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#00A2FF] group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <circle cx="11" cy="11" r="8" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-purple-500 transition-colors" />
           <path d="m21 21-4.35-4.35" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-purple-500 transition-colors" />
         </svg>
         <div class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 rounded-full bg-purple-400 opacity-0 group-hover:opacity-20 group-hover:animate-ping pointer-events-none"></div>
-        <button id="clear-search-btn" class="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors hidden" onclick="clearSearchInput()">
+        <button id="clear-search-btn" class="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 hover:text-white transition-colors hidden" onclick="clearSearchInput()">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
           </svg>
@@ -3821,13 +3821,13 @@ function escapeHtml(text) {
         </div>
       </div>
       
-      <div class="flex gap-2 overflow-x-auto pb-2">
-        <button class="category-chip active" data-value="">All</button>
-        <button class="category-chip" data-value="aventura">Adventure</button>
-        <button class="category-chip" data-value="romance">Romance</button>
-        <button class="category-chip" data-value="misterio">Mystery</button>
-        <button class="category-chip" data-value="fantasia">Fantasy</button>
-        <button class="category-chip" data-value="terror">Horror</button>
+      <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+        <button class="category-chip active" data-value="" style="background: rgba(0,162,255,0.2); color: #00A2FF; border: 1px solid #00A2FF;">All</button>
+        <button class="category-chip" data-value="aventura" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);">Adventure</button>
+        <button class="category-chip" data-value="romance" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);">Romance</button>
+        <button class="category-chip" data-value="misterio" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);">Mystery</button>
+        <button class="category-chip" data-value="fantasia" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);">Fantasy</button>
+        <button class="category-chip" data-value="terror" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);">Horror</button>
       </div>
       <select id="category-filter" class="hidden">
         <option value="">All Categories</option>
@@ -3840,19 +3840,19 @@ function escapeHtml(text) {
     </div>
 
     <!-- Search Results -->
-    <h2 id="search-results-title" class="text-xl font-bold mb-4 text-black">Search Results</h2>
-    <div class="flex justify-around border-b border-gray-200 mb-4">
-      <button data-tab="books" class="tab-button py-2 w-1/2 text-center font-medium text-gray-500 hover:text-[#FE2C55] active">
+    <h2 id="search-results-title" class="text-xl font-bold mb-4 text-white">Search Results</h2>
+    <div class="flex justify-around border-b mb-4" style="border-color: rgba(255,255,255,0.1);">
+      <button data-tab="books" class="tab-button py-2 w-1/2 text-center font-medium text-gray-400 hover:text-[#00A2FF] active" style="border-bottom: 2px solid #00A2FF; color: #00A2FF;">
         Stories
       </button>
-      <button data-tab="authors" class="tab-button py-2 w-1/2 text-center font-medium text-gray-500 hover:text-[#FE2C55]">
+      <button data-tab="authors" class="tab-button py-2 w-1/2 text-center font-medium text-gray-400 hover:text-[#00A2FF]" style="border-bottom: 2px solid transparent;">
         Authors
       </button>
     </div>
 
     <!-- Stories Section -->
     <div id="books-section" class="block">
-      <h3 id="search-books-title" class="text-base font-semibold mb-3 text-[#FE2C55]">Stories</h3>
+      <h3 id="search-books-title" class="text-base font-semibold mb-3 text-[#00A2FF]">Stories</h3>
       <div id="search-books-carousel" class="flex space-x-3 overflow-x-auto mb-6 p-1 scrollbar-hide">
         <!-- Stories will be loaded from Firebase here -->
       </div>
@@ -3860,7 +3860,7 @@ function escapeHtml(text) {
 
     <!-- Authors Section -->
     <div id="authors-section" class="hidden">
-      <h3 id="search-authors-title" class="text-base font-semibold mb-3 text-[#FE2C55]">Authors</h3>
+      <h3 id="search-authors-title" class="text-base font-semibold mb-3 text-[#00A2FF]">Authors</h3>
       <div id="search-authors-list" class="space-y-3">
         <!-- Authors will be loaded from Firebase here -->
       </div>
