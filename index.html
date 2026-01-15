@@ -1713,6 +1713,39 @@ setInterval(checkScheduledChapters, 60000);
       <div class="w-6"></div>
     </div>
     
+    <!-- Tu cuenta con foto y nombre -->
+    <div class="p-4 border-b border-gray-100">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Tu cuenta</h2>
+        <div class="flex items-center space-x-1">
+          <div class="w-4 h-4">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="baroGradientSmall" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#FE2C55;stop-opacity:1" />
+                  <stop offset="50%" style="stop-color:#ff6b7a;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#25F4EE;stop-opacity:1" />
+                </linearGradient>
+              </defs>
+              <circle cx="20" cy="20" r="18" fill="url(#baroGradientSmall)"/>
+              <path d="M14 10 L14 30 L22 30 C25 30 27 28 27 25 C27 23 26 21.5 24 21 C25.5 20.5 26 19 26 17 C26 14 24 10 21 10 Z M17 13 L21 13 C22.5 13 23 14 23 15.5 C23 17 22.5 18 21 18 L17 18 Z M17 21 L22 21 C23.5 21 24 22 24 23.5 C24 25 23.5 27 22 27 L17 27 Z" fill="white"/>
+            </svg>
+          </div>
+          <span class="text-xs font-medium text-gray-400">Baro</span>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3">
+        <img id="menu-profile-image" src="https://via.placeholder.com/150" class="w-14 h-14 rounded-full object-cover border-2 border-gray-200" alt="Foto de perfil">
+        <div class="flex-1">
+          <p id="menu-profile-username" class="font-semibold text-gray-900">@usuario</p>
+          <p class="text-sm text-gray-500">Ver perfil</p>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </div>
+    </div>
+    
     <!-- Lista de opciones scrolleable -->
     <div class="flex-1 overflow-y-auto">
       <div class="space-y-4 p-4">
@@ -1766,27 +1799,6 @@ setInterval(checkScheduledChapters, 60000);
         </button>
         
       </div>
-    </div>
-    
-    <!-- Footer con Baro (estilo Meta en Instagram) -->
-    <div class="border-t border-gray-100 p-6 bg-gray-50">
-      <div class="flex items-center justify-center space-x-2 mb-2">
-        <div class="w-6 h-6">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="baroGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#FE2C55;stop-opacity:1" />
-                <stop offset="50%" style="stop-color:#ff6b7a;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#25F4EE;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <circle cx="20" cy="20" r="18" fill="url(#baroGradient)"/>
-            <path d="M14 10 L14 30 L22 30 C25 30 27 28 27 25 C27 23 26 21.5 24 21 C25.5 20.5 26 19 26 17 C26 14 24 10 21 10 Z M17 13 L21 13 C22.5 13 23 14 23 15.5 C23 17 22.5 18 21 18 L17 18 Z M17 21 L22 21 C23.5 21 24 22 24 23.5 C24 25 23.5 27 22 27 L17 27 Z" fill="white"/>
-          </svg>
-        </div>
-        <span class="text-sm font-semibold text-gray-900">Baro</span>
-      </div>
-      <p class="text-xs text-gray-500 text-center">© 2024 Baro. Todos los derechos reservados.</p>
     </div>
   </div>
 </div>
@@ -7997,7 +8009,22 @@ function showNotification(message, type = 'info') {
 
 // Funciones para el menú de las 3 rayas
 function openMenuModal() {
-  document.getElementById('menu-modal').classList.remove('hidden');
+  const modal = document.getElementById('menu-modal');
+  modal.classList.remove('hidden');
+  
+  // Actualizar foto y nombre en tiempo real
+  const user = firebase.auth().currentUser;
+  if (user) {
+    firebase.database().ref('users/' + user.uid).once('value').then(snapshot => {
+      const userData = snapshot.val();
+      if (userData) {
+        const menuImg = document.getElementById('menu-profile-image');
+        const menuUsername = document.getElementById('menu-profile-username');
+        if (menuImg) menuImg.src = userData.profileImage || 'https://via.placeholder.com/150';
+        if (menuUsername) menuUsername.textContent = '@' + (userData.username || 'usuario');
+      }
+    });
+  }
 }
 
 function closeMenuModal() {
