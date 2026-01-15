@@ -9279,13 +9279,18 @@ function showLiveNotification(message, type = 'info') {
 }
 
 function openCreatorHub() {
+    // Ocultar TODAS las vistas
     const mainApp = document.getElementById('main-app');
     if (mainApp) mainApp.classList.add('hidden');
     document.getElementById('search-view').classList.add('hidden');
     document.getElementById('profile-view').classList.add('hidden');
     document.getElementById('community-view').classList.add('hidden');
     document.getElementById('zenvio-chat-view').classList.add('hidden');
+    
+    // Mostrar creator hub
     document.getElementById('creator-hub-view').classList.remove('hidden');
+    
+    // Ocultar top navbar
     const topNav = document.getElementById('top-navbar');
     if (topNav) topNav.style.display = 'none';
   }
@@ -9350,15 +9355,21 @@ function openCreatorHub() {
   }
 
   function openCommunity() {
+    // Ocultar TODAS las vistas
     const mainApp = document.getElementById('main-app');
     if (mainApp) mainApp.classList.add('hidden');
     document.getElementById('search-view').classList.add('hidden');
     document.getElementById('profile-view').classList.add('hidden');
     document.getElementById('creator-hub-view').classList.add('hidden');
     document.getElementById('zenvio-chat-view').classList.add('hidden');
+    
+    // Mostrar community
     document.getElementById('community-view').classList.remove('hidden');
+    
+    // Ocultar top navbar
     const topNav = document.getElementById('top-navbar');
     if (topNav) topNav.style.display = 'none';
+    
     loadNotes();
   }
 
@@ -10035,28 +10046,38 @@ async function likeNote(noteId) {
 <script>
   /*********************** FUNCIONES DE NAVEGACIÓN **************************/
   function openHome() {
+    // Ocultar TODAS las vistas
     document.getElementById('community-view').classList.add('hidden');
     document.getElementById('search-view').classList.add('hidden');
     document.getElementById('profile-view').classList.add('hidden');
     document.getElementById('creator-hub-view').classList.add('hidden');
     document.getElementById('zenvio-chat-view').classList.add('hidden');
+    
+    // Mostrar main-app
     const mainApp = document.getElementById('main-app');
     if (mainApp) {
       mainApp.classList.remove('hidden');
       mainApp.style.display = 'flex';
     }
+    
+    // Mostrar top navbar
     const topNav = document.getElementById('top-navbar');
     if (topNav) topNav.style.display = 'flex';
   }
 
   function openSearch() {
+    // Ocultar TODAS las vistas
     const mainApp = document.getElementById('main-app');
     if (mainApp) mainApp.classList.add('hidden');
     document.getElementById('community-view').classList.add('hidden');
     document.getElementById('profile-view').classList.add('hidden');
     document.getElementById('creator-hub-view').classList.add('hidden');
     document.getElementById('zenvio-chat-view').classList.add('hidden');
+    
+    // Mostrar search
     document.getElementById('search-view').classList.remove('hidden');
+    
+    // Mostrar top navbar
     const topNav = document.getElementById('top-navbar');
     if (topNav) topNav.style.display = 'flex';
   }
@@ -10064,15 +10085,22 @@ async function likeNote(noteId) {
   function openProfile() {
     const user = firebase.auth().currentUser;
     if (!user) return;
+    
+    // Ocultar TODAS las vistas
     const mainApp = document.getElementById('main-app');
     if (mainApp) mainApp.classList.add('hidden');
     document.getElementById('search-view').classList.add('hidden');
     document.getElementById('community-view').classList.add('hidden');
     document.getElementById('creator-hub-view').classList.add('hidden');
     document.getElementById('zenvio-chat-view').classList.add('hidden');
+    
+    // Mostrar profile
+    document.getElementById('profile-view').classList.remove('hidden');
+    
+    // Ocultar top navbar
     const topNav = document.getElementById('top-navbar');
     if (topNav) topNav.style.display = 'none';
-    document.getElementById('profile-view').classList.remove('hidden');
+    
     loadUserStats(user.uid);
   }
 
