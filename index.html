@@ -11092,38 +11092,7 @@ async function likeNote(noteId) {
     }
   }
 
-  function openProfile() {
-    showLoader();
-    setTimeout(() => {
-      mainApp.classList.add('hidden');
-      
-      // Ocultar la barra de navegación superior cuando se abre el perfil
-      const topNav = document.getElementById('top-navbar');
-      if (topNav) topNav.style.display = 'none';
-      
-      document.getElementById('profile-view').classList.remove('hidden');
-      hideLoader();
-    }, 300);
-  }
 
-  function openHome() {
-    showLoader();
-    setTimeout(() => {
-      document.getElementById('profile-view').classList.add('hidden');
-      mainApp.classList.remove('hidden');
-      
-      // Mostrar la barra de navegación superior cuando se vuelve al home
-      const topNav = document.getElementById('top-navbar');
-      if (topNav) topNav.style.display = 'flex';
-      
-      hideLoader();
-    }, 300);
-  }
-
-  function openSearch() {
-    mainApp.classList.add('hidden');
-    document.getElementById('search-view').classList.remove('hidden');
-  }
 
   function closeSearch() {
     document.getElementById('search-view').classList.add('hidden');
