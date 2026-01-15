@@ -1717,20 +1717,23 @@ setInterval(checkScheduledChapters, 60000);
     <div class="p-4 border-b border-gray-100">
       <div class="flex items-center justify-between mb-3">
         <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Tu cuenta</h2>
-        <div class="flex items-center space-x-1.5 bg-gradient-to-r from-[#FE2C55] to-[#25F4EE] px-2.5 py-1 rounded-full">
-          <div class="w-3.5 h-3.5">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="20" cy="20" r="18" fill="white"/>
-              <path d="M14 10 L14 30 L22 30 C25 30 27 28 27 25 C27 23 26 21.5 24 21 C25.5 20.5 26 19 26 17 C26 14 24 10 21 10 Z M17 13 L21 13 C22.5 13 23 14 23 15.5 C23 17 22.5 18 21 18 L17 18 Z M17 21 L22 21 C23.5 21 24 22 24 23.5 C24 25 23.5 27 22 27 L17 27 Z" fill="url(#baroGradientMini)"/>
+        <div class="flex items-center space-x-2">
+          <div class="relative w-5 h-5">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <linearGradient id="baroGradientMini" x1="0%" y1="0%" x2="100%" y2="100%">
+                <linearGradient id="baroInfinityGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" style="stop-color:#FE2C55;stop-opacity:1" />
+                  <stop offset="50%" style="stop-color:#ff6b7a;stop-opacity:1" />
                   <stop offset="100%" style="stop-color:#25F4EE;stop-opacity:1" />
                 </linearGradient>
               </defs>
+              <!-- Símbolo infinito estilo Meta -->
+              <path d="M 25 50 C 25 35, 35 25, 50 25 C 65 25, 75 35, 75 50 C 75 65, 65 75, 50 75 C 35 75, 25 65, 25 50 Z M 50 25 C 65 25, 75 35, 75 50 C 75 35, 85 25, 100 25 C 115 25, 125 35, 125 50 C 125 65, 115 75, 100 75 C 85 75, 75 65, 75 50 Z" fill="url(#baroInfinityGradient)" transform="translate(-25, 0) scale(0.8)"/>
+              <!-- Forma de B integrada en infinito -->
+              <path d="M 30 30 L 30 70 L 50 70 C 60 70, 65 65, 65 57.5 C 65 52.5, 62 48, 55 47 C 60 46, 62 42, 62 37.5 C 62 30, 57 30, 50 30 Z M 35 35 L 48 35 C 52 35, 55 37, 55 40 C 55 43, 52 45, 48 45 L 35 45 Z M 35 50 L 50 50 C 54 50, 57 52.5, 57 56 C 57 59.5, 54 65, 50 65 L 35 65 Z" fill="url(#baroInfinityGradient)"/>
             </svg>
           </div>
-          <span class="text-xs font-bold text-white tracking-wide">Baro</span>
+          <span class="text-xs font-semibold bg-gradient-to-r from-[#FE2C55] via-[#ff6b7a] to-[#25F4EE] bg-clip-text text-transparent">Baro</span>
         </div>
       </div>
       <div class="flex items-center space-x-3">
