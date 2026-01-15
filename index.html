@@ -1699,92 +1699,97 @@ setInterval(checkScheduledChapters, 60000);
   </div>
 </div>
 
-<!-- MODAL DE CONFIGURACIÓN CON INTRO DE BARO -->
+<!-- MODAL DE CONFIGURACIÓN -->
 <div id="menu-modal" class="fixed inset-0 z-50 hidden bg-white">
-  <div class="w-full h-full min-h-screen">
-    <div class="bg-white h-full min-h-screen">
-      <!-- Header -->
-      <div class="flex items-center justify-between p-4 border-b border-gray-100">
-        <button onclick="closeMenuModal()" class="text-gray-600 hover:text-[#FE2C55] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+  <div class="w-full h-full flex flex-col">
+    <!-- Header -->
+    <div class="flex items-center justify-between p-4 border-b border-gray-100">
+      <button onclick="closeMenuModal()" class="text-gray-600 hover:text-[#FE2C55] transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <h1 class="text-lg font-semibold text-gray-900">Configuración</h1>
+      <div class="w-6"></div>
+    </div>
+    
+    <!-- Lista de opciones scrolleable -->
+    <div class="flex-1 overflow-y-auto">
+      <div class="space-y-4 p-4">
+
+        <!-- Soporte -->
+        <button onclick="openSupportModal(); closeMenuModal();" class="w-full bg-white border border-gray-200 p-4 rounded-xl hover:bg-gray-50 transition-colors flex items-center">
+          <div class="w-12 h-12 bg-[#FE2C55] bg-opacity-10 rounded-full flex items-center justify-center mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FE2C55]" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div class="text-left">
+            <h3 class="font-semibold text-gray-900">Centro de Soporte</h3>
+            <p class="text-sm text-gray-500">Obtén ayuda y reporta problemas</p>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
           </svg>
         </button>
-        <h1 class="text-lg font-semibold text-gray-900">Configuración</h1>
-        <div class="w-6"></div>
+
+        <!-- Consigue Verificarte -->
+        <button onclick="openVerificationModal(); closeMenuModal();" class="w-full bg-white border border-blue-200 p-4 rounded-xl hover:bg-blue-50 transition-colors flex items-center">
+          <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div class="text-left">
+            <h3 class="font-semibold text-blue-600">Consigue Verificarte</h3>
+            <p class="text-sm text-blue-500">Obtén tu insignia de verificación</p>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+
+        <!-- Cerrar Sesión -->
+        <button onclick="signOutUser(); closeMenuModal();" class="w-full bg-white border border-red-200 p-4 rounded-xl hover:bg-red-50 transition-colors flex items-center">
+          <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+          </div>
+          <div class="text-left">
+            <h3 class="font-semibold text-red-600">Cerrar Sesión</h3>
+            <p class="text-sm text-red-500">Salir de tu cuenta</p>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-400 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+        
       </div>
-      
-      <!-- Intro de Baro estilo Meta AI con colores TikTok -->
-      <div class="p-6">
-        <div class="bg-gradient-to-br from-[#FE2C55] via-[#ff6b7a] to-[#25F4EE] rounded-3xl p-8 mb-6 shadow-xl">
-          <div class="flex items-center justify-center mb-6">
-            <div class="relative">
-              <div class="w-20 h-20 rounded-full bg-white flex items-center justify-center shadow-lg">
-                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <linearGradient id="baroGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" style="stop-color:#FE2C55;stop-opacity:1" />
-                      <stop offset="50%" style="stop-color:#ff6b7a;stop-opacity:1" />
-                      <stop offset="100%" style="stop-color:#25F4EE;stop-opacity:1" />
-                    </linearGradient>
-                  </defs>
-                  <circle cx="20" cy="20" r="18" fill="url(#baroGradient)"/>
-                  <path d="M14 10 L14 30 L22 30 C25 30 27 28 27 25 C27 23 26 21.5 24 21 C25.5 20.5 26 19 26 17 C26 14 24 10 21 10 Z M17 13 L21 13 C22.5 13 23 14 23 15.5 C23 17 22.5 18 21 18 L17 18 Z M17 21 L22 21 C23.5 21 24 22 24 23.5 C24 25 23.5 27 22 27 L17 27 Z" fill="white"/>
-                </svg>
-              </div>
-              <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-[#25F4EE] rounded-full border-2 border-white flex items-center justify-center">
-                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-              </div>
-            </div>
-          </div>
-          
-          <h2 class="text-2xl font-bold text-white text-center mb-3">Baro</h2>
-          <p class="text-white text-center text-sm opacity-90 mb-6 leading-relaxed">
-            La empresa detrás de Zenvio. Creando experiencias únicas para escritores y lectores.
-          </p>
-          
-          <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl p-4 space-y-3">
-            <div class="flex items-start space-x-3">
-              <div class="w-8 h-8 rounded-full bg-white bg-opacity-30 flex items-center justify-center flex-shrink-0">
-                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-              </div>
-              <div class="flex-1">
-                <h3 class="text-white font-semibold text-sm mb-1">Innovación</h3>
-                <p class="text-white text-xs opacity-80">Tecnología de IA para potenciar tu creatividad</p>
-              </div>
-            </div>
-            
-            <div class="flex items-start space-x-3">
-              <div class="w-8 h-8 rounded-full bg-white bg-opacity-30 flex items-center justify-center flex-shrink-0">
-                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                  <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
-                </svg>
-              </div>
-              <div class="flex-1">
-                <h3 class="text-white font-semibold text-sm mb-1">Visión</h3>
-                <p class="text-white text-xs opacity-80">Conectar historias con millones de lectores</p>
-              </div>
-            </div>
-            
-            <div class="flex items-start space-x-3">
-              <div class="w-8 h-8 rounded-full bg-white bg-opacity-30 flex items-center justify-center flex-shrink-0">
-                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-                </svg>
-              </div>
-              <div class="flex-1">
-                <h3 class="text-white font-semibold text-sm mb-1">Pasión</h3>
-                <p class="text-white text-xs opacity-80">Amor por las historias y la comunidad</p>
-              </div>
-            </div>
-          </div>
+    </div>
+    
+    <!-- Footer con Baro (estilo Meta en Instagram) -->
+    <div class="border-t border-gray-100 p-6 bg-gray-50">
+      <div class="flex items-center justify-center space-x-2 mb-2">
+        <div class="w-6 h-6">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="baroGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#FE2C55;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#ff6b7a;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#25F4EE;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <circle cx="20" cy="20" r="18" fill="url(#baroGradient)"/>
+            <path d="M14 10 L14 30 L22 30 C25 30 27 28 27 25 C27 23 26 21.5 24 21 C25.5 20.5 26 19 26 17 C26 14 24 10 21 10 Z M17 13 L21 13 C22.5 13 23 14 23 15.5 C23 17 22.5 18 21 18 L17 18 Z M17 21 L22 21 C23.5 21 24 22 24 23.5 C24 25 23.5 27 22 27 L17 27 Z" fill="white"/>
+          </svg>
         </div>
+        <span class="text-sm font-semibold text-gray-900">Baro</span>
       </div>
+      <p class="text-xs text-gray-500 text-center">© 2024 Baro. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</div>
       
       <!-- Lista de opciones del menú -->
       <div class="space-y-4">
