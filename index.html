@@ -2805,11 +2805,19 @@ firebase.auth().onAuthStateChanged(user => {
 function openZenvioChat() {
   document.getElementById('creator-hub-view').classList.add('hidden');
   document.getElementById('zenvio-chat-view').classList.remove('hidden');
+  
+  // Ocultar barra de navegación inferior
+  const bottomNav = document.getElementById('bottom-nav');
+  if (bottomNav) bottomNav.style.display = 'none';
 }
 
 function closeZenvioChat() {
   document.getElementById('zenvio-chat-view').classList.add('hidden');
   document.getElementById('creator-hub-view').classList.remove('hidden');
+  
+  // Mostrar barra de navegación inferior
+  const bottomNav = document.getElementById('bottom-nav');
+  if (bottomNav) bottomNav.style.display = 'block';
 }
 
 // Función para cambiar entre tabs de Zenvio AI
