@@ -6058,7 +6058,7 @@ function saveNote() {
 
 
 <!-- VISTA DE CREACIÓN DE HISTORIAS (Paso 1) - PANTALLA COMPLETA -->
-<div id="story-creation-view" class="fixed inset-0 overflow-y-auto z-50 hidden bg-white text-black">
+<div id="story-creation-view" class="fixed inset-0 overflow-y-auto z-[200] hidden bg-white text-black">
   <div class="min-h-screen w-full">
     <!-- Header fijo -->
     <div class="sticky top-0 z-10 bg-white border-b border-gray-200 p-4">
@@ -6211,7 +6211,7 @@ function previewCover(event) {
 </script>
 
 <!-- MODAL DE EDICIÓN DE HISTORIAS (Paso 3) -->
-<div id="story-edit-view" class="fixed inset-0 overflow-y-auto z-50 hidden bg-white text-black">
+<div id="story-edit-view" class="fixed inset-0 overflow-y-auto z-[200] hidden bg-white text-black">
   <div class="h-full flex flex-col">
     <!-- Header -->
     <div class="sticky top-0 bg-white border-b border-gray-200 p-4 z-10">
@@ -6390,7 +6390,7 @@ function previewEditCover(event) {
 </div>
 
 <!-- MODAL DE DETALLE DE HISTORIA -->
-<div id="story-detail-modal" class="fixed inset-0 overflow-y-auto z-50 hidden bg-gradient-to-b from-white to-[#f9f9f9] text-black">
+<div id="story-detail-modal" class="fixed inset-0 overflow-y-auto z-[200] hidden bg-gradient-to-b from-white to-[#f9f9f9] text-black">
   <div class="p-6 relative max-w-4xl mx-auto bg-white min-h-screen">
 
     <!-- Botón de volver -->
@@ -12052,10 +12052,18 @@ document.getElementById('category-filter').addEventListener('change', performRea
     document.getElementById('story-creation-view').classList.remove('hidden');
     document.getElementById('story-details-view').classList.add('hidden');
     document.getElementById('story-edit-view').classList.add('hidden');
+    
+    // Ocultar barra inferior
+    const bottomNav = document.getElementById('bottom-nav');
+    if (bottomNav) bottomNav.style.display = 'none';
   }
 
   function closeStoryCreation() {
     document.getElementById('story-creation-view').classList.add('hidden');
+    
+    // Mostrar barra inferior
+    const bottomNav = document.getElementById('bottom-nav');
+    if (bottomNav) bottomNav.style.display = 'block';
   }
 
   function backToStoryType() {
