@@ -5852,55 +5852,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- MODAL DE PERFIL DEL AUTOR -->
 <div id="author-profile-modal" class="fixed inset-0 overflow-y-auto z-50 hidden bg-white">
-  <!-- Header minimalista -->
-  <div class="sticky top-0 bg-white border-b border-gray-100 p-4 z-10">
-    <div class="flex items-center justify-between max-w-2xl mx-auto">
-      <button onclick="closeAuthorProfile()" class="text-gray-600 hover:text-[#00A2FF] transition">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-        </svg>
+  <div class="sticky top-0 bg-white border-b border-gray-200 p-3 z-10">
+    <div class="flex items-center justify-between">
+      <button onclick="closeAuthorProfile()" class="p-2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
       </button>
-      <button onclick="window.location.href='report.html'" class="text-gray-600 hover:text-red-500 transition">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-        </svg>
+      <button onclick="window.location.href='report.html'" class="p-2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/></svg>
       </button>
     </div>
   </div>
 
-  <div class="max-w-2xl mx-auto p-6">
-    <!-- Perfil -->
-    <div class="text-center mb-8">
-      <img id="author-profile-image" src="https://via.placeholder.com/150" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-[#00A2FF] shadow-lg">
-      <h2 id="author-profile-name" class="text-3xl font-bold text-gray-900 mb-2"></h2>
-      <div id="author-bio" class="text-gray-600 mb-4"></div>
-      <div id="author-social-links" class="flex justify-center space-x-3 mb-6"></div>
-    </div>
-
-    <!-- Stats -->
-    <div class="grid grid-cols-2 gap-3 mb-6">
-      <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 text-center border border-blue-200">
-        <div id="author-following" class="text-4xl font-bold text-[#00A2FF] mb-1">0</div>
-        <div class="text-sm font-medium text-gray-700">Siguiendo</div>
-      </div>
-      <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 text-center border border-blue-200">
-        <div id="author-followers" class="text-4xl font-bold text-[#00A2FF] mb-1">0</div>
-        <div class="text-sm font-medium text-gray-700">Seguidores</div>
+  <div class="p-4">
+    <div class="flex items-center mb-4">
+      <img id="author-profile-image" src="https://via.placeholder.com/150" class="w-20 h-20 rounded-full object-cover border-2 border-gray-200">
+      <div class="flex-1 grid grid-cols-3 gap-4 ml-6 text-center">
+        <div>
+          <div id="author-stories-count" class="font-semibold text-gray-900">0</div>
+          <div class="text-xs text-gray-500">historias</div>
+        </div>
+        <div onclick="openFollowersModal()" class="cursor-pointer">
+          <div id="author-followers" class="font-semibold text-gray-900">0</div>
+          <div class="text-xs text-gray-500">seguidores</div>
+        </div>
+        <div onclick="openFollowingModal()" class="cursor-pointer">
+          <div id="author-following" class="font-semibold text-gray-900">0</div>
+          <div class="text-xs text-gray-500">siguiendo</div>
+        </div>
       </div>
     </div>
 
-    <!-- Botón seguir -->
-    <button id="follow-button" onclick="followAuthor()" class="w-full bg-[#00A2FF] hover:bg-[#0066CC] text-white font-bold py-4 rounded-2xl transition-all transform hover:scale-105 shadow-lg mb-8">
+    <div class="mb-4">
+      <h2 id="author-profile-name" class="font-semibold text-sm text-gray-900"></h2>
+      <div id="author-bio" class="text-sm text-gray-900 mt-1"></div>
+      <div id="author-social-links" class="flex space-x-2 mt-2"></div>
+    </div>
+
+    <button id="follow-button" onclick="followAuthor()" class="w-full bg-[#00A2FF] text-white text-sm font-semibold py-2 rounded-lg">
       <span id="follow-button-text">Seguir</span>
     </button>
 
-    <!-- Historias -->
-    <div>
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-2xl font-bold text-gray-900">Historias</h3>
-        <span id="author-stories-count" class="text-sm text-gray-500">0</span>
-      </div>
-      <div id="author-stories" class="grid grid-cols-2 gap-4"></div>
+    <div class="border-t border-gray-200 mt-6 pt-4">
+      <div id="author-stories" class="grid grid-cols-3 gap-1"></div>
     </div>
   </div>
 </div>
