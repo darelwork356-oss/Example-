@@ -2272,11 +2272,11 @@ setInterval(checkScheduledChapters, 60000);
 
 <!-- APLICACIÓN PRINCIPAL ESTILO TIKTOK (MODO CLARO) -->
 <div id="main-app" class="h-screen flex flex-col font-sans text-black" style="display: none; opacity: 0; background: #F2F4F5;">
-  <!-- TOP BAR ESTILO TIKTOK -->
-  <div id="top-navbar" class="flex items-center justify-between px-4 py-3 border-b border-gray-200 sticky top-0 z-50 bg-white">
-    <h1 id="app-name" class="text-2xl font-bold text-[#161823]">Zenvio</h1>
+  <!-- TOP BAR ESTILO ROBLOX -->
+  <div id="top-navbar" class="flex items-center justify-between px-4 py-3 sticky top-0 z-50" style="background: linear-gradient(180deg, #393B3D 0%, #2B2D2F 100%); border-bottom: 1px solid rgba(255,255,255,0.1);">
+    <h1 id="app-name" class="text-2xl font-bold text-white">Zenvio</h1>
     <div class="flex items-center space-x-4">
-      <button onclick="openNotifications()" aria-label="Notificaciones" class="relative w-6 h-6 text-[#161823] hover:text-[#FE2C55] transition">
+      <button onclick="openNotifications()" aria-label="Notificaciones" class="relative w-6 h-6 text-white hover:text-[#00A2FF] transition">
         <svg class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
           <path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke-linecap="round" stroke-linejoin="round" />
           <path d="M13.73 21a2 2 0 01-3.46 0" stroke-linecap="round" stroke-linejoin="round" />
@@ -2479,30 +2479,30 @@ firebase.auth().onAuthStateChanged(user => {
     </section>
   </div>
 
-  <!-- BOTTOM NAVIGATION TIKTOK STYLE - GLOBAL -->
-  <div id="bottom-nav" class="fixed bottom-0 left-0 right-0 border-t border-gray-200 bg-white transition-transform duration-300 z-[100]">
+  <!-- BOTTOM NAVIGATION ESTILO ROBLOX -->
+  <div id="bottom-nav" class="fixed bottom-0 left-0 right-0 transition-transform duration-300 z-[100]" style="background: linear-gradient(180deg, #2B2D2F 0%, #393B3D 100%); border-top: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
     <div class="grid grid-cols-5 gap-1 p-3">
-      <button onclick="openHome()" class="flex flex-col items-center text-[#161823] hover:text-[#FE2C55] transition">
+      <button onclick="openHome()" class="flex flex-col items-center text-white hover:text-[#00A2FF] transition">
         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
           <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" />
           <polyline points="9,22 9,12 15,12 15,22" />
         </svg>
         <span class="text-xs font-medium">Inicio</span>
       </button>
-      <button onclick="openSearch()" class="flex flex-col items-center text-[#161823] hover:text-[#FE2C55] transition">
+      <button onclick="openSearch()" class="flex flex-col items-center text-white hover:text-[#00A2FF] transition">
         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
           <circle cx="11" cy="11" r="8" stroke-linecap="round" stroke-linejoin="round" />
           <line x1="21" y1="21" x2="16.65" y2="16.65" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <span class="text-xs font-medium">Buscar</span>
       </button>
-      <button onclick="openCreatorHub()" class="flex flex-col items-center text-[#161823] hover:text-[#FE2C55] transition">
+      <button onclick="openCreatorHub()" class="flex flex-col items-center text-white hover:text-[#00A2FF] transition">
         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
         </svg>
         <span class="text-xs font-medium">Crear</span>
       </button>
-      <button onclick="openCommunity()" class="flex flex-col items-center text-[#161823] hover:text-[#FE2C55] transition">
+      <button onclick="openCommunity()" class="flex flex-col items-center text-white hover:text-[#00A2FF] transition">
         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
           <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke-linecap="round" stroke-linejoin="round" />
           <circle cx="9" cy="7" r="4" />
@@ -2511,8 +2511,8 @@ firebase.auth().onAuthStateChanged(user => {
         </svg>
         <span class="text-xs font-medium">Comunidad</span>
       </button>
-      <button onclick="openProfile()" class="flex flex-col items-center text-[#161823] hover:text-[#FE2C55] transition">
-        <img id="bottom-nav-profile-pic" src="https://via.placeholder.com/150" class="w-6 h-6 rounded-full object-cover mb-1 border border-gray-300" alt="Perfil">
+      <button onclick="openProfile()" class="flex flex-col items-center text-white hover:text-[#00A2FF] transition">
+        <img id="bottom-nav-profile-pic" src="https://via.placeholder.com/150" class="w-6 h-6 rounded-full object-cover mb-1" style="border: 2px solid rgba(255,255,255,0.2);" alt="Perfil">
         <span class="text-xs font-medium">Perfil</span>
       </button>
     </div>
@@ -3626,18 +3626,18 @@ function escapeHtml(text) {
   </div>
 </div>
 
-<!-- Community View -->
-<div id="community-view" class="fixed inset-0 bg-white text-black overflow-y-auto hidden z-50">
-  <!-- Header estilo Instagram -->
-  <div class="sticky top-0 bg-white border-b border-gray-200 p-4 z-10">
+<!-- Community View ESTILO ROBLOX -->
+<div id="community-view" class="fixed inset-0 overflow-y-auto hidden z-50" style="background: linear-gradient(180deg, #393B3D 0%, #2B2D2F 100%);">
+  <!-- Header estilo Roblox -->
+  <div class="sticky top-0 p-4 z-10" style="background: rgba(57, 59, 61, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1);">
     <div class="flex items-center justify-between">
-      <button onclick="closeCommunity()" class="text-gray-700 hover:text-[#FE2C55] transition-colors hidden">
+      <button onclick="closeCommunity()" class="text-white hover:text-[#00A2FF] transition-colors hidden">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
       </button>
-      <h1 class="text-xl font-semibold">Comunidad</h1>
-      <button onclick="openNoteCreation()" class="text-[#FE2C55] hover:text-red-600 transition-colors">
+      <h1 class="text-xl font-semibold text-white">Comunidad</h1>
+      <button onclick="openNoteCreation()" class="text-[#00A2FF] hover:text-[#0066CC] transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
         </svg>
@@ -3645,16 +3645,16 @@ function escapeHtml(text) {
     </div>
   </div>
 
-  <!-- Tabs estilo Instagram -->
-  <div class="bg-white border-b border-gray-100">
+  <!-- Tabs estilo Roblox -->
+  <div style="background: rgba(43, 45, 47, 0.8); border-bottom: 1px solid rgba(255,255,255,0.1);">
     <div class="flex">
-      <button onclick="switchCommunityTab('feed')" class="community-tab flex-1 py-3 text-center font-medium border-b-2 border-[#FE2C55] text-[#FE2C55]" id="feed-tab">
+      <button onclick="switchCommunityTab('feed')" class="community-tab flex-1 py-3 text-center font-medium border-b-2 text-white" style="border-color: #00A2FF;" id="feed-tab">
         <svg class="w-6 h-6 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
         </svg>
         <span class="text-xs">Feed</span>
       </button>
-      <button onclick="switchCommunityTab('photos'); loadPhotos();" class="community-tab flex-1 py-3 text-center font-medium border-b-2 border-transparent text-gray-500" id="photos-tab">
+      <button onclick="switchCommunityTab('photos'); loadPhotos();" class="community-tab flex-1 py-3 text-center font-medium border-b-2 border-transparent" style="color: rgba(255,255,255,0.6);" id="photos-tab">
         <svg class="w-6 h-6 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
