@@ -5851,60 +5851,54 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!-- MODAL DE PERFIL DEL AUTOR -->
-<div id="author-profile-modal" class="fixed inset-0 overflow-y-auto z-50 hidden bg-white text-black">
-  <!-- Header estilo Roblox -->
-  <div class="sticky top-0 p-4 z-10" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0, 162, 255, 0.2);">
-    <div class="flex items-center justify-between">
-      <button onclick="closeAuthorProfile()" class="hover:text-[#00A2FF] transition-colors" style="color: #393B3D;">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+<div id="author-profile-modal" class="fixed inset-0 overflow-y-auto z-50 hidden bg-white">
+  <!-- Header minimalista -->
+  <div class="sticky top-0 bg-white border-b border-gray-100 p-4 z-10">
+    <div class="flex items-center justify-between max-w-2xl mx-auto">
+      <button onclick="closeAuthorProfile()" class="text-gray-600 hover:text-[#00A2FF] transition">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
       </button>
-      <h1 class="text-lg font-semibold" style="color: #00A2FF;">Perfil</h1>
-      <button onclick="window.location.href='report.html'" class="hover:text-[#00A2FF] transition-colors" style="color: #393B3D;">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      <button onclick="window.location.href='report.html'" class="text-gray-600 hover:text-red-500 transition">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
         </svg>
       </button>
     </div>
   </div>
 
-  <div class="p-6 max-w-2xl mx-auto">
-    <!-- Perfil del autor -->
-    <div class="flex flex-col items-center mb-6">
-      <div class="relative mb-4">
-        <img id="author-profile-image" src="https://via.placeholder.com/150" class="w-28 h-28 rounded-full object-cover" style="border: 4px solid #00A2FF;" alt="Foto del autor">
+  <div class="max-w-2xl mx-auto p-6">
+    <!-- Perfil -->
+    <div class="text-center mb-8">
+      <img id="author-profile-image" src="https://via.placeholder.com/150" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-[#00A2FF] shadow-lg">
+      <h2 id="author-profile-name" class="text-3xl font-bold text-gray-900 mb-2"></h2>
+      <div id="author-bio" class="text-gray-600 mb-4"></div>
+      <div id="author-social-links" class="flex justify-center space-x-3 mb-6"></div>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-2 gap-3 mb-6">
+      <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 text-center border border-blue-200">
+        <div id="author-following" class="text-4xl font-bold text-[#00A2FF] mb-1">0</div>
+        <div class="text-sm font-medium text-gray-700">Siguiendo</div>
       </div>
-      
-      <h2 id="author-profile-name" class="text-2xl font-bold mb-2" style="color: #393B3D;"></h2>
-      <div id="author-bio" class="text-center text-gray-600 mb-4 max-w-md"></div>
-      
-      <!-- Redes sociales -->
-      <div id="author-social-links" class="flex justify-center items-center space-x-4 mb-6"></div>
+      <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 text-center border border-blue-200">
+        <div id="author-followers" class="text-4xl font-bold text-[#00A2FF] mb-1">0</div>
+        <div class="text-sm font-medium text-gray-700">Seguidores</div>
+      </div>
     </div>
 
-    <!-- Estadísticas estilo Roblox -->
-    <div class="grid grid-cols-2 gap-4 mb-6">
-      <button onclick="openFollowingModal()" class="p-4 rounded-xl text-center transition-all hover:scale-105" style="background: rgba(0, 162, 255, 0.1); border: 1px solid rgba(0, 162, 255, 0.2);">
-        <div id="author-following" class="text-3xl font-bold" style="color: #00A2FF;">0</div>
-        <div class="text-sm text-gray-600 mt-1">Siguiendo</div>
-      </button>
-      <button onclick="openFollowersModal()" class="p-4 rounded-xl text-center transition-all hover:scale-105" style="background: rgba(0, 162, 255, 0.1); border: 1px solid rgba(0, 162, 255, 0.2);">
-        <div id="author-followers" class="text-3xl font-bold" style="color: #00A2FF;">0</div>
-        <div class="text-sm text-gray-600 mt-1">Seguidores</div>
-      </button>
-    </div>
-
-    <!-- Botón de seguir -->
-    <button id="follow-button" onclick="followAuthor()" class="w-full py-4 rounded-xl font-semibold text-white transition-all hover:scale-105" style="background: linear-gradient(135deg, #00A2FF 0%, #0066CC 100%); box-shadow: 0 4px 12px rgba(0, 162, 255, 0.3);">
+    <!-- Botón seguir -->
+    <button id="follow-button" onclick="followAuthor()" class="w-full bg-[#00A2FF] hover:bg-[#0066CC] text-white font-bold py-4 rounded-2xl transition-all transform hover:scale-105 shadow-lg mb-8">
       <span id="follow-button-text">Seguir</span>
     </button>
 
-    <!-- Historias del autor -->
-    <div class="mt-8">
+    <!-- Historias -->
+    <div>
       <div class="flex items-center justify-between mb-4">
-        <h3 class="text-xl font-bold" style="color: #00A2FF;">Historias</h3>
-        <div class="text-sm text-gray-500" id="author-stories-count">0 historias</div>
+        <h3 class="text-2xl font-bold text-gray-900">Historias</h3>
+        <span id="author-stories-count" class="text-sm text-gray-500">0</span>
       </div>
       <div id="author-stories" class="grid grid-cols-2 gap-4"></div>
     </div>
