@@ -1704,14 +1704,14 @@ setInterval(checkScheduledChapters, 60000);
 <!-- MODAL DE CONFIGURACIÓN -->
 <div id="menu-modal" class="fixed inset-0 z-50 hidden bg-white">
   <div class="w-full h-full flex flex-col">
-    <!-- Header -->
-    <div class="flex items-center justify-between p-4 border-b border-gray-100">
-      <button onclick="closeMenuModal()" class="text-gray-600 hover:text-[#FE2C55] transition-colors">
+    <!-- Header estilo Roblox -->
+    <div class="flex items-center justify-between p-4" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0, 162, 255, 0.2);">
+      <button onclick="closeMenuModal()" class="hover:text-[#00A2FF] transition-colors" style="color: #393B3D;">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
       </button>
-      <h1 class="text-lg font-semibold text-gray-900">Configuración</h1>
+      <h1 class="text-lg font-semibold" style="color: #00A2FF;">Configuración</h1>
       <div class="w-6"></div>
     </div>
     
@@ -3565,14 +3565,14 @@ function escapeHtml(text) {
 <!-- VISTA CREATOR HUB (NUEVA SECCIÓN DE CREACIÓN) -->
 <div id="creator-hub-view" class="fixed inset-0 bg-white text-black hidden z-50 overflow-hidden">
   <div class="h-full flex flex-col">
-    <!-- Header minimalista -->
-    <div class="flex-shrink-0 p-4 flex items-center justify-between border-b border-gray-200">
-      <button onclick="closeCreatorHub()" class="text-gray-700 hover:text-gray-900 transition-colors">
+    <!-- Header estilo Roblox -->
+    <div class="flex-shrink-0 p-4 flex items-center justify-between" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0, 162, 255, 0.2);">
+      <button onclick="closeCreatorHub()" class="hover:text-[#00A2FF] transition-colors" style="color: #393B3D;">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
-      <h1 class="text-lg font-semibold text-gray-900">Crear</h1>
+      <h1 class="text-lg font-semibold" style="color: #00A2FF;">Crear</h1>
       <button onclick="openZenvioChat()" class="p-2 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 hover:scale-110 transition-transform">
         <svg class="h-5 w-5 text-white transform transition-transform duration-300 hover:rotate-12 hover:-translate-y-1" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2L9 12L12 15L15 12L12 2Z"/>
@@ -5062,9 +5062,9 @@ function escapeHtml(text) {
 <div id="profile-view" class="fixed inset-0 overflow-y-auto z-40 hidden bg-white text-black scrollbar-hide">
   <!-- Vista móvil -->
   <div class="block lg:hidden p-4 max-w-md mx-auto">
-    <!-- Header con botón volver y botones de acción -->
-    <div class="flex justify-between items-center mb-4">
-      <button onclick="openHome()" class="text-[#FE2C55] font-medium flex items-center hidden">
+    <!-- Header con botón volver y botones de acción estilo Roblox -->
+    <div class="flex justify-between items-center mb-4 p-3 rounded-lg" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(0, 162, 255, 0.2);">
+      <button onclick="openHome()" class="font-medium flex items-center hidden" style="color: #00A2FF;">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <polyline points="15 18 9 12 15 6" />
         </svg>
@@ -5074,14 +5074,14 @@ function escapeHtml(text) {
       <!-- Botones de acción en la esquina superior derecha -->
       <div class="flex items-center space-x-2">
         <!-- Botón de crear historia -->
-        <button onclick="openStoryCreation()" class="text-[#FE2C55] p-2 hover:bg-gray-100 rounded-full transition-all">
+        <button onclick="openStoryCreation()" class="p-2 hover:bg-gray-100 rounded-full transition-all" style="color: #00A2FF;">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
           </svg>
         </button>
         
         <!-- Botón de menú (3 líneas) -->
-        <button onclick="openMenuModal()" class="text-[#FE2C55] p-2 hover:bg-gray-100 rounded-full transition-all">
+        <button onclick="openMenuModal()" class="p-2 hover:bg-gray-100 rounded-full transition-all" style="color: #00A2FF;">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
@@ -5096,7 +5096,7 @@ function escapeHtml(text) {
         
         <!-- Imagen de perfil (SOLO VISUALIZACIÓN) -->
         <div class="relative block">
-          <img id="profile-image" src="https://via.placeholder.com/150" class="w-24 h-24 rounded-full object-cover border-2 border-[#FE2C55] relative z-0" alt="Foto de perfil">
+          <img id="profile-image" src="https://via.placeholder.com/150" class="w-24 h-24 rounded-full object-cover relative z-0" style="border: 3px solid #00A2FF;" alt="Foto de perfil">
         </div>
         
 
@@ -5851,18 +5851,18 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!-- MODAL DE PERFIL DEL AUTOR -->
-<div id="author-profile-modal" class="fixed inset-0 overflow-y-auto z-50 hidden bg-gradient-to-b from-white to-[#f9f9f9] text-black">
+<div id="author-profile-modal" class="fixed inset-0 overflow-y-auto z-50 hidden bg-white text-black">
   <div class="p-4 relative">
-    <!-- Botón de volver -->
-    <button onclick="closeAuthorProfile()" class="text-[#FE2C55] mb-4 flex items-center hidden">
+    <!-- Botón de volver estilo Roblox -->
+    <button onclick="closeAuthorProfile()" class="mb-4 flex items-center hidden" style="color: #00A2FF;">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <polyline points="15 18 9 12 15 6" />
       </svg>
       <span id="btn-volver-author">Volver</span>
     </button>
     <!-- Botón de opciones (3 puntos) -->
-    <button id="options-button" class="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <button id="options-button" class="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200" style="color: #00A2FF;">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.75a.75.75 0 100-1.5.75.75 0 000 1.5zM12 13.25a.75.75 0 100-1.5.75.75 0 000 1.5zM12 19.75a.75.75 0 100-1.5.75.75 0 000 1.5z" />
       </svg>
     </button>
