@@ -5852,141 +5852,61 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- MODAL DE PERFIL DEL AUTOR -->
 <div id="author-profile-modal" class="fixed inset-0 overflow-y-auto z-50 hidden bg-white text-black">
-  <div class="p-4 relative">
-    <!-- Botón de volver estilo Roblox -->
-    <button onclick="closeAuthorProfile()" class="mb-4 flex items-center hidden" style="color: #00A2FF;">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <polyline points="15 18 9 12 15 6" />
-      </svg>
-      <span id="btn-volver-author">Volver</span>
-    </button>
-    <!-- Botón de opciones (3 puntos) -->
-    <button id="options-button" class="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200" style="color: #00A2FF;">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.75a.75.75 0 100-1.5.75.75 0 000 1.5zM12 13.25a.75.75 0 100-1.5.75.75 0 000 1.5zM12 19.75a.75.75 0 100-1.5.75.75 0 000 1.5z" />
-      </svg>
-    </button>
-    <!-- Menú de opciones -->
-    <div id="options-menu" class="absolute top-12 right-4 bg-white border border-gray-300 rounded-lg shadow-lg hidden">
-      <ul class="divide-y">
-        <li><button onclick="window.location.href='report.html'" class="w-full text-left px-4 py-2 hover:bg-gray-100">Reportar</button></li>
-      </ul>
+  <!-- Header estilo Roblox -->
+  <div class="sticky top-0 p-4 z-10" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0, 162, 255, 0.2);">
+    <div class="flex items-center justify-between">
+      <button onclick="closeAuthorProfile()" class="hover:text-[#00A2FF] transition-colors" style="color: #393B3D;">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <h1 class="text-lg font-semibold" style="color: #00A2FF;">Perfil</h1>
+      <button onclick="window.location.href='report.html'" class="hover:text-[#00A2FF] transition-colors" style="color: #393B3D;">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="p-6 max-w-2xl mx-auto">
+    <!-- Perfil del autor -->
+    <div class="flex flex-col items-center mb-6">
+      <div class="relative mb-4">
+        <img id="author-profile-image" src="https://via.placeholder.com/150" class="w-28 h-28 rounded-full object-cover" style="border: 4px solid #00A2FF;" alt="Foto del autor">
+      </div>
+      
+      <h2 id="author-profile-name" class="text-2xl font-bold mb-2" style="color: #393B3D;"></h2>
+      <div id="author-bio" class="text-center text-gray-600 mb-4 max-w-md"></div>
+      
+      <!-- Redes sociales -->
+      <div id="author-social-links" class="flex justify-center items-center space-x-4 mb-6"></div>
     </div>
 
-    <div class="flex flex-col items-center mt-4" id="author-profile-content">
-      <!-- Foto del autor -->
-      <div id="author-profile-img-container" class="relative">
+    <!-- Estadísticas estilo Roblox -->
+    <div class="grid grid-cols-2 gap-4 mb-6">
+      <button onclick="openFollowingModal()" class="p-4 rounded-xl text-center transition-all hover:scale-105" style="background: rgba(0, 162, 255, 0.1); border: 1px solid rgba(0, 162, 255, 0.2);">
+        <div id="author-following" class="text-3xl font-bold" style="color: #00A2FF;">0</div>
+        <div class="text-sm text-gray-600 mt-1">Siguiendo</div>
+      </button>
+      <button onclick="openFollowersModal()" class="p-4 rounded-xl text-center transition-all hover:scale-105" style="background: rgba(0, 162, 255, 0.1); border: 1px solid rgba(0, 162, 255, 0.2);">
+        <div id="author-followers" class="text-3xl font-bold" style="color: #00A2FF;">0</div>
+        <div class="text-sm text-gray-600 mt-1">Seguidores</div>
+      </button>
+    </div>
 
-        <img id="author-profile-image" src="https://via.placeholder.com/150" class="w-24 h-24 rounded-full object-cover border-2 border-[#00A2FF]" alt="Foto del autor">
-        <!-- Note bubble -->
-        <div id="profile-note" class="hidden absolute -top-16 left-1/2 transform -translate-x-1/2 bg-white p-3 rounded-lg shadow-lg w-48 text-center animate-float">
-          <p id="note-text" class="text-sm"></p>
-          <p id="note-time" class="text-xs text-gray-500 mt-1"></p>
-        </div>
-        <style>
-          @keyframes float {
-            0%, 100% { transform: translate(-50%, 0px); }
-            50% { transform: translate(-50%, -10px); }
-          }
-          .animate-float {
-            animation: float 3s ease-in-out infinite;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-          }
-        </style>
-        <!-- Add note button (only visible for profile owner) -->
-        <button id="add-note-btn" onclick="openNoteModal()" class="hidden absolute bottom-0 right-0 bg-[#00A2FF] text-white rounded-full p-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-          </svg>
-        </button>
+    <!-- Botón de seguir -->
+    <button id="follow-button" onclick="followAuthor()" class="w-full py-4 rounded-xl font-semibold text-white transition-all hover:scale-105" style="background: linear-gradient(135deg, #00A2FF 0%, #0066CC 100%); box-shadow: 0 4px 12px rgba(0, 162, 255, 0.3);">
+      <span id="follow-button-text">Seguir</span>
+    </button>
+
+    <!-- Historias del autor -->
+    <div class="mt-8">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-bold" style="color: #00A2FF;">Historias</h3>
+        <div class="text-sm text-gray-500" id="author-stories-count">0 historias</div>
       </div>
-
-      <!-- Note Modal -->
-      <div id="note-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
-        <div class="bg-white p-4 rounded-lg w-80">
-          <h3 class="text-lg font-bold mb-4">Agregar nota temporal</h3>
-          <textarea id="note-input" class="w-full p-2 border rounded mb-4" placeholder="Escribe tu nota (máx. 100 caracteres)" maxlength="100"></textarea>
-          <div class="flex justify-end space-x-2">
-            <button onclick="closeNoteModal()" class="px-4 py-2 text-gray-600 hover:text-gray-800">Cancelar</button>
-            <button onclick="saveNote()" class="px-4 py-2 bg-[#00A2FF] text-white rounded hover:bg-[#0066CC]">Guardar</button>
-          </div>
-        </div>
-      </div>
-
-<script>
-function openNoteModal() {
-  document.getElementById('note-modal').classList.remove('hidden');
-}
-
-function closeNoteModal() {
-  document.getElementById('note-modal').classList.add('hidden');
-  document.getElementById('note-input').value = '';
-}
-
-function saveNote() {
-  const noteText = document.getElementById('note-input').value.trim();
-  const currentUser = firebase.auth().currentUser;
-  
-  if (!noteText || !currentUser) return;
-  
-  firebase.database().ref('profileNotes/' + currentUser.uid).set({
-    text: noteText,
-    timestamp: Date.now()
-  }).then(() => {
-    closeNoteModal();
-    const profileNote = document.getElementById('profile-note');
-    profileNote.classList.remove('hidden');
-    document.getElementById('note-text').textContent = noteText;
-    document.getElementById('note-time').textContent = 'Expira en 12 horas';
-  });
-}
-</script>
-      <!-- Nombre de usuario -->
-      <h2 id="author-profile-name" class="text-xl font-bold mt-2 text-black"></h2>
-      <!-- Biografía y sitio web -->
-      <div id="author-bio" class="text-center text-gray-600 mt-2 max-w-md"></div>
-      <!-- Redes sociales -->
-      <div id="author-social-links" class="flex justify-center items-center space-x-6 mt-6 mb-4"></div>
-
-      <!-- Estadísticas encima de botones -->
-      <div class="flex space-x-8 mt-6">
-        <button onclick="openFollowingModal()" class="text-center focus:outline-none hover:opacity-70 transition-opacity">
-          <span id="author-following" class="font-bold text-black">0</span>
-          <p class="text-sm text-[#00A2FF]">Siguiendo</p>
-        </button>
-        <button onclick="openFollowersModal()" class="text-center focus:outline-none hover:opacity-70 transition-opacity">
-          <span id="author-followers" class="font-bold text-black">0</span>
-          <p class="text-sm text-[#00A2FF]">Seguidores</p>
-        </button>
-      </div>
-
-      <!-- Botones de acción: Seguir, Bloquear y Reportar -->
-      <div class="flex items-center justify-center w-full mt-4 space-x-2">
-        <button id="follow-button" onclick="followAuthor()" class="bg-[#00A2FF] text-white px-4 py-2 rounded-lg hover:bg-[#0066CC]" title="Seguir/Dejar de seguir">
-          <span id="follow-button-text">Seguir</span>
-        </button>
-        <button id="block-button" onclick="blockAuthor()" class="bg-[#f9f9f9] text-[#00A2FF] px-4 py-2 rounded-lg border border-[#00A2FF] hover:bg-gray-100" title="Bloquear/Desbloquear">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
-          </svg>
-          Bloquear
-        </button>
-        <button id="report-button" onclick="window.location.href='report.html'" class="flex items-center bg-[#f9f9f9] text-[#00A2FF] px-4 py-2 rounded-lg border border-[#00A2FF] hover:bg-gray-100" title="Reportar">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-          </svg>
-          Reportar
-        </button>
-      </div>
-
-      <hr class="border-t border-gray-300 w-full my-4">
-
-      <!-- Historias del autor -->
-      <div class="mt-4 w-full">
-        <h3 id="author-stories-title" class="text-lg font-bold mb-2 text-[#00A2FF]">Historias del autor</h3>
-        <div id="author-stories" class="grid grid-cols-2 gap-4"></div>
-      </div>
+      <div id="author-stories" class="grid grid-cols-2 gap-4"></div>
     </div>
   </div>
 </div>
