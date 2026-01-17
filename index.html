@@ -3720,115 +3720,35 @@ function escapeHtml(text) {
 
 
 
-<!-- Search View - TikTok Style -->
-<div id="search-view" class="fixed inset-0 text-black overflow-y-auto hidden z-50" style="background: #F2F4F5;">
-  <div class="p-4">
-
-    <!-- Back Button -->
-    <button onclick="closeSearch()" class="text-gray-800 mb-4 flex items-center font-medium hover:text-[#00A2FF] transition hidden">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <polyline points="15 18 9 12 15 6" />
+<!-- Search View - Estilo Instagram -->
+<div id="search-view" class="fixed inset-0 bg-white overflow-y-auto hidden z-50">
+  <div class="sticky top-0 bg-white border-b border-gray-200 px-4 py-2 z-10">
+    <div class="relative">
+      <input id="search-input" type="text" placeholder="Buscar" class="w-full pl-10 pr-10 py-2 bg-gray-100 rounded-lg text-sm focus:outline-none" oninput="handleSearchInput()">
+      <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8" stroke-width="2"/>
+        <path d="m21 21-4.35-4.35" stroke-width="2"/>
       </svg>
-      <span id="btn-volver-search">Back</span>
-    </button>
-
-    <!-- Search Bar and Category Filter -->
-    <div class="space-y-4 mb-6">
-      <div class="relative group">
-        <input id="search-input" type="text" placeholder="Buscar historias o autores" class="w-full pl-12 pr-12 py-3 rounded-lg text-black placeholder-gray-500 border-0 focus:outline-none focus:ring-2 focus:ring-[#00A2FF]" style="background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" oninput="handleSearchInput()">
-        <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#00A2FF] group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="8" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-purple-500 transition-colors" />
-          <path d="m21 21-4.35-4.35" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-purple-500 transition-colors" />
+      <button id="clear-search-btn" class="absolute right-3 top-1/2 transform -translate-y-1/2 hidden" onclick="clearSearchInput()">
+        <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
         </svg>
-        <div class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 rounded-full bg-purple-400 opacity-0 group-hover:opacity-20 group-hover:animate-ping pointer-events-none"></div>
-        <button id="clear-search-btn" class="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors hidden" onclick="clearSearchInput()">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-      </div>
-      
-      <!-- Wikipedia AI Results -->
-      <div id="wikipedia-results" class="hidden bg-gray-50 border border-gray-200 rounded-lg p-4">
-        <div class="flex items-start space-x-3">
-          <!-- Imagen o icono -->
-          <div class="flex-shrink-0">
-            <div id="wiki-image-container" class="hidden">
-              <img id="wiki-image" class="w-16 h-24 object-cover rounded-lg" alt="Imagen">
-              <div id="wiki-type-badge" class="hidden mt-1 text-xs bg-[#00A2FF] text-white px-2 py-1 rounded text-center font-medium">Película</div>
-            </div>
-            <div id="wiki-icon" class="w-8 h-8 bg-[#00A2FF] rounded-full flex items-center justify-center">
-              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C20.832 18.477 19.246 18 17.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>
-            </div>
-          </div>
-          <div class="flex-1">
-            <div class="flex items-center justify-between mb-2">
-              <h4 class="font-semibold text-gray-900 text-sm">Resumen IA</h4>
-              <div id="wiki-loading" class="hidden">
-                <svg class="animate-spin h-4 w-4 text-[#00A2FF]" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-              </div>
-            </div>
-            <div id="wiki-content" class="text-sm text-gray-700 leading-relaxed mb-3">
-              <!-- Wikipedia content will appear here -->
-            </div>
-            <a id="wiki-link" href="#" target="_blank" class="inline-flex items-center text-[#00A2FF] hover:text-red-600 text-sm font-medium transition-colors">
-              <span>Ver más información</span>
-              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      
-      <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-        <button class="category-chip active" data-value="" style="background: #00A2FF; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600;">All</button>
-        <button class="category-chip" data-value="aventura" style="background: white; color: #393B3D; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Adventure</button>
-        <button class="category-chip" data-value="romance" style="background: white; color: #393B3D; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Romance</button>
-        <button class="category-chip" data-value="misterio" style="background: white; color: #393B3D; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Mystery</button>
-        <button class="category-chip" data-value="fantasia" style="background: white; color: #393B3D; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Fantasy</button>
-        <button class="category-chip" data-value="terror" style="background: white; color: #393B3D; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Horror</button>
-      </div>
-      <select id="category-filter" class="hidden">
-        <option value="">All Categories</option>
-        <option value="aventura">Adventure</option>
-        <option value="romance">Romance</option>
-        <option value="misterio">Mystery</option>
-        <option value="fantasia">Fantasy</option>
-        <option value="terror">Horror</option>
-      </select>
-    </div>
-
-    <!-- Search Results -->
-    <h2 id="search-results-title" class="text-xl font-bold mb-4 text-black">Search Results</h2>
-    <div class="flex justify-around border-b mb-4" style="border-color: #E3E5E8;">
-      <button data-tab="books" class="tab-button py-2 w-1/2 text-center font-medium text-gray-600 hover:text-[#00A2FF] active" style="border-bottom: 2px solid #00A2FF; color: #00A2FF;">
-        Stories
-      </button>
-      <button data-tab="authors" class="tab-button py-2 w-1/2 text-center font-medium text-gray-600 hover:text-[#00A2FF]" style="border-bottom: 2px solid transparent;">
-        Authors
       </button>
     </div>
+  </div>
 
-    <!-- Stories Section -->
-    <div id="books-section" class="block">
-      <h3 id="search-books-title" class="text-base font-semibold mb-3 text-[#00A2FF]">Stories</h3>
-      <div id="search-books-carousel" class="flex space-x-3 overflow-x-auto mb-6 p-1 scrollbar-hide">
-        <!-- Stories will be loaded from Firebase here -->
-      </div>
+  <div class="p-4">
+    <div class="flex border-b border-gray-200 mb-4">
+      <button class="flex-1 py-3 text-center font-semibold border-b-2 border-gray-900" id="search-stories-tab">Historias</button>
+      <button class="flex-1 py-3 text-center font-semibold border-b-2 border-transparent text-gray-400" id="search-authors-tab">Autores</button>
     </div>
 
-    <!-- Authors Section -->
-    <div id="authors-section" class="hidden">
-      <h3 id="search-authors-title" class="text-base font-semibold mb-3 text-[#00A2FF]">Authors</h3>
-      <div id="search-authors-list" class="space-y-3">
-        <!-- Authors will be loaded from Firebase here -->
-      </div>
+    <div id="search-stories-section">
+      <div id="search-books-carousel" class="grid grid-cols-3 gap-1"></div>
+    </div>
+
+    <div id="search-authors-section" class="hidden">
+      <div id="search-authors-list" class="space-y-3"></div>
     </div>
   </div>
 </div>
@@ -15348,5 +15268,6 @@ firebase.auth().onAuthStateChanged(user => {
 </script>
 
 <script src="stories.js"></script>
+<script src="community-firebase.js"></script>
 </body>
 </html>
