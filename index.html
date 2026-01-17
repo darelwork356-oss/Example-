@@ -4188,7 +4188,7 @@ function switchSearchTab(tab) {
                   const summary = altData.extract.length > 120 ? altData.extract.substring(0, 120) + '...' : altData.extract;
                   wikiContent.textContent = summary;
                   wikiLink.href = altData.content_urls?.desktop?.page || `https://${altWikiDomain}/wiki/${encodeURIComponent(query)}`;
-                  found = true;
+                  found = true;-09
                   categoryChips.classList.add('hidden');
                   break;
                 }
@@ -10842,13 +10842,16 @@ async function likeNote(noteId) {
     // Mostrar el modal
     const modal = document.getElementById('story-detail-modal');
     const mainAppElement = document.getElementById('main-app');
+    const bottomNav = document.getElementById('bottom-nav');
     
     console.log('Modal element:', modal); // Debug
     console.log('MainApp element:', mainAppElement); // Debug
     
     if (modal && mainAppElement) {
       modal.classList.remove('hidden');
+      modal.style.display = 'block';
       mainAppElement.classList.add('hidden');
+      if (bottomNav) bottomNav.style.display = 'none';
       console.log('Modal mostrado correctamente'); // Debug
     } else {
       console.error('No se pudo encontrar el modal o main-app'); // Debug
@@ -10858,12 +10861,17 @@ async function likeNote(noteId) {
   function closeStoryDetail() {
     const modal = document.getElementById('story-detail-modal');
     const mainAppElement = document.getElementById('main-app');
+    const bottomNav = document.getElementById('bottom-nav');
     
     if (modal) {
       modal.classList.add('hidden');
+      modal.style.display = 'none';
     }
     if (mainAppElement) {
       mainAppElement.classList.remove('hidden');
+    }
+    if (bottomNav) {
+      bottomNav.style.display = 'block';
     }
   }
 
@@ -11585,7 +11593,11 @@ document.getElementById('category-filter').addEventListener('change', performRea
       });
     });
     currentViewedAuthorId = authorId;
-    document.getElementById('author-profile-modal').style.display = "block";
+    const authorModal = document.getElementById('author-profile-modal');
+    if (authorModal) {
+      authorModal.classList.remove('hidden');
+      authorModal.style.display = 'block';
+    }
     updateFollowIcon();
     loadAuthorStories(authorId);
     document.getElementById('author-profile-image').onclick = function() {
@@ -11598,14 +11610,22 @@ document.getElementById('category-filter').addEventListener('change', performRea
   }
 
   function closeAuthorProfile() {
-    document.getElementById('author-profile-modal').style.display = "none";
+    const authorModal = document.getElementById('author-profile-modal');
+    if (authorModal) {
+      authorModal.style.display = 'none';
+      authorModal.classList.add('hidden');
+    }
     if (document.getElementById('search-view').classList.contains('hidden')) {
       document.getElementById('story-detail-modal').classList.remove('hidden');
     }
   }
 
   function closeBlockedErrorModal() {
-    document.getElementById('blocked-error-modal').style.display = "none";
+    const blockedModal = document.getElementById('blocked-error-modal');
+    if (blockedModal) {
+      blockedModal.style.display = 'none';
+      blockedModal.classList.add('hidden');
+    }
     document.getElementById('story-detail-modal').classList.remove('hidden');
   }
   /*********************** FUNCIONES PARA SEGUIR **************************/
