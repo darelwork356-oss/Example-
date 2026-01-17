@@ -4915,17 +4915,8 @@ function clearSearchInput() {
     }
   }
   
-  // Asegurar que las funciones estén disponibles globalmente
+  // Asegurar que la función esté disponible globalmente
   window.generateImage = generateImage;
-  window.updateCharCounter = updateCharCounter;
-  
-  // Inicializar el contador cuando se carga el modal
-  document.addEventListener('DOMContentLoaded', function() {
-    const imagePrompt = document.getElementById('image-prompt');
-    if (imagePrompt) {
-      imagePrompt.addEventListener('input', updateCharCounter);
-    }
-  });
 
   function useGeneratedImageForPost() {
     const generatedImageSrc = document.getElementById('generated-image').src;
@@ -9927,6 +9918,18 @@ async function likeNote(noteId) {
     const user = firebase.auth().currentUser;
     if (!user) return;
 
+    const likeBtn = document.getElementById(`like-btn-${noteId}`);
+    
+    // Verificar si ya está deshabilitado
+    if (likeBtn && likeBtn.disabled) {
+      return;
+    }
+    
+    // Deshabilitar inmediatamente para evitar múltiples clicks
+    if (likeBtn) {
+      likeBtn.disabled = true;
+    }
+
     try {
       const response = await fetch('/.netlify/functions/likes', {
         method: 'POST',
@@ -9942,11 +9945,7 @@ async function likeNote(noteId) {
       const result = await response.json();
       
       if (!response.ok) {
-        if (result.error === 'User already liked this note') {
-          console.log('Ya has dado like a esta nota');
-        } else {
-          throw new Error(result.error || 'Error al dar like');
-        }
+        if (likeBtn) likeBtn.disabled = false;
         return;
       }
 
@@ -9956,15 +9955,14 @@ async function likeNote(noteId) {
         likeCountElement.textContent = result.likes;
       }
 
-      // Deshabilitar el botón de like
-      const likeBtn = document.getElementById(`like-btn-${noteId}`);
+      // Mantener el botón deshabilitado
       if (likeBtn) {
         likeBtn.style.opacity = '0.6';
         likeBtn.style.pointerEvents = 'none';
-        likeBtn.title = 'Ya has dado like a esta nota';
       }
     } catch (error) {
       console.error('Error al dar like:', error);
+      if (likeBtn) likeBtn.disabled = false;
     }
 }
 
