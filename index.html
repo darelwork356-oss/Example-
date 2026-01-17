@@ -9274,6 +9274,19 @@ function openCreatorHub() {
     document.getElementById('preview-img').src = '';
   }
 
+  // Actualizar contador de caracteres en tiempo real
+  document.addEventListener('DOMContentLoaded', function() {
+    const noteContent = document.getElementById('note-content');
+    const charCounter = document.getElementById('char-counter');
+    
+    if (noteContent && charCounter) {
+      noteContent.addEventListener('input', function() {
+        const remaining = 200 - this.value.length;
+        charCounter.textContent = remaining;
+      });
+    }
+  });
+
   async function publishNote() {
     const content = document.getElementById('note-content').value.trim();
     const imageInput = document.getElementById('note-image');
