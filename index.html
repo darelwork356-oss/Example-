@@ -4915,8 +4915,17 @@ function clearSearchInput() {
     }
   }
   
-  // Asegurar que la función esté disponible globalmente
+  // Asegurar que las funciones estén disponibles globalmente
   window.generateImage = generateImage;
+  window.updateCharCounter = updateCharCounter;
+  
+  // Inicializar el contador cuando se carga el modal
+  document.addEventListener('DOMContentLoaded', function() {
+    const imagePrompt = document.getElementById('image-prompt');
+    if (imagePrompt) {
+      imagePrompt.addEventListener('input', updateCharCounter);
+    }
+  });
 
   function useGeneratedImageForPost() {
     const generatedImageSrc = document.getElementById('generated-image').src;
