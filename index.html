@@ -4795,29 +4795,37 @@ function clearSearchInput() {
     const container = document.getElementById('generated-image-container');
     const loading = document.getElementById('image-loading');
     const result = document.getElementById('generated-image-result');
-    const error = document.getElementById('generation-error');
+    const errorDiv = document.getElementById('generation-error');
     
     if (container) container.classList.remove('hidden');
     if (loading) loading.classList.remove('hidden');
     if (result) result.classList.add('hidden');
-    if (error) error.classList.add('hidden');
+    if (errorDiv) errorDiv.classList.add('hidden');
     
     console.log('⏳ Mostrando loading...');
     
     try {
+      // Mapeo de estilos a prompts mejorados
+      const stylePrompts = {
+        'realistic': 'photorealistic, ultra detailed, 8k quality',
+        'anime': 'anime style, manga art, vibrant colors',
+        'cartoon': 'cartoon style, colorful, playful',
+        'digital-art': 'digital art, concept art, artstation quality'
+      };
+      
       // Lista de servicios de IA gratuitos para probar
       const aiServices = [
         {
           name: 'Pollinations AI',
           url: (prompt, style) => {
-            const enhancedPrompt = `${prompt}, ${style} style, high quality, detailed`;
+            const styleEnhancement = stylePrompts[style] || 'high quality, detailed';
+            const enhancedPrompt = `${prompt}, ${styleEnhancement}`;
             return `https://image.pollinations.ai/prompt/${encodeURIComponent(enhancedPrompt)}?width=512&height=512&seed=${Math.floor(Math.random() * 1000000)}&nologo=true`;
           }
         },
         {
-          name: 'Picsum Photos (placeholder)',
+          name: 'Picsum Photos',
           url: (prompt, style) => {
-            // Servicio de respaldo con imágenes placeholder
             return `https://picsum.photos/512/512?random=${Math.floor(Math.random() * 1000000)}`;
           }
         }
@@ -4828,20 +4836,21 @@ function clearSearchInput() {
       // Intentar con cada servicio hasta que uno funcione
       for (const service of aiServices) {
         try {
-          console.log(`Intentando generar imagen con ${service.name}...`);
+          console.log(`🔄 Intentando generar imagen con ${service.name}...`);
           const imageUrl = service.url(prompt, style);
           
           // Crear una promesa que se resuelve cuando la imagen se carga o falla
           const imageLoadPromise = new Promise((resolve, reject) => {
             const img = new Image();
             
-            // Configurar timeout de 10 segundos
+            // Configurar timeout de 15 segundos
             const timeout = setTimeout(() => {
               reject(new Error('Timeout: La imagen tardó demasiado en cargar'));
-            }, 10000);
+            }, 15000);
             
             img.onload = function() {
               clearTimeout(timeout);
+              console.log(`✅ Imagen cargada exitosamente desde ${service.name}`);
               resolve(imageUrl);
             };
             
@@ -4859,20 +4868,26 @@ function clearSearchInput() {
           const successUrl = await imageLoadPromise;
           
           // Si llegamos aquí, la imagen se cargó correctamente
-          document.getElementById('generated-image').src = successUrl;
-          document.getElementById('image-loading').classList.add('hidden');
-          document.getElementById('generated-image-result').classList.remove('hidden');
-          document.getElementById('use-image-section').classList.remove('hidden');
+          const generatedImage = document.getElementById('generated-image');
+          if (generatedImage) {
+            generatedImage.src = successUrl;
+          }
+          
+          if (loading) loading.classList.add('hidden');
+          if (result) result.classList.remove('hidden');
+          
+          const useImageSection = document.getElementById('use-image-section');
+          if (useImageSection) useImageSection.classList.remove('hidden');
           
           generateBtn.disabled = false;
-          generateBtn.textContent = originalText;
+          generateBtn.innerHTML = originalText;
           
           imageGenerated = true;
-          console.log(`Imagen generada exitosamente con ${service.name}`);
+          console.log(`✅ Imagen generada exitosamente con ${service.name}`);
           break;
           
         } catch (serviceError) {
-          console.warn(`${service.name} falló:`, serviceError.message);
+          console.warn(`⚠️ ${service.name} falló:`, serviceError.message);
           // Continuar con el siguiente servicio
           continue;
         }
@@ -4887,7 +4902,7 @@ function clearSearchInput() {
       console.error('❌ Error generando imagen:', error);
       
       if (loading) loading.classList.add('hidden');
-      if (error) error.classList.remove('hidden');
+      if (errorDiv) errorDiv.classList.remove('hidden');
       
       // Mostrar mensaje de error más específico
       const errorElement = document.querySelector('#generation-error p:last-child');
