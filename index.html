@@ -3932,6 +3932,94 @@ function escapeHtml(text) {
 </style>
 
 <script>
+// Funciones de navegación principales
+function openSearch() {
+  console.log('🔍 Abriendo sección de búsqueda');
+  
+  // Ocultar todas las vistas
+  document.getElementById('main-app').style.display = 'none';
+  document.getElementById('search-view').classList.remove('hidden');
+  
+  // Enfocar el campo de búsqueda
+  setTimeout(() => {
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) searchInput.focus();
+  }, 100);
+}
+
+function openHome() {
+  console.log('🏠 Abriendo inicio');
+  document.getElementById('search-view').classList.add('hidden');
+  document.getElementById('main-app').style.display = 'flex';
+}
+
+function openCreatorHub() {
+  console.log('✨ Abriendo Creator Hub');
+  // Implementar lógica del creator hub
+}
+
+function openCommunity() {
+  console.log('👥 Abriendo comunidad');
+  // Implementar lógica de comunidad
+}
+
+function openProfile() {
+  console.log('👤 Abriendo perfil');
+  // Implementar lógica del perfil
+}
+
+// Función de búsqueda corregida
+function handleSearchInput() {
+  console.log('🔍 handleSearchInput ejecutándose...');
+  
+  const searchTerm = document.getElementById('search-input').value.trim();
+  const loadingDiv = document.getElementById('search-loading');
+  const booksCarousel = document.getElementById('search-books-carousel');
+  const authorsList = document.getElementById('search-authors-list');
+  
+  console.log('📝 Término de búsqueda:', searchTerm);
+  console.log('🎯 Elementos encontrados:', {
+    loadingDiv: !!loadingDiv,
+    booksCarousel: !!booksCarousel,
+    authorsList: !!authorsList
+  });
+  
+  // Mostrar/ocultar botón de limpiar
+  toggleClearButton('search-input', 'clear-search-btn');
+  
+  if (searchTerm.length > 2) {
+    console.log('✅ Iniciando búsqueda...');
+    
+    // Limpiar resultados anteriores
+    if (booksCarousel) booksCarousel.innerHTML = '';
+    if (authorsList) authorsList.innerHTML = '';
+    
+    // Mostrar animación de carga inmediatamente
+    if (loadingDiv) {
+      loadingDiv.classList.remove('hidden');
+      console.log('🔄 Animación de carga mostrada');
+    }
+    
+    // Simular búsqueda con delay
+    setTimeout(() => {
+      console.log('⏰ Timeout completado, ocultando animación');
+      if (loadingDiv) loadingDiv.classList.add('hidden');
+      // Aquí iría la lógica real de búsqueda
+      performSearch(searchTerm);
+    }, 3000);
+  } else {
+    console.log('❌ Término muy corto, ocultando animación');
+    if (loadingDiv) loadingDiv.classList.add('hidden');
+    if (booksCarousel) booksCarousel.innerHTML = '';
+    if (authorsList) authorsList.innerHTML = '';
+  }
+}
+
+function performSearch(term) {
+  console.log('🎯 Realizando búsqueda para:', term);
+  // Lógica de búsqueda real aquí
+}
+
 function switchSearchTab(tab) {
   const storiesTab = document.getElementById('search-stories-tab');
   const authorsTab = document.getElementById('search-authors-tab');
@@ -3949,6 +4037,37 @@ function switchSearchTab(tab) {
     storiesSection.classList.add('hidden');
     authorsSection.classList.remove('hidden');
   }
+}
+
+function toggleClearButton(inputId, buttonId) {
+  const input = document.getElementById(inputId);
+  const button = document.getElementById(buttonId);
+  
+  if (input && button) {
+    if (input.value.length > 0) {
+      button.classList.remove('hidden');
+    } else {
+      button.classList.add('hidden');
+    }
+  }
+}
+
+function clearSearchInput() {
+  const input = document.getElementById('search-input');
+  const button = document.getElementById('clear-search-btn');
+  const loadingDiv = document.getElementById('search-loading');
+  const booksCarousel = document.getElementById('search-books-carousel');
+  const authorsList = document.getElementById('search-authors-list');
+  
+  if (input) {
+    input.value = '';
+    input.focus();
+  }
+  
+  if (button) button.classList.add('hidden');
+  if (loadingDiv) loadingDiv.classList.add('hidden');
+  if (booksCarousel) booksCarousel.innerHTML = '';
+  if (authorsList) authorsList.innerHTML = '';
 }
 </script>
 
