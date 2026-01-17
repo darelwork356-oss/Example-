@@ -10528,6 +10528,22 @@ async function likeNote(noteId) {
         throw new Error(result.error || 'Error al crear notificación');
       }
     } catch (error) {
+      console.error('Error al enviar notificación:', error);
+    }
+  }
+  
+  // Listener para respuestas de soporte
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      firebase.database().ref('supportTickets').orderByChild('userId').equalTo(user.uid)
+        .on('child_changed', (snapshot) => {
+          const ticket = snapshot.val();
+          if (ticket.response && ticket.status === 'resolved') {
+            addNotification(user.uid, `Respuesta de soporte: ${ticket.response}`, 'support');
+          }
+        });
+    }
+  });
       console.error('Error al crear notificación:', error);
     }
     
@@ -10942,52 +10958,48 @@ async function likeNote(noteId) {
     const problemType = document.getElementById('support-problem-type').value;
     const description = document.getElementById('support-description').value;
     
-    if (description.length < 100) {
-      alert("Por favor, proporciona una descripción de al menos 100 caracteres.");
+    if (description.length < 20) {
+      alert("Por favor, proporciona una descripción de al menos 20 caracteres.");
       return;
     }
     
     const user = firebase.auth().currentUser;
+    if (!user) {
+      alert('Debes iniciar sesión para enviar un reporte');
+      return;
+    }
     
-    const btn = document.getElementById('btn-send-support');
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Enviando...';
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<svg class="animate-spin h-5 w-5 mx-auto" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
     
     try {
-      const response = await fetch('/.netlify/functions/send-support-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          problemType,
-          description,
-          userId: user ? user.uid : null
-        })
+      // Guardar en Firebase
+      const supportRef = firebase.database().ref('supportTickets').push();
+      await supportRef.set({
+        userId: user.uid,
+        email: email,
+        problemType: problemType,
+        description: description,
+        status: 'pending',
+        timestamp: Date.now(),
+        createdAt: new Date().toISOString()
       });
-
-      const result = await response.json();
       
-      if (!response.ok) {
-        throw new Error(result.error || 'Error al enviar solicitud');
-      }
-      
-      document.getElementById('support-form-container').classList.add('hidden');
+      // Mostrar mensaje de éxito
+      document.querySelector('#support-modal > div:first-child').classList.add('hidden');
       document.getElementById('support-success-message').classList.remove('hidden');
       
-      setTimeout(() => {
-        closeSupportModal();
-      }, 3000);
-      
+      // Resetear formulario
       document.getElementById('support-form').reset();
-      btn.disabled = false;
-      btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Enviar Solicitud de Soporte';
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Enviar Reporte';
+      
     } catch (error) {
       console.error("Error al enviar solicitud de soporte:", error);
       alert("❌ Hubo un error al enviar tu solicitud. Por favor, intenta nuevamente.");
-      btn.disabled = false;
-      btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Enviar Solicitud de Soporte';
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Enviar Reporte';
     }
   });
   /*********************** NAVEGACIÓN Y MODALES **************************/
