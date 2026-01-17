@@ -4045,18 +4045,20 @@ function switchSearchTab(tab) {
     // Mostrar/ocultar botón de limpiar
     toggleClearButton('search-input', 'clear-search-btn');
     
-    if (searchTerm.length > 0) {
-      // Mostrar animación de carga
-      loadingDiv.classList.remove('hidden');
+    if (searchTerm.length > 2) {
+      // Limpiar resultados anteriores
       booksCarousel.innerHTML = '';
       authorsList.innerHTML = '';
       
-      // Simular búsqueda con delay
+      // Mostrar animación de carga inmediatamente
+      loadingDiv.classList.remove('hidden');
+      
+      // Simular búsqueda con delay más largo
       setTimeout(() => {
         loadingDiv.classList.add('hidden');
         // Aquí iría la lógica real de búsqueda
         performSearch(searchTerm);
-      }, 1500);
+      }, 3000); // 3 segundos para ver bien la animación
     } else {
       loadingDiv.classList.add('hidden');
       booksCarousel.innerHTML = '';
