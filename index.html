@@ -6231,22 +6231,6 @@ document.addEventListener('DOMContentLoaded', function() {
           </label>
         </div>
 
-<script>
-function previewCover(event) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      document.getElementById('cover-image').src = e.target.result;
-      document.getElementById('cover-image').classList.remove('hidden');
-      document.getElementById('cover-icon').classList.add('hidden');
-      document.getElementById('cover-text').classList.add('hidden');
-    };
-    reader.readAsDataURL(file);
-  }
-}
-</script>
-
         <!-- Título -->
         <div>
           <input id="story-title" type="text" placeholder="Título de la historia" class="w-full p-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-[#00A2FF] transition" required>
@@ -6400,6 +6384,20 @@ function previewCover(event) {
 </div>
 
 <script>
+function previewCover(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('cover-image').src = e.target.result;
+      document.getElementById('cover-image').classList.remove('hidden');
+      document.getElementById('cover-icon').classList.add('hidden');
+      document.getElementById('cover-text').classList.add('hidden');
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
 function previewEditCover(event) {
   const file = event.target.files[0];
   if (file) {
