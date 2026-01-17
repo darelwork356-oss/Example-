@@ -3664,19 +3664,19 @@ function escapeHtml(text) {
 }
 </script>
 
-<!-- VISTA CREATOR HUB ESTILO ONLYFANS -->
-<div id="creator-hub-view" class="fixed inset-0 bg-black text-white hidden z-50 overflow-hidden">
+<!-- VISTA CREATOR HUB ESTILO ROBLOX -->
+<div id="creator-hub-view" class="fixed inset-0 bg-white text-black hidden z-50 overflow-hidden">
   <div class="h-full flex flex-col">
-    <!-- Header oscuro -->
-    <div class="flex-shrink-0 p-4 flex items-center justify-between bg-black border-b border-gray-800">
-      <button onclick="closeCreatorHub()" class="text-white hover:text-blue-400 transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <!-- Header Roblox -->
+    <div class="flex-shrink-0 p-3 flex items-center justify-between bg-white border-b border-gray-200">
+      <button onclick="closeCreatorHub()" class="text-gray-700 hover:text-blue-500 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
-      <h1 class="text-lg font-semibold text-white">Crear Contenido</h1>
-      <button onclick="openZenvioChat()" class="p-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 hover:scale-110 transition-transform">
-        <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+      <h1 class="text-base font-semibold text-gray-900">Crear</h1>
+      <button onclick="openZenvioChat()" class="p-1.5 rounded-lg bg-blue-500 hover:bg-blue-600 transition-colors">
+        <svg class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2L9 12L12 15L15 12L12 2Z"/>
           <path d="M12 15L9 12L2 14L5 17L12 15Z"/>
           <path d="M12 15L15 12L22 14L19 17L12 15Z"/>
@@ -3685,92 +3685,70 @@ function escapeHtml(text) {
       </button>
     </div>
 
-    <!-- Contenido principal -->
-    <div class="flex-1 overflow-y-auto bg-gradient-to-b from-gray-900 to-black">
-      <div class="p-6">
-        <!-- Sección principal de creación -->
-        <div class="mb-8">
-          <h2 class="text-2xl font-bold text-white mb-2">¿Qué quieres crear hoy?</h2>
-          <p class="text-gray-400 mb-6">Elige el tipo de contenido que deseas publicar</p>
-          
-          <!-- Opciones principales grandes -->
-          <div class="grid grid-cols-1 gap-4 mb-8">
-            <!-- Historia Premium -->
-            <div onclick="openStoryCreation()" class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl p-6 cursor-pointer hover:scale-105 transition-all duration-300 shadow-xl">
-              <div class="flex items-center justify-between">
-                <div>
-                  <h3 class="text-xl font-bold text-white mb-2">Historia Premium</h3>
-                  <p class="text-purple-100">Crea historias largas con capítulos</p>
-                </div>
-                <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C20.832 18.477 19.246 18 17.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-
-            <!-- Transmisión en Vivo -->
-            <div onclick="openLiveStreamModal()" class="bg-gradient-to-r from-red-500 to-pink-500 rounded-2xl p-6 cursor-pointer hover:scale-105 transition-all duration-300 shadow-xl">
-              <div class="flex items-center justify-between">
-                <div>
-                  <h3 class="text-xl font-bold text-white mb-2">Transmisión en Vivo</h3>
-                  <p class="text-red-100">Conecta en tiempo real con tu audiencia</p>
-                </div>
-                <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                </div>
-              </div>
-            </div>
+    <!-- Contenido -->
+    <div class="flex-1 overflow-y-auto bg-gray-50 p-4">
+      <!-- Grid principal 2x2 -->
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <!-- Historia -->
+        <div onclick="openStoryCreation()" class="bg-white rounded-xl p-4 cursor-pointer hover:shadow-md transition-all border border-gray-200">
+          <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C20.832 18.477 19.246 18 17.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
           </div>
+          <h3 class="text-sm font-semibold text-gray-900 mb-1">Historia</h3>
+          <p class="text-xs text-gray-500">Crear historia larga</p>
         </div>
 
-        <!-- Contenido rápido -->
-        <div class="mb-8">
-          <h3 class="text-lg font-semibold text-white mb-4">Contenido Rápido</h3>
-          <div class="grid grid-cols-2 gap-4">
-            <!-- Relato corto -->
-            <div onclick="document.getElementById('add-story-btn').click()" class="bg-gray-800 rounded-xl p-4 cursor-pointer hover:bg-gray-700 transition-colors border border-gray-700">
-              <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-3">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h4 class="font-semibold text-white mb-1">Relato</h4>
-              <p class="text-sm text-gray-400">Historia de 24h</p>
-            </div>
-
-            <!-- Imagen con IA -->
-            <div onclick="document.getElementById('image-generator-modal').style.display='block'" class="bg-gray-800 rounded-xl p-4 cursor-pointer hover:bg-gray-700 transition-colors border border-gray-700">
-              <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-3">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h4 class="font-semibold text-white mb-1">Imagen IA</h4>
-              <p class="text-sm text-gray-400">Genera con AI</p>
-            </div>
+        <!-- En Vivo -->
+        <div onclick="openLiveStreamModal()" class="bg-white rounded-xl p-4 cursor-pointer hover:shadow-md transition-all border border-gray-200">
+          <div class="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
           </div>
+          <h3 class="text-sm font-semibold text-gray-900 mb-1">En Vivo</h3>
+          <p class="text-xs text-gray-500">Transmitir ahora</p>
         </div>
 
-        <!-- Estadísticas del creador -->
-        <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800">
-          <h3 class="text-lg font-semibold text-white mb-4">Tu Rendimiento</h3>
-          <div class="grid grid-cols-3 gap-4">
-            <div class="text-center">
-              <div class="text-2xl font-bold text-blue-400">0</div>
-              <div class="text-sm text-gray-400">Seguidores</div>
-            </div>
-            <div class="text-center">
-              <div class="text-2xl font-bold text-green-400">0</div>
-              <div class="text-sm text-gray-400">Me Gusta</div>
-            </div>
-            <div class="text-center">
-              <div class="text-2xl font-bold text-purple-400">0</div>
-              <div class="text-sm text-gray-400">Historias</div>
-            </div>
+        <!-- Relato -->
+        <div onclick="document.getElementById('add-story-btn').click()" class="bg-white rounded-xl p-4 cursor-pointer hover:shadow-md transition-all border border-gray-200">
+          <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="text-sm font-semibold text-gray-900 mb-1">Relato</h3>
+          <p class="text-xs text-gray-500">Historia de 24h</p>
+        </div>
+
+        <!-- Imagen IA -->
+        <div onclick="document.getElementById('image-generator-modal').style.display='block'" class="bg-white rounded-xl p-4 cursor-pointer hover:shadow-md transition-all border border-gray-200">
+          <div class="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h3 class="text-sm font-semibold text-gray-900 mb-1">Imagen IA</h3>
+          <p class="text-xs text-gray-500">Generar con AI</p>
+        </div>
+      </div>
+
+      <!-- Estadísticas compactas -->
+      <div class="bg-white rounded-xl p-4 border border-gray-200">
+        <h3 class="text-sm font-semibold text-gray-900 mb-3">Estadísticas</h3>
+        <div class="grid grid-cols-3 gap-4 text-center">
+          <div>
+            <div class="text-lg font-bold text-blue-500">0</div>
+            <div class="text-xs text-gray-500">Seguidores</div>
+          </div>
+          <div>
+            <div class="text-lg font-bold text-green-500">0</div>
+            <div class="text-xs text-gray-500">Me Gusta</div>
+          </div>
+          <div>
+            <div class="text-lg font-bold text-purple-500">0</div>
+            <div class="text-xs text-gray-500">Historias</div>
           </div>
         </div>
       </div>
