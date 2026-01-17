@@ -8,12 +8,31 @@ const s3 = new AWS.S3({
 
 const BUCKET = process.env.ZENVIO_AWS_S3_BUCKET || process.env.AWS_S3_BUCKET;
 
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
+};
+
 exports.handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers, body: '' };
+  }
+
   try {
     if (event.httpMethod !== 'POST') {
       return {
         statusCode: 405,
+        headers,
         body: JSON.stringify({ error: 'Method not allowed' })
+      };
+    }
+
+    if (!BUCKET) {
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ error: 'Missing S3 bucket configuration' })
       };
     }
 
@@ -22,6 +41,7 @@ exports.handler = async (event) => {
     if (!storyId || !updates) {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({ error: 'storyId and updates are required' })
       };
     }
@@ -33,7 +53,7 @@ exports.handler = async (event) => {
     };
 
     const data = await s3.listObjectsV2(listParams).promise();
-    
+
     let storyToUpdate = null;
     let storyKey = null;
 
@@ -41,11 +61,11 @@ exports.handler = async (event) => {
     for (const item of data.Contents || []) {
       if (item.Key.includes(storyId)) {
         try {
-          const obj = await s3.getObject({ 
-            Bucket: BUCKET, 
-            Key: item.Key 
+          const obj = await s3.getObject({
+            Bucket: BUCKET,
+            Key: item.Key
           }).promise();
-          
+
           const story = JSON.parse(obj.Body.toString());
           if (story.id === storyId) {
             storyToUpdate = story;
@@ -61,6 +81,7 @@ exports.handler = async (event) => {
     if (!storyToUpdate || !storyKey) {
       return {
         statusCode: 404,
+        headers,
         body: JSON.stringify({ error: 'Story not found' })
       };
     }
@@ -82,11 +103,7 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
-      },
+      headers,
       body: JSON.stringify({
         success: true,
         story: updatedStory
@@ -97,11 +114,7 @@ exports.handler = async (event) => {
     console.error('Error updating story:', error);
     return {
       statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
-      },
+      headers,
       body: JSON.stringify({ error: error.message })
     };
   }

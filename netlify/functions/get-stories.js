@@ -8,8 +8,26 @@ const s3 = new AWS.S3({
 
 const BUCKET = process.env.ZENVIO_AWS_S3_BUCKET || process.env.AWS_S3_BUCKET;
 
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
+};
+
 exports.handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers, body: '' };
+  }
+
   try {
+    if (!BUCKET) {
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ error: 'Missing S3 bucket configuration' })
+      };
+    }
+
     const { userId, limit = 100 } = event.queryStringParameters || {};
     
     let prefix = 'stories/';
@@ -28,11 +46,7 @@ exports.handler = async (event) => {
     if (!data.Contents || data.Contents.length === 0) {
       return {
         statusCode: 200,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': 'Content-Type',
-          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
-        },
+        headers,
         body: JSON.stringify({ stories: [] })
       };
     }
@@ -62,26 +76,18 @@ exports.handler = async (event) => {
     
     return {
       statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
-      },
-      body: JSON.stringify({ 
+      headers,
+      body: JSON.stringify({
         stories: validStories,
         count: validStories.length
       })
     };
-    
+
   } catch (error) {
     console.error('Error getting stories:', error);
     return {
       statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
-      },
+      headers,
       body: JSON.stringify({ error: error.message })
     };
   }

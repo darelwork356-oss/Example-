@@ -8,13 +8,32 @@ const s3 = new AWS.S3({
 
 const BUCKET = process.env.ZENVIO_AWS_S3_BUCKET || process.env.AWS_S3_BUCKET;
 
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
+};
+
 exports.handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers, body: '' };
+  }
+
   try {
+    if (!BUCKET) {
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ error: 'Missing S3 bucket configuration' })
+      };
+    }
+
     const { userId, type } = event.queryStringParameters || {};
-    
+
     if (!userId || !type) {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({ error: 'userId and type are required' })
       };
     }
@@ -27,50 +46,43 @@ exports.handler = async (event) => {
         Bucket: BUCKET,
         Prefix: `stories/${userId}/`
       };
-      
+
       const data = await s3.listObjectsV2(params).promise();
       count = data.Contents ? data.Contents.length : 0;
-      
+
     } else if (type === 'notes') {
       // Contar notas del usuario
       const params = {
         Bucket: BUCKET,
         Prefix: `notes/${userId}/`
       };
-      
+
       const data = await s3.listObjectsV2(params).promise();
       count = data.Contents ? data.Contents.length : 0;
-      
+
     } else {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({ error: 'Invalid type. Use "stories" or "notes"' })
       };
     }
 
     return {
       statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
-      },
-      body: JSON.stringify({ 
+      headers,
+      body: JSON.stringify({
         userId,
         type,
-        count 
+        count
       })
     };
-    
+
   } catch (error) {
     console.error('Error getting user stats:', error);
     return {
       statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
-      },
+      headers,
       body: JSON.stringify({ error: error.message })
     };
   }
