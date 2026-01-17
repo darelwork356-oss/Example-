@@ -3834,6 +3834,17 @@ function escapeHtml(text) {
     </div>
   </div>
 
+  <!-- Animación de carga Baro -->
+  <div id="search-loading" class="hidden flex items-center justify-center py-20">
+    <div class="baro-infinity-loader">
+      <div class="infinity-symbol">
+        <div class="infinity-path"></div>
+        <div class="infinity-path"></div>
+      </div>
+      <div class="baro-text">Buscando...</div>
+    </div>
+  </div>
+
   <div class="p-4">
     <div class="flex border-b border-gray-200 mb-4">
       <button onclick="switchSearchTab('stories')" class="flex-1 py-3 text-center font-semibold border-b-2 border-gray-900" id="search-stories-tab">Historias</button>
@@ -3849,6 +3860,76 @@ function escapeHtml(text) {
     </div>
   </div>
 </div>
+
+<style>
+/* Animación Baro Infinity Loader */
+.baro-infinity-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.infinity-symbol {
+  position: relative;
+  width: 60px;
+  height: 30px;
+}
+
+.infinity-path {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 3px solid transparent;
+  border-radius: 50%;
+  animation: infinity-rotate 2s linear infinite;
+}
+
+.infinity-path:first-child {
+  left: 0;
+  border-top-color: #00A2FF;
+  border-right-color: #00A2FF;
+  animation-delay: 0s;
+}
+
+.infinity-path:last-child {
+  right: 0;
+  border-bottom-color: #ff6b7a;
+  border-left-color: #ff6b7a;
+  animation-delay: -1s;
+}
+
+@keyframes infinity-rotate {
+  0% {
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: rotate(180deg) scale(0.8);
+    opacity: 0.7;
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+    opacity: 1;
+  }
+}
+
+.baro-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  animation: pulse-text 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-text {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+</style>
 
 <script>
 function switchSearchTab(tab) {
@@ -3957,9 +4038,35 @@ function switchSearchTab(tab) {
   
   function handleSearchInput() {
     const searchTerm = document.getElementById('search-input').value.trim();
+    const loadingDiv = document.getElementById('search-loading');
+    const booksCarousel = document.getElementById('search-books-carousel');
+    const authorsList = document.getElementById('search-authors-list');
     
     // Mostrar/ocultar botón de limpiar
     toggleClearButton('search-input', 'clear-search-btn');
+    
+    if (searchTerm.length > 0) {
+      // Mostrar animación de carga
+      loadingDiv.classList.remove('hidden');
+      booksCarousel.innerHTML = '';
+      authorsList.innerHTML = '';
+      
+      // Simular búsqueda con delay
+      setTimeout(() => {
+        loadingDiv.classList.add('hidden');
+        // Aquí iría la lógica real de búsqueda
+        performSearch(searchTerm);
+      }, 1500);
+    } else {
+      loadingDiv.classList.add('hidden');
+      booksCarousel.innerHTML = '';
+      authorsList.innerHTML = '';
+    }
+  }
+  
+  function performSearch(term) {
+    // Lógica de búsqueda real aquí
+    console.log('Buscando:', term);
   }
   
 
