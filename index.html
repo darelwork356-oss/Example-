@@ -2101,12 +2101,17 @@ setInterval(checkScheduledChapters, 60000);
   // Funciones para el QR
   function openQRModal() {
     const modal = document.getElementById('qr-modal');
+    const bottomNav = document.getElementById('bottom-nav');
     modal.classList.remove('hidden');
+    if (bottomNav) bottomNav.style.display = 'none';
     generateUserQR();
   }
   
   function closeQRModal() {
-    document.getElementById('qr-modal').classList.add('hidden');
+    const modal = document.getElementById('qr-modal');
+    const bottomNav = document.getElementById('bottom-nav');
+    modal.classList.add('hidden');
+    if (bottomNav) bottomNav.style.display = 'block';
   }
   
   function generateUserQR() {
@@ -2276,20 +2281,37 @@ setInterval(checkScheduledChapters, 60000);
   </div>
 </section>
 
-<!-- Historias -->
-    <section class="stories-container" style="margin-top: 0; margin-bottom: 24px;">
-        <div class="stories">
-            <div class="story add-story" id="add-story-btn">
-                <div class="image-container">
-                    <i class="fas fa-plus"></i>
+<!-- Relatos Diarios - Estilo Instagram -->
+    <section class="px-4 py-3 bg-white border-b border-gray-100">
+        <div class="flex space-x-4 overflow-x-auto scrollbar-hide">
+            <!-- Tu relato -->
+            <div class="flex flex-col items-center flex-shrink-0 cursor-pointer" id="add-story-btn">
+                <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-pink-500 p-0.5">
+                    <div class="w-full h-full rounded-full bg-white flex items-center justify-center">
+                        <svg class="w-8 h-8 text-[#00A2FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </div>
                 </div>
-                <div class="username">Tu relato</div>
+                <span class="text-xs mt-1 text-gray-900 font-medium">Tu relato</span>
             </div>
-            <div id="stories">
+            
+            <!-- Relatos de otros usuarios -->
+            <div id="stories" class="flex space-x-4">
                 <!-- Las historias se cargarán aquí -->
             </div>
         </div>
     </section>
+    
+    <style>
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    </style>
     
     <!-- SECCIONES DE CONTENIDO -->
 <section id="new-releases-section" class="mb-8">

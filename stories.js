@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createStoryElement(storyData, userId) {
         const storyDiv = document.createElement('div');
-        storyDiv.className = 'story';
+        storyDiv.className = 'flex flex-col items-center flex-shrink-0 cursor-pointer';
         
         // Usar username, nunca email, y saltar si es anónimo
         let displayName = storyData.username || storyData.email?.split('@')[0] || '';
@@ -165,10 +165,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         storyDiv.innerHTML = `
-            <div class="image-container">
-                <img src="${storyData.coverImage || 'https://via.placeholder.com/150'}" alt="${displayName}">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-pink-500 p-0.5">
+                <div class="w-full h-full rounded-full border-2 border-white overflow-hidden">
+                    <img src="${storyData.coverImage || 'https://via.placeholder.com/150'}" alt="${displayName}" class="w-full h-full object-cover">
+                </div>
             </div>
-            <div class="username">${displayName}</div>
+            <span class="text-xs mt-1 text-gray-900 font-medium max-w-[64px] truncate">${displayName}</span>
         `;
         storyDiv.addEventListener('click', () => openStoryViewer(userId));
         return storyDiv;
