@@ -3609,117 +3609,73 @@ function escapeHtml(text) {
   </div>
 </div>
 
-<!-- Community View - Estilo Instagram Mejorado -->
+<!-- Community View - Estilo Twitter/X -->
 <div id="community-view" class="fixed inset-0 bg-white overflow-y-auto hidden z-50">
-  <!-- Header Moderno -->
-  <div class="sticky top-0 bg-white border-b border-gray-100 px-4 py-3 z-10" style="backdrop-filter: blur(10px); background: rgba(255,255,255,0.95);">
+  <!-- Header Simple -->
+  <div class="sticky top-0 bg-white border-b border-gray-200 px-4 py-3 z-10">
     <div class="flex items-center justify-between">
-      <h1 class="text-xl font-bold" style="color: #00A2FF;">Comunidad</h1>
-      <button onclick="openNoteCreation()" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-        </svg>
+      <h1 class="text-xl font-bold">Comunidad</h1>
+      <button onclick="openNoteCreation()" class="bg-[#00A2FF] text-white px-4 py-2 rounded-full font-semibold hover:bg-[#0066CC] transition-colors">
+        Publicar
       </button>
     </div>
   </div>
 
-  <!-- Tabs Mejorados -->
-  <div class="bg-white border-b border-gray-100">
-    <div class="flex px-4">
-      <button onclick="switchCommunityTab('feed')" class="flex-1 py-4 text-center text-sm font-semibold border-b-2 transition-all" id="feed-tab" style="border-color: #00A2FF; color: #00A2FF;">
-        <div class="flex items-center justify-center space-x-2">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-          </svg>
-          <span>Feed</span>
-        </div>
+  <!-- Tabs Simples -->
+  <div class="bg-white border-b border-gray-200">
+    <div class="flex">
+      <button onclick="switchCommunityTab('feed')" class="flex-1 py-4 text-center text-sm font-semibold border-b-2 border-[#00A2FF]" id="feed-tab">
+        Para ti
       </button>
-      <button onclick="switchCommunityTab('photos'); loadPhotos();" class="flex-1 py-4 text-center text-sm font-semibold border-b-2 border-transparent text-gray-400 transition-all hover:text-gray-600" id="photos-tab">
-        <div class="flex items-center justify-center space-x-2">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-          <span>Fotos</span>
-        </div>
+      <button onclick="switchCommunityTab('photos'); loadPhotos();" class="flex-1 py-4 text-center text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:bg-gray-50" id="photos-tab">
+        Fotos
       </button>
     </div>
   </div>
     
-  <!-- Content Mejorado -->
-  <div class="flex-1" style="background: #FAFAFA;">
-    <!-- Feed con Cards Estilo Instagram -->
-    <div id="notes-feed" class="py-4 space-y-3"></div>
-    
-    <!-- Grid de Fotos 3x3 -->
-    <div id="photos-feed" class="hidden">
-      <div class="grid grid-cols-3 gap-0.5" id="photos-grid"></div>
+  <!-- Content -->
+  <div class="flex-1">
+    <div id="notes-feed" class="divide-y divide-gray-200"></div>
+    <div id="photos-feed" class="hidden p-1">
+      <div class="grid grid-cols-3 gap-1" id="photos-grid"></div>
     </div>
 
-    <!-- Modal de Creación Mejorado (Desde Abajo) -->
-    <div id="add-note-form" class="hidden fixed inset-0 z-[60]" style="background: rgba(0,0,0,0.4);">
-      <div class="absolute inset-x-0 bottom-0 bg-white rounded-t-3xl" style="max-height: 90vh; animation: slideUp 0.3s ease-out;">
-        <!-- Header del Modal -->
-        <div class="flex items-center justify-between px-4 py-4 border-b border-gray-100">
-          <button onclick="cancelNoteCreation()" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">Cancelar</button>
-          <h2 class="text-base font-semibold">Nueva publicación</h2>
-          <button onclick="publishNote()" class="text-sm font-semibold px-4 py-1.5 rounded-full transition-all" style="background: #00A2FF; color: white;" id="publish-note-btn">Publicar</button>
-        </div>
+    <!-- Modal de Creación Estilo Twitter -->
+    <div id="add-note-form" class="hidden bg-white">
+      <div class="flex items-center justify-between p-3 border-b border-gray-200">
+        <button onclick="switchCommunityTab('feed')" class="text-sm font-medium text-gray-600">Cancelar</button>
+        <h2 class="text-base font-semibold">Nueva publicación</h2>
+        <button onclick="publishNote()" class="bg-[#00A2FF] text-white px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-[#0066CC]">Publicar</button>
+      </div>
+      
+      <div class="p-4">
+        <textarea id="note-content" placeholder="¿Qué está pasando?" maxlength="280" class="w-full border-0 resize-none focus:outline-none text-base" rows="4"></textarea>
         
-        <!-- Área de Usuario -->
-        <div class="flex items-center space-x-3 px-4 py-3 border-b border-gray-50">
-          <img id="note-user-avatar" src="https://via.placeholder.com/40" class="w-10 h-10 rounded-full object-cover" alt="Avatar">
-          <div>
-            <p id="note-username" class="font-semibold text-sm">@usuario</p>
-            <p class="text-xs text-gray-500">Público</p>
-          </div>
-        </div>
-        
-        <!-- Área de Contenido -->
-        <div class="px-4 py-3 overflow-y-auto" style="max-height: 50vh;">
-          <textarea id="note-content" placeholder="¿Qué estás pensando?" maxlength="500" class="w-full border-0 resize-none focus:outline-none text-base" rows="6" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;"></textarea>
-          
-          <!-- Preview de Imagen -->
-          <div id="image-preview" class="hidden mt-4">
-            <div class="relative rounded-2xl overflow-hidden">
-              <img id="preview-img" class="w-full max-h-80 object-cover">
-              <button onclick="removeImage()" class="absolute top-3 right-3 bg-black bg-opacity-60 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-opacity-80 transition-all">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          
-          <div class="flex items-center justify-between mt-2">
-            <div id="char-counter" class="text-xs text-gray-400">0/500</div>
-            <div class="flex items-center space-x-1">
-              <span class="text-xs text-gray-400">💡 Tip: Usa emojis para expresarte mejor</span>
-            </div>
+        <div id="image-preview" class="hidden mt-3">
+          <div class="relative inline-block">
+            <img id="preview-img" class="max-h-60 rounded-2xl">
+            <button onclick="removeImage()" class="absolute top-2 right-2 bg-black bg-opacity-50 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-opacity-70">
+              ×
+            </button>
           </div>
         </div>
         
-        <!-- Barra de Herramientas -->
-        <div class="border-t border-gray-100 px-4 py-3">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-              <label class="cursor-pointer hover:bg-gray-100 p-2 rounded-full transition-colors">
-                <svg class="w-6 h-6" style="color: #00A2FF;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <input type="file" id="note-image" accept="image/*" class="hidden" onchange="handleNoteImagePreview(event)">
-              </label>
-              <button onclick="document.getElementById('image-generator-modal').style.display='block'" class="hover:bg-gray-100 p-2 rounded-full transition-colors">
-                <svg class="w-6 h-6" style="color: #ff6b7a;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </button>
-              <button class="hover:bg-gray-100 p-2 rounded-full transition-colors">
-                <svg class="w-6 h-6" style="color: #10a37f;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-          </div>
+        <div id="char-counter" class="text-xs text-gray-400 mt-2">0/280</div>
+      </div>
+      
+      <div class="border-t border-gray-200 p-3">
+        <div class="flex items-center space-x-4">
+          <label class="cursor-pointer text-[#00A2FF] hover:bg-blue-50 p-2 rounded-full transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <input type="file" id="note-image" accept="image/*" class="hidden" onchange="handleNoteImagePreview(event)">
+          </label>
+          <button onclick="document.getElementById('image-generator-modal').style.display='block'" class="text-[#00A2FF] hover:bg-blue-50 p-2 rounded-full transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </button>
         </div>
       </div>
     </div>
@@ -3727,26 +3683,7 @@ function escapeHtml(text) {
 </div>
 
 <style>
-@keyframes slideUp {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
-}
-
-/* Estilos para las cards del feed */
-.note-card {
-  background: white;
-  border-radius: 12px;
-  margin: 0 16px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.note-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-/* Tabs activos */
+/* Tabs activos estilo Twitter */
 #feed-tab.active {
   border-color: #00A2FF !important;
   color: #00A2FF !important;
@@ -9217,46 +9154,22 @@ function openCreatorHub() {
   }
 
   function openNoteCreation() {
-    const user = firebase.auth().currentUser;
-    if (!user) {
-      alert('Debes iniciar sesión para publicar');
-      return;
-    }
-    
-    // Actualizar info del usuario en el modal
-    firebase.database().ref('users/' + user.uid).once('value').then(snapshot => {
-      const userData = snapshot.val();
-      if (userData) {
-        document.getElementById('note-username').textContent = '@' + (userData.username || 'usuario');
-        document.getElementById('note-user-avatar').src = userData.profileImage || 'https://via.placeholder.com/40';
-      }
-    });
-    
-    // Mostrar modal
     document.getElementById('add-note-form').classList.remove('hidden');
     document.getElementById('note-content').focus();
     
-    // Actualizar contador de caracteres
     const noteContent = document.getElementById('note-content');
     const charCounter = document.getElementById('char-counter');
     noteContent.addEventListener('input', function() {
       const count = this.value.length;
-      charCounter.textContent = count + '/500';
-      if (count > 450) {
+      charCounter.textContent = count + '/280';
+      if (count > 260) {
         charCounter.style.color = '#ef4444';
-      } else if (count > 400) {
+      } else if (count > 240) {
         charCounter.style.color = '#f59e0b';
       } else {
         charCounter.style.color = '#9ca3af';
       }
     });
-  }
-  
-  function cancelNoteCreation() {
-    document.getElementById('add-note-form').classList.add('hidden');
-    document.getElementById('note-content').value = '';
-    document.getElementById('char-counter').textContent = '0/500';
-    document.getElementById('image-preview').classList.add('hidden');
   }
 
   async function loadCreatorStats() {
