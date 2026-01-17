@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 500);
             } catch (error) {
                 console.error("Error al publicar relato:", error);
-                alert('Error al publicar el relato. Por favor intenta de nuevo. Error: ' + error.message);
+                alert('Error al publicar la nota. Por favor intenta de nuevo.');
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Publicar Relato';
                 progressDiv.style.display = 'none';
