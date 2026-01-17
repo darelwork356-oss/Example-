@@ -981,37 +981,38 @@ body {
     /*********************** LAS FUNCIONES DE HISTORIAS ESTÁN DEFINIDAS MÁS ADELANTE CON AWS S3 ***********************/
     /*************** FIN NUEVAS FUNCIONES ***********************/
   </script>
+  <script>
+    // Funciones para capítulos programados
+    function saveScheduledChapter(chapterId, publishDate) {
+      firebase.database().ref('scheduledChapters/' + chapterId).set({
+        publishDate: publishDate,
+        status: 'pending'
+      });
+    }
+
+    function checkScheduledChapters() {
+      const now = new Date().getTime();
+      firebase.database().ref('scheduledChapters').once('value', snapshot => {
+        snapshot.forEach(child => {
+          const scheduled = child.val();
+          if (scheduled.status === 'pending' && new Date(scheduled.publishDate).getTime() <= now) {
+            // Publicar el capítulo
+            firebase.database().ref('stories/' + currentEditingStory.id + '/chapters/' + child.key).update({
+              status: 'published'
+            });
+            // Actualizar estado del capítulo programado
+            child.ref.update({ status: 'published' });
+          }
+        });
+      });
+    }
+
+    // Verificar capítulos programados cada minuto
+    setInterval(checkScheduledChapters, 60000);
+  </script>
 </head>
 
-<script>
-// Funciones para capítulos programados
-function saveScheduledChapter(chapterId, publishDate) {
-  firebase.database().ref('scheduledChapters/' + chapterId).set({
-    publishDate: publishDate,
-    status: 'pending'
-  });
-}
-
-function checkScheduledChapters() {
-  const now = new Date().getTime();
-  firebase.database().ref('scheduledChapters').once('value', snapshot => {
-    snapshot.forEach(child => {
-      const scheduled = child.val();
-      if (scheduled.status === 'pending' && new Date(scheduled.publishDate).getTime() <= now) {
-        // Publicar el capítulo
-        firebase.database().ref('stories/' + currentEditingStory.id + '/chapters/' + child.key).update({
-          status: 'published'
-        });
-        // Actualizar estado del capítulo programado
-        child.ref.update({ status: 'published' });
-      }
-    });
-  });
-}
-
-// Verificar capítulos programados cada minuto
-setInterval(checkScheduledChapters, 60000);
-</script>
+<body class="bg-white font-sans text-[#393B3D]" style="overflow: hidden;">
 
 <!-- MODAL DE NOTIFICACIONES -->
 <div id="notifications-modal" class="fixed inset-0 z-[9999] hidden bg-white">
@@ -2144,8 +2145,6 @@ setInterval(checkScheduledChapters, 60000);
   }
 </script>
 
-<body class="bg-white font-sans text-[#393B3D]" style="overflow: hidden;">
-  
   <!-- Google Translate (oculto) -->
   <div id="google_translate_element" style="display:none !important; visibility:hidden !important; position:absolute; left:-9999px;"></div>
   
@@ -2194,7 +2193,6 @@ setInterval(checkScheduledChapters, 60000);
       <div id="authError" class="mt-4 text-red-500 hidden"></div>
     </div>
   </div>
-</body>
 
 <!-- APLICACIÓN PRINCIPAL ESTILO TIKTOK (MODO CLARO) -->
 <div id="main-app" class="h-screen flex flex-col font-sans text-black" style="display: none; opacity: 0; background: #F2F4F5;">
@@ -15478,8 +15476,6 @@ function closeZenvioStudio() {
     });
   }
 </script>
-
-</body>
 
 <!-- Story Viewer Modal -->
 <div id="story-viewer">
