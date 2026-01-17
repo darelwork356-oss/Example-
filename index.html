@@ -2485,63 +2485,154 @@ firebase.auth().onAuthStateChanged(user => {
   </div>
 
   <!-- BOTTOM NAVIGATION ESTILO ROBLOX -->
-  <div id="bottom-nav" class="fixed bottom-0 left-0 right-0 transition-transform duration-300 z-[100]" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-top: 1px solid rgba(0, 162, 255, 0.2);">
-    <div class="grid grid-cols-5 gap-1 p-3">
-      <button onclick="openHome()" class="flex flex-col items-center hover:text-[#00A2FF] transition" style="color: #393B3D;">
-        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" />
-          <polyline points="9,22 9,12 15,12 15,22" />
+  <!-- BOTTOM NAVIGATION MODERNA CON BORDES OVALADOS -->
+  <div id="bottom-nav" class="fixed bottom-4 left-4 right-4 transition-all duration-300 z-[100]" style="background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px); border-radius: 24px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);">
+    <div class="grid grid-cols-5 gap-1 px-2 py-3">
+      <button id="nav-home" data-section="home" class="nav-button flex flex-col items-center transition-all duration-200 rounded-2xl p-2 active" style="color: #00A2FF;">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
         </svg>
-        <span class="text-xs font-medium">Inicio</span>
+        <span class="text-xs font-medium mt-1">Inicio</span>
       </button>
-      <button onclick="openSearch()" class="flex flex-col items-center hover:text-[#00A2FF] transition" style="color: #393B3D;">
-        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="8" stroke-linecap="round" stroke-linejoin="round" />
-          <line x1="21" y1="21" x2="16.65" y2="16.65" stroke-linecap="round" stroke-linejoin="round" />
+      <button id="nav-search" data-section="search" class="nav-button flex flex-col items-center transition-all duration-200 rounded-2xl p-2" style="color: #393B3D;">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
-        <span class="text-xs font-medium">Buscar</span>
+        <span class="text-xs font-medium mt-1">Buscar</span>
       </button>
-      <button onclick="openCreatorHub()" class="flex flex-col items-center hover:text-[#00A2FF] transition" style="color: #393B3D;">
-        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-        </svg>
-        <span class="text-xs font-medium">Crear</span>
+      <button id="nav-create" data-section="create" class="nav-button flex flex-col items-center transition-all duration-200 rounded-2xl p-2" style="color: #393B3D;">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #00A2FF, #ff6b7a);">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+          </svg>
+        </div>
       </button>
-      <button onclick="openCommunity()" class="flex flex-col items-center hover:text-[#00A2FF] transition" style="color: #393B3D;">
-        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke-linecap="round" stroke-linejoin="round" />
+      <button id="nav-community" data-section="community" class="nav-button flex flex-col items-center transition-all duration-200 rounded-2xl p-2" style="color: #393B3D;">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
           <circle cx="9" cy="7" r="4" />
-          <path d="M23 21v-2a4 4 0 00-3-3.87" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M16 3.13a4 4 0 010 7.75" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-        <span class="text-xs font-medium">Comunidad</span>
+        <span class="text-xs font-medium mt-1">Comunidad</span>
       </button>
-      <button onclick="openProfile()" class="flex flex-col items-center hover:text-[#00A2FF] transition" style="color: #393B3D;">
-        <img id="bottom-nav-profile-pic" src="https://via.placeholder.com/150" class="w-6 h-6 rounded-full object-cover mb-1" style="border: 2px solid #00A2FF;" alt="Perfil">
-        <span class="text-xs font-medium">Perfil</span>
+      <button id="nav-profile" data-section="profile" class="nav-button flex flex-col items-center transition-all duration-200 rounded-2xl p-2" style="color: #393B3D;">
+        <img id="bottom-nav-profile-pic" src="https://via.placeholder.com/150" class="w-6 h-6 rounded-full object-cover" style="border: 2px solid #00A2FF;" alt="Perfil">
+        <span class="text-xs font-medium mt-1">Perfil</span>
       </button>
     </div>
   </div>
 
   <style>
-    .transition { transition: all 0.2s ease-in-out; }
-    #bottom-nav.hide { transform: translateY(100%); }
+    .nav-button.active {
+      background: rgba(0, 162, 255, 0.1);
+      color: #00A2FF !important;
+      transform: scale(1.05);
+    }
+    
+    .nav-button:active {
+      transform: scale(0.95);
+    }
+    
+    #bottom-nav.hide {
+      transform: translateY(120%);
+    }
   </style>
 
   <script>
-    let lastScrollTop = 0;
-    const bottomNav = document.getElementById("bottom-nav");
-    const scrollArea = document.getElementById("scrollable-content");
+    // Sistema de navegación con deslizamiento
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let currentButton = null;
+    let isDragging = false;
 
-    scrollArea.addEventListener("scroll", () => {
-      const scrollTop = scrollArea.scrollTop;
-      if (scrollTop > lastScrollTop) {
-        bottomNav.classList.add("hide");
-      } else {
-        bottomNav.classList.remove("hide");
-      }
-      lastScrollTop = scrollTop;
+    const navButtons = document.querySelectorAll('.nav-button');
+    const bottomNav = document.getElementById('bottom-nav');
+
+    navButtons.forEach(button => {
+      button.addEventListener('touchstart', handleTouchStart, { passive: false });
+      button.addEventListener('touchmove', handleTouchMove, { passive: false });
+      button.addEventListener('touchend', handleTouchEnd);
+      button.addEventListener('click', handleClick);
     });
+
+    function handleTouchStart(e) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      currentButton = e.currentTarget;
+      isDragging = false;
+    }
+
+    function handleTouchMove(e) {
+      if (!currentButton) return;
+      
+      const touchX = e.touches[0].clientX;
+      const touchY = e.touches[0].clientY;
+      const deltaX = Math.abs(touchX - touchStartX);
+      const deltaY = Math.abs(touchY - touchStartY);
+
+      if (deltaX > 10 || deltaY > 10) {
+        isDragging = true;
+        e.preventDefault();
+
+        // Detectar sobre qué botón está el dedo
+        const element = document.elementFromPoint(touchX, touchY);
+        const button = element?.closest('.nav-button');
+        
+        if (button && button !== currentButton) {
+          navButtons.forEach(b => b.classList.remove('active'));
+          button.classList.add('active');
+          currentButton = button;
+          
+          // Vibración suave
+          if (navigator.vibrate) navigator.vibrate(10);
+        }
+      }
+    }
+
+    function handleTouchEnd(e) {
+      if (isDragging && currentButton) {
+        const section = currentButton.dataset.section;
+        navigateToSection(section);
+      }
+      isDragging = false;
+      currentButton = null;
+    }
+
+    function handleClick(e) {
+      if (isDragging) return;
+      
+      navButtons.forEach(b => b.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+      
+      const section = e.currentTarget.dataset.section;
+      navigateToSection(section);
+    }
+
+    function navigateToSection(section) {
+      switch(section) {
+        case 'home': openHome(); break;
+        case 'search': openSearch(); break;
+        case 'create': openCreatorHub(); break;
+        case 'community': openCommunity(); break;
+        case 'profile': openProfile(); break;
+      }
+    }
+
+    // Ocultar al hacer scroll
+    let lastScrollTop = 0;
+    const scrollArea = document.getElementById('scrollable-content');
+
+    if (scrollArea) {
+      scrollArea.addEventListener('scroll', () => {
+        const scrollTop = scrollArea.scrollTop;
+        if (scrollTop > lastScrollTop && scrollTop > 100) {
+          bottomNav.classList.add('hide');
+        } else {
+          bottomNav.classList.remove('hide');
+        }
+        lastScrollTop = scrollTop;
+      });
+    }
   </script>
 </div>
 
