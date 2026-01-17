@@ -6,13 +6,31 @@ const ses = new AWS.SES({
   region: process.env.ZENVIO_AWS_REGION || process.env.AWS_REGION || 'us-east-2'
 });
 
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
+};
+
 exports.handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers, body: '' };
+  }
+
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
+    return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method Not Allowed' }) };
   }
 
   try {
     const { email, problemType, description } = JSON.parse(event.body);
+
+    if (!email || !problemType || !description) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: 'email, problemType, and description are required' })
+      };
+    }
 
     const params = {
       Source: process.env.SUPPORT_EMAIL || 'support@zenvio.app',
@@ -31,11 +49,13 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
+      headers,
       body: JSON.stringify({ success: true })
     };
   } catch (error) {
     return {
       statusCode: 500,
+      headers,
       body: JSON.stringify({ error: error.message })
     };
   }

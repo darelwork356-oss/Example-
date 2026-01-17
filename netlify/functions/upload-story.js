@@ -8,12 +8,31 @@ const s3 = new AWS.S3({
 
 const BUCKET = process.env.ZENVIO_AWS_S3_BUCKET || process.env.AWS_S3_BUCKET;
 
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
+};
+
 exports.handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers, body: '' };
+  }
+
   try {
     if (event.httpMethod !== 'POST') {
       return {
         statusCode: 405,
+        headers,
         body: JSON.stringify({ error: 'Method not allowed' })
+      };
+    }
+
+    if (!BUCKET) {
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ error: 'Missing S3 bucket configuration' })
       };
     }
 
@@ -34,6 +53,7 @@ exports.handler = async (event) => {
     if (!userId || !coverImageData) {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({ error: 'userId and coverImageData are required' })
       };
     }
@@ -86,11 +106,7 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
-      },
+      headers,
       body: JSON.stringify({
         success: true,
         story,
@@ -103,11 +119,7 @@ exports.handler = async (event) => {
     console.error('Error uploading story:', error);
     return {
       statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
-      },
+      headers,
       body: JSON.stringify({ error: error.message })
     };
   }
